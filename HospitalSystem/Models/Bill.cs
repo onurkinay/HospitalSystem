@@ -11,7 +11,12 @@ namespace HospitalSystem.Models
 
         public int Id { get; set; }
         public int Bill_No { get; set; }
+
+
         public int Apointment_ID { get; set; }
+        public Appointment Appointment { get; set; }
+
+
         public DateTime Issued_Date { get; set; }
         public double Amount { get; set; }
         public bool IsPaid { get; set; }=false;

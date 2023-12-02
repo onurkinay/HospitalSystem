@@ -11,5 +11,8 @@ namespace HospitalSystem.Models
         public string Name { get; set; }
         public string Code { get; set; }
         public string Location { get; set; }
+
+        public Patient Patient { get; set; }
+        public int PatientID { get; set; } = -1;
     }
 }

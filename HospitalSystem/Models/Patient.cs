@@ -21,6 +21,7 @@ namespace HospitalSystem.Models
         public string Phone { get; set; }
 
         public int Room_ID { get; set; } = -1;
+
         public virtual Room Room { get; set; }
 
 

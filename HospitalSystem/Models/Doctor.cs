@@ -7,7 +7,7 @@ namespace HospitalSystem.Models
 {
     public class Doctor
     {
-        // Doctor doesn't have any relationship
+        // Doctor does have relationship with Department
         public int ID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -15,8 +15,8 @@ namespace HospitalSystem.Models
         public DateTime DOB { get; set;}
         public bool Gender { get; set; }
 
-        public int Department_Id { get; set; }
-        public virtual Department Department { get; set; }
+        public int DepartmentID { get; set; }
+        public virtual Department Department { get; set; } = null;
 
         public double Salary { get; set; }
         public string Specializations { get; set; }
