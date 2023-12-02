@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,7 @@ namespace HospitalSystem.Models
     public class Patient
     {
         // patient may be stay in any room
-
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -20,12 +21,10 @@ namespace HospitalSystem.Models
         public string Address { get; set; }
         public string City { get; set; }
         public string Phone { get; set; }
+         
+        public virtual Room CurRoom { get; set; }
 
-        [ForeignKey("Room")]
-        public int Room_ID { get; set; }
-        public virtual Room Room { get; set; }
-
-        public virtual ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Appointment> Appointments { get; set; }
 
 
     }

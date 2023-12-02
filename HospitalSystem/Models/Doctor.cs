@@ -15,10 +15,7 @@ namespace HospitalSystem.Models
         public int Age { get; set; }
         public DateTime DOB { get; set;}
         public bool Gender { get; set; }
-
-        [ForeignKey("Department")]
-        public int DepartmentID { get; set; }
-        public virtual Department Department { get; set; }
+         
 
         public double Salary { get; set; }
         public string Specializations { get; set; }
@@ -28,7 +25,12 @@ namespace HospitalSystem.Models
         public string Email { get; set; }
         public List<DateTime> Schedules { get; set; }
 
-        public virtual ICollection<Appointment> Appointments { get; set; }
+
+        public int CurDeptartmentID { get; set; } 
+        public Department CurDepartment { get; set; }
+
+        public ICollection<Appointment> Appointments { get; set; }
+       
 
     }
 }

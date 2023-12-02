@@ -12,21 +12,21 @@ namespace HospitalSystem.Models
         // Appointment have Doctor and Patient ID
         [Key]
         public int Id { get; set; }
-
-
-        [ForeignKey("Patient")]
-        public int Patient_ID { get; set; }
-        [ForeignKey("Doctor")]
-        public int Doctor_ID { get; set; }
-       
+          
         public string Description { get; set; }
         public double Consultant_Fee { get; set; }
         public DateTime AppointmentDate { get; set; }
-         
-        public virtual Doctor Doctor { get; set; } 
-        public virtual Patient Patient { get; set; }
 
-        public virtual Bill Bill { get; set; }
-        public virtual Prescription Prescription { get; set; }
+        public int Doctor_ID { get; set; }
+        public int Patient_ID { get; set; }
+
+        public Doctor Doctor { get; set; }
+        public Patient Patient { get; set; }
+
+        public ICollection<Bill> Bills { get; set; }
+        public ICollection<Prescription> Prescriptions { get; set; }
+
+
+
     }
 }

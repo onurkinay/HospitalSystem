@@ -13,15 +13,14 @@ namespace HospitalSystem.Models
         //
         [Key]
         public int Id { get; set; } 
-
-        [ForeignKey("Appointment")]
-        public int Appointment_ID { get; set; }
+         
 
         public string Medicinde { get; set; }
         public string Remark { get; set; }
-        public string Advice { get; set; } 
+        public string Advice { get; set; }
 
-        public virtual Appointment Appointment { get; set; }
+        public int Appointment_ID { get; set; }
+        public Appointment CurAppointment { get; set; }
 
     }
 }
