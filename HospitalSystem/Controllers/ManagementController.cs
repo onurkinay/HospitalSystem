@@ -8,6 +8,10 @@ namespace HospitalSystem.Controllers
 {
     public class ManagementController : Controller
     {
+        // GİRİŞ SAYFASI OLACAK
+        //ROLLERE GÖRE AYRI SAYFALARA YÖNLENDİRİLECEK
+
+
         // GET: Management
         public ActionResult Index() //login page
         {

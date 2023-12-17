@@ -13,6 +13,10 @@ namespace HospitalSystem.Controllers
 {
     public class PrescriptionsController : Controller
     {
+        //HASTA İSE HASTA ID İLE UYAN KAYITLARA BAKABİLECEK
+        //SADECE DOKTORUN EKLEME/SİLME YETKİSİ VAR
+        //ADMIN TAM YETKİLİ
+
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Prescriptions

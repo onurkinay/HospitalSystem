@@ -13,6 +13,10 @@ namespace HospitalSystem.Controllers
 {
     public class DoctorsController : Controller
     {
+        //SADECE ADMİN, DOKTOR KAYDI EKLEYEBİLİR
+        //DOKTORLAR KENDİ KAYITLARINA MÜDAHALE EDEBİLİR
+        //ADMİN TAM YETKİLİDİR
+
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Doctors

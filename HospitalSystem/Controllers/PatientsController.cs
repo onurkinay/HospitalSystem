@@ -13,6 +13,9 @@ namespace HospitalSystem.Controllers
 {
     public class PatientsController : Controller
     {
+        // HASTALAR SİSTEME ÜYE OLUR GİBİ KAYIT EKLENEBİLİR
+        // ADMİN TAM YETKİLİDİR
+
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Patients

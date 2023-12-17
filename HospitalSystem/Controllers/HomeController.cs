@@ -8,6 +8,7 @@ namespace HospitalSystem.Controllers
 {
     public class HomeController : Controller
     {
+        //ANA SAYFA
         public ActionResult Index()
         {
             return View();

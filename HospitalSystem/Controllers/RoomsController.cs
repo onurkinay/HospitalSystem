@@ -13,6 +13,7 @@ namespace HospitalSystem.Controllers
 {
     public class RoomsController : Controller
     {
+        //SADECE ADMIN ERİŞEBİLİR
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Rooms

@@ -13,6 +13,7 @@ namespace HospitalSystem.Controllers
 {
     public class DepartmentsController : Controller
     {
+        //ADMİN TAM YETKİLİDİR
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Departments

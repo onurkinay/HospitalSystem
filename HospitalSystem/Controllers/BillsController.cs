@@ -13,6 +13,7 @@ namespace HospitalSystem.Controllers
 {
     public class BillsController : Controller
     {
+        //
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Bills
