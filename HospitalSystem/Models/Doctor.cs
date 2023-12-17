@@ -31,6 +31,6 @@ namespace HospitalSystem.Models
 
         public ICollection<Appointment> Appointments { get; set; }
        
-
+        
     }
 }

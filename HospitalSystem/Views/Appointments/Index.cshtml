@@ -4,54 +4,47 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<header>
+    <h1>Hasta Portalı</h1>
+    <nav>
+        <a href="#ozel-sayfa">Özel Sayfa</a>
+        <a href="#randevu-al">Randevu Al</a>
+        <a href="#randevular">Randevular</a>
+        <a href="#recete-goruntule">Reçete Görüntüle</a>
+        <a href="#odeme">Ödeme</a>
+        <a href="#iade">İade</a>
+        <a href="#odeme-gecmisi">Ödeme Geçmişi</a>
+        <a href="#sifre-yonetimi">Şifre Yönetimi</a>
+    </nav>
+</header>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Doctor.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Patient.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Consultant_Fee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AppointmentDate)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Doctor.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Patient.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Consultant_Fee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AppointmentDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<section id="randevular">
 
-</table>
+    <div class="container">
+        <h2>Randevular</h2>
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1">Tarih/Saat</div>
+                <div class="col col-3">Doktor Adı</div>
+                <div class="col col-6">Eylemler</div>
+            </li>
+            @foreach (var item in Model)
+            {
+                <li class="table-row">
+                    <div class="col col-1" data-label="Date">
+                        @Html.DisplayFor(modelItem => item.AppointmentDate)
+                    </div>
+                    <div class="col col-3" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.Doctor.Name)</div>
+                    <div class="col col-6" data-label="Change Appointment Operation">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+
+</section>
+

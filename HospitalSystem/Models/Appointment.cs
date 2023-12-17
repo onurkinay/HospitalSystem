@@ -15,6 +15,7 @@ namespace HospitalSystem.Models
           
         public string Description { get; set; }
         public double Consultant_Fee { get; set; }
+         
         public DateTime AppointmentDate { get; set; }
 
         public int Doctor_ID { get; set; }

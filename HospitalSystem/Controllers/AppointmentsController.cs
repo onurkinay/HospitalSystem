@@ -40,7 +40,17 @@ namespace HospitalSystem.Controllers
         // GET: Appointments/Create
         public ActionResult Create()
         {
-            ViewBag.Doctor_ID = new SelectList(db.Doctors, "ID", "Name");
+             
+            List<object> newList = new List<object>();
+            foreach (var doctor in db.Doctors)
+                newList.Add(new
+                {
+                    ID = doctor.ID,
+                    Name = doctor.Name + " - " + db.Departments.ToList().FirstOrDefault(x => doctor.CurDeptartmentID.Equals(x.ID)).Name   
+                });
+
+
+            ViewBag.Doctor_ID = new SelectList(newList, "ID", "Name");
             ViewBag.Patient_ID = new SelectList(db.Patients, "Id", "Name");
             return View();
         }

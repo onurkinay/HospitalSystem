@@ -1,33 +1,185 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    ViewBag.isHome = true;
 }
+<header id="header">
+    <img id="logo-header" src="~/favicon.ico" alt="Hastane Logosu">
+    <h1 id="head">Hastane Yönetim Sistemi</h1>
+    <nav class="ana-menu">
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+        <a href="#">Ana Sayfa</a>
+        <a href="pages/admin.html" target="_blank">Log In</a>
+
+
+    </nav>
+</header>
+
+
+<div class="slider">
+    <img class="slider-img-top" src="~/Content/Images/images1.jpeg" alt="">
+</div>
+
+<h1 id="about-head">Hastane Hakkında</h1>
+
+<section class="about">
+    <div>
+        <h2>Hizmetler</h2>
+        <ul>
+            <li>
+                [Hastane Adı] Hastanesi, [şehir] şehrinde bulunan özel bir hastanedir. [Yıl] yılında kurulan hastanemiz,
+                [branşlar] branşlarında hizmet vermektedir.
+            </li>
+            <li>
+                Modern tıbbi cihazlar ve deneyimli personeliyle, hastalarına en iyi sağlık hizmetini sunmayı amaçlamaktadır.
+            </li>
+            <li>Hastanemiz bünyesinde, [hizmetler] gibi hizmetler sunulmaktadır.</li>
+            <li>
+                Hastalarının memnuniyetini her zaman ön planda tutmaktadır. Bu nedenle, hastanemizde, hastaların konforu ve
+                güvenliği için her türlü önlem alınmıştır.
+            </li>
+        </ul>
     </div>
-</main>
+    <div>
+        <h2>
+            Hastane Misyonu</h3>
+            <ul>
+                <li>
+                    [Hastane Adı] Hastanesi, hastalarına en iyi sağlık hizmetini sunmak ve onların sağlığını korumak için
+                    çalışmaktadır.
+                </li>
+                <li>
+                    Hasta ve yakınları ile etkileşimi artırmak, tedavi süreçlerini anlaşılır bir şekilde iletmek ve hastaların
+                    karar süreçlerine aktif olarak katılımlarını sağlamak.
+                </li>
+                <li>
+                    Çevresel etkileri minimize ederek sürdürülebilir bir sağlık hizmeti sunmak, atık yönetiminde çevre dostu
+                    politikalar benimsemek ve toplumda çevre bilincini artırmak
+                </li>
+            </ul>
+
+    </div>
+    <div>
+        <h2>
+            Hastane Vizyonu</h3>
+            <ul>
+                <li>
+                    [Hastane Adı] Hastanesi, bölgenin lider sağlık kurumu olmak ve hastalarına uluslararası standartlarda
+                    hizmet
+                    sunmak için çalışmaktadır.
+                </li>
+                <li>
+                    Sürekli olarak yeni teknolojileri benimsemek, sağlık sektöründeki yeniliklere açık olmak ve uluslararası
+                    standartlarda en güncel sağlık hizmetlerini sunmak.
+                </li>
+                <li>
+                    Sağlık alanında önde gelen kurumlarla işbirlikleri kurarak, ulusal ve uluslararası düzeyde sağlık ağlarını
+                    güçlendirmek ve hastalarımıza geniş bir uzmanlık yelpazesi sunarak lider bir sağlık kurumu olmak.
+                </li>
+            </ul>
+    </div>
+</section>
+
+
+<div id="gallery" class="gallery-box">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-box">
+                    <h2 id="galery-head">Gallery</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup-gallery row clearfix">
+            <div class="col-md-3 col-sm-6">
+                <div class="box-gallery">
+                    <img src="~/Content/Images/gallery-01.jpg" alt="">
+                    <div class="box-content">
+                        <h3 class="title">Lorem ipsum dolor</h3>
+                        <ul class="icon">
+                            <li><a href="~/Content/Images/gallery-01.jpg"><i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="box-gallery">
+                    <img src="~/Content/Images/gallery-02.jpg" alt="">
+                    <div class="box-content">
+                        <h3 class="title">Lorem ipsum dolor</h3>
+                        <ul class="icon">
+                            <li><a href="~/Content/Images/gallery-02.jpg"><i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="box-gallery">
+                    <img src="~/Content/Images/gallery-03.jpg" alt="">
+                    <div class="box-content">
+                        <ul class="icon">
+                            <li><a href="~/Content/Images/gallery-03.jpg"><i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="box-gallery">
+                    <img src="~/Content/Images/gallery-04.jpg" alt="">
+                    <div class="box-content">
+                        <h3 class="title">Lorem ipsum dolor</h3>
+                        <ul class="icon">
+                            <li><a href="~/Content/Images/gallery-04.jpg"><i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="box-gallery">
+                    <img src="~/Content/Images/gallery-05.jpg" alt="">
+                    <div class="box-content">
+                        <h3 class="title">Lorem ipsum dolor</h3>
+                        <ul class="icon">
+                            <li><a href="~/Content/Images/gallery-05.jpg"><i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="box-gallery">
+                    <img src="~/Content/Images/gallery-06.jpg" alt="">
+                    <div class="box-content">
+                        <h3 class="title">Lorem ipsum dolor</h3>
+                        <ul class="icon">
+                            <li><a href="~/Content/Images/gallery-06.jpg"><i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="box-gallery">
+                    <img src="~/Content/Images/gallery-07.jpg" alt="">
+                    <div class="box-content">
+                        <h3 class="title">Lorem ipsum dolor</h3>
+                        <ul class="icon">
+                            <li><a href="~/Content/Images/gallery-07.jpg"><i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="box-gallery">
+                    <img src="~/Content/Images/gallery-08.jpg" alt="">
+                    <div class="box-content">
+                        <h3 class="title">Lorem ipsum dolor</h3>
+                        <ul class="icon">
+                            <li><a href="~/Content/Images/gallery-08.jpg"><i class="fa fa-picture-o" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
