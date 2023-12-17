@@ -287,8 +287,6 @@
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\Appointments\Create.cshtml" />
-    <Content Include="Views\Appointments\Delete.cshtml" />
-    <Content Include="Views\Appointments\Details.cshtml" />
     <Content Include="Views\Appointments\Edit.cshtml" />
     <Content Include="Views\Appointments\Index.cshtml" />
     <Content Include="Views\Bills\Create.cshtml" />
@@ -302,8 +300,6 @@
     <Content Include="Views\Patients\Edit.cshtml" />
     <Content Include="Views\Patients\Index.cshtml" />
     <Content Include="Views\Prescriptions\Create.cshtml" />
-    <Content Include="Views\Prescriptions\Delete.cshtml" />
-    <Content Include="Views\Prescriptions\Details.cshtml" />
     <Content Include="Views\Prescriptions\Edit.cshtml" />
     <Content Include="Views\Prescriptions\Index.cshtml" />
     <Content Include="Views\Rooms\Create.cshtml" />

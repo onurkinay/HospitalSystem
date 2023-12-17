@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
-using HospitalSystem.Models;
+using HospitalSystem.Models; 
+using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
 {
@@ -18,23 +17,44 @@ namespace HospitalSystem.Controllers
         // GET: Appointments
         public ActionResult Index()
         {
+            //sistemde muhasebe giriş varsa yetkisiz rol hatası versin
+
             var appointments = db.Appointments.Include(a => a.Doctor).Include(a => a.Patient);
+
+            int patientID = 1;
+            int doctorID = 1;
+
+            if(patientID != null)
+            {
+                appointments = db.Appointments
+                    .Where(x=> x.Patient_ID==patientID)
+                    .Include(a => a.Doctor)
+                    .Include(a => a.Patient);//hastanın girişi olduğunda hastanın randevuları göster
+                 
+            }else if(doctorID != null)
+            {
+                appointments = db.Appointments
+                   .Where(x => x.Doctor_ID == doctorID)
+                   .Include(a => a.Doctor)
+                   .Include(a => a.Patient);//doktor girişi olduğunda doktorun randevuları göster
+            }
+          
             return View(appointments.ToList());
         }
 
         // GET: Appointments/Details/5
-        public ActionResult Details(int? id)
+        public string Details(int? id) // RANDEVU DETAYLARI JSON İLE AJAX GET OLARAK GÖSTERİLECEK
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return "403";
             }
             Appointment appointment = db.Appointments.Find(id);
             if (appointment == null)
             {
-                return HttpNotFound();
+                return "404";
             }
-            return View(appointment);
+            return JsonConvert.SerializeObject(appointment, new JsonSerializerSettings() { DateFormatString = "yyyy-MM-ddThh:mm:ssZ" });
         }
 
         // GET: Appointments/Create
@@ -86,7 +106,18 @@ namespace HospitalSystem.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Doctor_ID = new SelectList(db.Doctors, "ID", "Name", appointment.Doctor_ID);
+
+            List<object> newList = new List<object>();
+            foreach (var doctor in db.Doctors)
+                newList.Add(new
+                {
+                    ID = doctor.ID,
+                    Name = doctor.Name + " - " + db.Departments.ToList().FirstOrDefault(x => doctor.CurDeptartmentID.Equals(x.ID)).Name
+                });
+
+
+
+            ViewBag.Doctor_ID = new SelectList(newList, "ID", "Name", appointment.Doctor_ID);
             ViewBag.Patient_ID = new SelectList(db.Patients, "Id", "Name", appointment.Patient_ID);
             return View(appointment);
         }
@@ -109,20 +140,7 @@ namespace HospitalSystem.Controllers
             return View(appointment);
         }
 
-        // GET: Appointments/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Appointment appointment = db.Appointments.Find(id);
-            if (appointment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(appointment);
-        }
+   
 
         // POST: Appointments/Delete/5
         [HttpPost, ActionName("Delete")]

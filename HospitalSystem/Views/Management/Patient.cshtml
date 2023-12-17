@@ -2,16 +2,17 @@
 @{
     ViewBag.Title = "Patient";
 }
-<header id="header">
-    <img id="logo-header" src="~/favicon.ico" alt="Hastane Logosu">
-    <h1 id="head">Hastane Yönetim Sistemi</h1>
-    <nav class="ana-menu">
-
-
-        <a href="#">Ana Sayfa</a>
-        <a href="pages/admin.html" target="_blank">Log In</a>
-
-
+<header>
+    <h1>Hasta Portalı</h1>
+    <nav>
+        <a href="#ozel-sayfa">Özel Sayfa</a>
+        <a href="#randevu-al">Randevu Al</a>
+        @Html.ActionLink("Randevular","Index","Appointments")
+        <a href="#recete-goruntule">Reçete Görüntüle</a>
+        <a href="#odeme">Ödeme</a>
+        <a href="#iade">İade</a>
+        <a href="#odeme-gecmisi">Ödeme Geçmişi</a>
+        <a href="#sifre-yonetimi">Şifre Yönetimi</a>
     </nav>
 </header>
 
