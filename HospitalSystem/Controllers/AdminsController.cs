@@ -14,7 +14,7 @@ namespace HospitalSystem.Controllers
     public class AdminsController : Controller
     {
         private HospitalSystem3Context db = new HospitalSystem3Context();
-
+        //branch test
         // GET: Admins
         public ActionResult Index()
         {
