@@ -22,7 +22,9 @@
 
     <h2 id="form-header">Login</h2>
     <div class="container-password-management">
-        <form action="#" method="post">
+      @using (Html.BeginForm("Index", "Management"))
+            {
+
             <div class="input-group">
                 <label for="kullanici_adi">Kullanıcı Adı:</label>
                 <input type="text" name="username" id="username" required>
@@ -34,7 +36,8 @@
 
 
             <button type="submit">Gönder</button>
-        </form>
+
+      } 
     </div>
 </section>
 
