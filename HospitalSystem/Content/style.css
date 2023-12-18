@@ -20,7 +20,7 @@ header {
 .ana-menu {
     display: flex;
     justify-content: space-between;
-    width: 30%;
+   /* width: 30%;*/
     margin-left: auto;
     margin-right: 2%;
 }
@@ -30,6 +30,7 @@ header {
         color: #333;
         margin-left: auto;
         transition: all 0.3s ease-in;
+        padding:20px;
     }
 
         .ana-menu a:hover {

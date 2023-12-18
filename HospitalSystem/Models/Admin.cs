@@ -17,6 +17,7 @@ namespace HospitalSystem.Models
         public string Address { get; set; }
         public string City { get; set; }
         public DateTime DOB { get; set; }
+        public bool Accountant { get; set; }
 
     }
 }

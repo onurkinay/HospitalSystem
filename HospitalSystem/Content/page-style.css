@@ -24,7 +24,7 @@ header h1 {
 nav {
     display: flex;
     margin-left: auto;
-    width: 40%;
+   /* width: 40%;*/
     padding: 10px;
 }
 
