@@ -173,13 +173,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312180951154_m1.cs" />
-    <Compile Include="Migrations\202312180951154_m1.designer.cs">
-      <DependentUpon>202312180951154_m1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312181023523_m2.cs" />
-    <Compile Include="Migrations\202312181023523_m2.designer.cs">
-      <DependentUpon>202312181023523_m2.cs</DependentUpon>
+    <Compile Include="Migrations\202312181814518_azure.cs" />
+    <Compile Include="Migrations\202312181814518_azure.designer.cs">
+      <DependentUpon>202312181814518_azure.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -196,10 +192,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Hospital.mdf" />
-    <Content Include="App_Data\Hospital_log.ldf">
-      <DependentUpon>Hospital.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\Images\about-img-01.jpg" />
     <Content Include="Content\Images\about-img-02.jpg" />
     <Content Include="Content\Images\about-img-03.jpg" />
@@ -317,12 +309,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202312180951154_m1.resx">
-      <DependentUpon>202312180951154_m1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202312181814518_azure.resx">
+      <DependentUpon>202312181814518_azure.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312181023523_m2.resx">
-      <DependentUpon>202312181023523_m2.cs</DependentUpon>
-    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
