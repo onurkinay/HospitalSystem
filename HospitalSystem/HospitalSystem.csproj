@@ -314,6 +314,7 @@
     <Content Include="Views\Management\Patient.cshtml" />
     <Content Include="Views\Management\Admin.cshtml" />
     <Content Include="Views\Management\Accountant.cshtml" />
+    <Content Include="Views\Management\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<header id="header">
+    <img id="logo-header" src="~/favicon.ico" alt="Hastane Logosu">
+    <h1 id="head">Hastane Yönetim Sistemi</h1>
+    <nav class="ana-menu">
+
+
+        <a href="#">Ana Sayfa</a>
+        <a href="pages/admin.html" target="_blank">Log In</a>
+
+
+    </nav>
+</header>
+
+
+
+<section id="sifre-yonetimi" style="margin-top:25px">
+
+    <h2 id="form-header">Login</h2>
+    <div class="container-password-management">
+        <form action="#" method="post">
+            <div class="input-group">
+                <label for="kullanici_adi">Kullanıcı Adı:</label>
+                <input type="text" name="username" id="username" required>
+            </div>
+            <div class="input-group">
+                <label for="eski_sifre">Şifre:</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+
+
+            <button type="submit">Gönder</button>
+        </form>
+    </div>
+</section>
+

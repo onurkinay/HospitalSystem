@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,32 +12,17 @@ namespace HospitalSystem.Controllers
         // GİRİŞ SAYFASI OLACAK
         //ROLLERE GÖRE AYRI SAYFALARA YÖNLENDİRİLECEK
 
-
+        string uyeKimlik = "anon";
         // GET: Management
         public ActionResult Index() //login page
         {
-            return View();
+            if (uyeKimlik == "doctor") return View("Doctor");
+            else if (uyeKimlik == "patient") return View("Patient");
+            else if (uyeKimlik == "admin") return View("Admin");
+            else if (uyeKimlik == "accountant") return View("Accountant");
+            else return View("Login");
         }
 
-        public ActionResult Doctor()
-        { 
-
-            return View();
-        }
-
-        public ActionResult Patient() //doctor main page
-        {
-            return View();
-        }
-
-        public ActionResult Admin() //admin main page
-        {
-            return View();
-        }
-
-        public ActionResult Accountant()
-        {
-            return View();
-        }
+        
     }
 }
