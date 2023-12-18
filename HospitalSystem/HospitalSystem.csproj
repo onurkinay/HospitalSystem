@@ -173,9 +173,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312181814518_azure.cs" />
-    <Compile Include="Migrations\202312181814518_azure.designer.cs">
-      <DependentUpon>202312181814518_azure.cs</DependentUpon>
+    <Compile Include="Migrations\202312181841122_azure2.cs" />
+    <Compile Include="Migrations\202312181841122_azure2.designer.cs">
+      <DependentUpon>202312181841122_azure2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -309,12 +309,12 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202312181814518_azure.resx">
-      <DependentUpon>202312181814518_azure.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <EmbeddedResource Include="Migrations\202312181841122_azure2.resx">
+      <DependentUpon>202312181841122_azure2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
