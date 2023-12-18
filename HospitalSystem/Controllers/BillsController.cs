@@ -24,7 +24,7 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Bills/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id) // JSON RETURN
         {
             if (id == null)
             {

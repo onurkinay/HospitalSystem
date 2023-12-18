@@ -43,7 +43,7 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Appointments/Details/5
-        public string Details(int? id) // RANDEVU DETAYLARI JSON İLE AJAX GET OLARAK GÖSTERİLECEK
+        public string Details(int? id) // RANDEVU DETAYLARI JSON İLE FETCH GET OLARAK GÖSTERİLECEK
         {
             if (id == null)
             {

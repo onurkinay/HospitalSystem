@@ -64,7 +64,6 @@ namespace HospitalSystem.Data
         public System.Data.Entity.DbSet<HospitalSystem.Models.Bill> Bills { get; set; }
 
         public System.Data.Entity.DbSet<HospitalSystem.Models.Prescription> Prescriptions { get; set; }
-
-        public System.Data.Entity.DbSet<HospitalSystem.Models.Room> Rooms { get; set; }
+         
     }
 }
