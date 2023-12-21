@@ -2,9 +2,9 @@
 <header>
     <h1>Hasta Portalı</h1>
     <nav>
-        <a href="#ozel-sayfa">Özel Sayfa</a>
-        <a href="#randevu-al">Randevu Al</a>
-        <a href="#randevular">Randevular</a>
+        @Html.ActionLink("My Page", "Index", "Management")
+        @Html.ActionLink("Create App", "Create", "Appointments")
+        @Html.ActionLink("Appointments", "Index", "Appointments")
         <a href="#recete-goruntule">Reçete Görüntüle</a>
         <a href="#odeme">Ödeme</a>
         <a href="#iade">İade</a>

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
+using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
 {
@@ -27,18 +28,19 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Doctors/Details/5
-        public ActionResult Details(int? id)
+        public string Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return "403";
             }
             Doctor doctor = db.Doctors.Find(id);
             if (doctor == null)
             {
-                return HttpNotFound();
+                return "404";
             }
-            return View(doctor);
+            return JsonConvert.SerializeObject(doctor, new JsonSerializerSettings() { DateFormatString = "yyyy-MM-ddThh:mm:ssZ" });
+
         }
 
         // GET: Doctors/Create
