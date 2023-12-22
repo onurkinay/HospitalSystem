@@ -59,10 +59,11 @@ namespace HospitalSystem.Controllers
 
         // GET: Appointments/Create
         public ActionResult Create()
-        {
+        {//role based kontrol, sadece hasta
              
             List<object> newList = new List<object>();
-            foreach (var doctor in db.Doctors)
+            var doctors = db.Doctors.ToList();
+            foreach (var doctor in doctors)
                 newList.Add(new
                 {
                     ID = doctor.ID,
@@ -82,6 +83,9 @@ namespace HospitalSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Description,Consultant_Fee,AppointmentDate,Doctor_ID,Patient_ID")] Appointment appointment)
         {
+            appointment.Patient_ID = 1;//giriş yapmış olan hastanın ID'sı gelecek
+            appointment.Consultant_Fee = 0;//ücret hesaplaması
+
             if (ModelState.IsValid)
             {
                 db.Appointments.Add(appointment);
@@ -96,7 +100,7 @@ namespace HospitalSystem.Controllers
 
         // GET: Appointments/Edit/5
         public ActionResult Edit(int? id)
-        {
+        {//role kontrol, hasta ve doktor(sadece tarih değiştirebilir)
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -108,7 +112,8 @@ namespace HospitalSystem.Controllers
             }
 
             List<object> newList = new List<object>();
-            foreach (var doctor in db.Doctors)
+            var doctors = db.Doctors.ToList();
+            foreach (var doctor in doctors)
                 newList.Add(new
                 {
                     ID = doctor.ID,
@@ -119,7 +124,12 @@ namespace HospitalSystem.Controllers
 
             ViewBag.Doctor_ID = new SelectList(newList, "ID", "Name", appointment.Doctor_ID);
             ViewBag.Patient_ID = new SelectList(db.Patients, "Id", "Name", appointment.Patient_ID);
+
+            Patient p = db.Patients.ToList().FirstOrDefault(x => appointment.Patient_ID == x.Id);
+            ViewBag.Patient_Name = p.Name+" "+p.Surname;
+
             return View(appointment);
+
         }
 
         // POST: Appointments/Edit/5
