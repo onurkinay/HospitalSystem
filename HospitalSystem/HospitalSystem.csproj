@@ -173,9 +173,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312181841122_azure2.cs" />
-    <Compile Include="Migrations\202312181841122_azure2.designer.cs">
-      <DependentUpon>202312181841122_azure2.cs</DependentUpon>
+    <Compile Include="Migrations\202312231145339_userroles.cs" />
+    <Compile Include="Migrations\202312231145339_userroles.designer.cs">
+      <DependentUpon>202312231145339_userroles.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -186,6 +186,7 @@
     <Compile Include="Models\Doctor.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MyConstants.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\Prescription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -319,8 +320,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202312181841122_azure2.resx">
-      <DependentUpon>202312181841122_azure2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202312231145339_userroles.resx">
+      <DependentUpon>202312231145339_userroles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
