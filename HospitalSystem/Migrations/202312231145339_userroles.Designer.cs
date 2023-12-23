@@ -7,13 +7,13 @@ namespace HospitalSystem.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class azure2 : IMigrationMetadata
+    public sealed partial class userroles : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(azure2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(userroles));
         
         string IMigrationMetadata.Id
         {
-            get { return "202312181841122_azure2"; }
+            get { return "202312231145339_userroles"; }
         }
         
         string IMigrationMetadata.Source
