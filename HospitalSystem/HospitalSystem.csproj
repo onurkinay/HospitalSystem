@@ -177,6 +177,10 @@
     <Compile Include="Migrations\202312231145339_userroles.designer.cs">
       <DependentUpon>202312231145339_userroles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312231209416_userid.cs" />
+    <Compile Include="Migrations\202312231209416_userid.designer.cs">
+      <DependentUpon>202312231209416_userid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -322,6 +326,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202312231145339_userroles.resx">
       <DependentUpon>202312231145339_userroles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312231209416_userid.resx">
+      <DependentUpon>202312231209416_userid.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

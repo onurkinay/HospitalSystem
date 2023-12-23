@@ -12,7 +12,7 @@ namespace HospitalSystem.Models
         // patient may be stay in any room
         [Key]
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime DOB { get; set; }

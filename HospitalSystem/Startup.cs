@@ -56,7 +56,7 @@ namespace HospitalSystem
                     Email = "appAdmin@test.com",
                     UserName = "appAdmin"
                 };
-
+             
                 userManager.Create(newUser, "applicationadmin");
                 userManager.AddToRole(newUser.Id, MyConstants.RoleAdmin);
 
