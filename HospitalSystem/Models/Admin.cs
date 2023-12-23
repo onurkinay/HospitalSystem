@@ -10,7 +10,7 @@ namespace HospitalSystem.Models
         // admin doesn't have any relationship
 
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }

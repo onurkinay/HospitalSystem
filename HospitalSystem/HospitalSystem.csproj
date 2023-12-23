@@ -279,6 +279,7 @@
     <Content Include="Views\Prescriptions\Create.cshtml" />
     <Content Include="Views\Prescriptions\Edit.cshtml" />
     <Content Include="Views\Prescriptions\Index.cshtml" />
+    <Content Include="Views\Management\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -22,24 +22,24 @@ namespace HospitalSystem
 
             if (!db.Roles.Any(x => x.Name == MyConstants.RoleAdmin))
             {
-                db.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = MyConstants.RoleAdmin });
+                db.Roles.Add(new IdentityRole() { Name = MyConstants.RoleAdmin });
                 db.SaveChanges();
             }
 
             if (!db.Roles.Any(x => x.Name == MyConstants.RolePatient))
             {
-                db.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = MyConstants.RolePatient });
+                db.Roles.Add(new IdentityRole() { Name = MyConstants.RolePatient });
                 db.SaveChanges();
             }
             if (!db.Roles.Any(x => x.Name == MyConstants.RoleDoctor))
             {
-                db.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = MyConstants.RoleDoctor });
+                db.Roles.Add(new IdentityRole() { Name = MyConstants.RoleDoctor });
                 db.SaveChanges();
             }
 
             if (!db.Roles.Any(x => x.Name == MyConstants.RoleAccountant))
             {
-                db.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole() { Name = MyConstants.RoleAccountant });
+                db.Roles.Add(new IdentityRole() { Name = MyConstants.RoleAccountant });
                 db.SaveChanges();
             }
 
