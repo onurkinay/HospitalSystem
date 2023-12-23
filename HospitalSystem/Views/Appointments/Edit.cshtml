@@ -5,22 +5,10 @@
 }
 
 <!-- rollere göre değişmeli -->
-<header>
-    <h1>Hasta Portalı</h1>
-    <nav>
-        <a href="#ozel-sayfa">Özel Sayfa</a>
-        <a href="#randevu-al">Randevu Al</a>
-        <a href="#randevular">Randevular</a>
-        <a href="#recete-goruntule">Reçete Görüntüle</a>
-        <a href="#odeme">Ödeme</a>
-        <a href="#iade">İade</a>
-        <a href="#odeme-gecmisi">Ödeme Geçmişi</a>
-        <a href="#sifre-yonetimi">Şifre Yönetimi</a>
-    </nav>
-</header>
+@Html.Partial("~/Views/Patients/Header.cshtml");
 
 <section id="randevu-al-container">
-    <h2 class="container-header">Randevu Al</h2>
+    <h2 class="container-header">Edit Appointment</h2>
     <div class="randevu-al">
         @using (Html.BeginForm())
         {
@@ -28,11 +16,21 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
 
-            <div class="form-group">
+            <div class="form-group"><!--HASTANIN GÖRECEĞİ KISIM-->
                 <label for="doktor-id">Doktor Adı</label>
-                @Html.DropDownList("Doctor_ID")
+                @Html.DropDownList("Doctor_ID", null, new
+           {
+               @class = "form-control"
+           })
                 @Html.ValidationMessageFor(model => model.Doctor_ID, "", new { @class = "text-danger" })
             </div>
+
+            <div class="form-group"><!--DOKTORUN GÖRECEĞİ KISIM-->
+                <label for="doktor-id">Patient:</label>
+                @Html.Label((string)ViewBag.Patient_Name)
+                @Html.ValidationMessageFor(model => model.Patient_ID, "", new { @class = "text-danger" })
+            </div>
+
             <div class="form-group">
                 <label for="randevu-tarihi">Randevu Tarihi</label>
                 @Html.TextBoxFor(model => model.AppointmentDate, "{0:yyyy-MM-ddTHH:mm:ss}", new

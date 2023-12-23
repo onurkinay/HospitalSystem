@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
+using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
 {
@@ -125,6 +126,20 @@ namespace HospitalSystem.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public string getDeptName(int? id)
+        {
+            if (id == null)
+            {
+                return "403";
+            }
+            Department department = db.Departments.Find(id);
+            if (department == null)
+            {
+                return "404";
+            }
+            return department.Name;
         }
     }
 }
