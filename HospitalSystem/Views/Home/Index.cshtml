@@ -7,9 +7,18 @@
     <h1 id="head">Hastane Yönetim Sistemi</h1>
     <nav class="ana-menu">
 
-
         <a href="#">Ana Sayfa</a>
-        @Html.ActionLink("Log In", "Index", "Management");
+        @if (ViewBag.UserLogged)
+        {
+            @Html.ActionLink("Go to Management", "Index", "Management")
+            @Html.ActionLink("Log off", "LogOff", "Account")
+        }
+        else
+        {
+            @Html.ActionLink("Log In", "Index", "Management")
+            @Html.ActionLink("Register", "Register", "Management")
+
+        }
         <!-- zaten giriş yaptıysa Log In yerine Go to Management yazmalı-->
 
     </nav>

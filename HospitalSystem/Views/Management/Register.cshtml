@@ -1,0 +1,84 @@
+﻿@model HospitalSystem.Models.Patient
+
+@{
+    ViewBag.Title = "Register";
+}
+<header id="header">
+    <img id="logo-header" src="~/favicon.ico" alt="Hastane Logosu">
+    <h1 id="head">Hastane Yönetim Sistemi</h1>
+    <nav class="ana-menu">
+
+
+        <a href="#">Ana Sayfa</a>
+        @Html.ActionLink("Log In", "Login", "Account")
+        @Html.ActionLink("Register", "Register", "Management")
+
+    </nav>
+</header>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<section id="ozel-sayfa">
+    <h2 style="margin-left: 13%;">Hasta Özel Sayfası</h2>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="container">
+    <div class="kisisel-bilgiler">
+        <h3>Kişisel Bilgiler</h3>
+        <ul>
+            <li>
+                <span>Adı:</span>    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </li>
+            <li>
+                <span>Surname:</span>  @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+            </li>
+            <li>
+                <span>Doğum Tarihi:</span>     @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+            </li>
+            <li>
+                <span>Telefon Numarası:</span>     @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+            </li>
+            <li>
+                <span>E-posta Adresi:</span>   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </li>
+            <li>
+                <span>City:</span>   @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+            </li>
+            <li> <button>Gönder</button></li>
+        </ul>
+    </div>
+    <div class="hesap-bilgileri">
+        <h3>Hesap Bilgileri</h3>
+        <ul> 
+            <li><span>Şifre:</span> <input type="password" name="password" value="" /></li>
+            <li><span>Şifre Tekrar:</span> <input type="password" name="passwordconfirm" value="" /></li>
+            <li>
+                <span>Cinsiyet</span>    @Html.EditorFor(model => model.Gender)
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            </li>
+            <li>
+                <span>Kan grubu: </span>  @Html.EditorFor(model => model.Blood_Group, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Blood_Group, "", new { @class = "text-danger" })
+            </li>
+            <li>
+                <span>Adres:</span>   @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </li>
+
+
+        </ul>
+    </div>
+
+
+</div>
+
+</section>
+}
+

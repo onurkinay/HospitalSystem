@@ -177,9 +177,10 @@
     <Compile Include="Migrations\202312231145339_userroles.designer.cs">
       <DependentUpon>202312231145339_userroles.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312231209416_userid.cs" />
-    <Compile Include="Migrations\202312231209416_userid.designer.cs">
-      <DependentUpon>202312231209416_userid.cs</DependentUpon>
+    <Compile Include="Migrations\202312240948557_remove-age.cs" />
+    <Compile Include="Migrations\202312240948557_remove-age.designer.cs">
+      <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -283,6 +284,7 @@
     <Content Include="Views\Prescriptions\Create.cshtml" />
     <Content Include="Views\Prescriptions\Edit.cshtml" />
     <Content Include="Views\Prescriptions\Index.cshtml" />
+    <Content Include="Views\Management\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -327,8 +329,9 @@
     <EmbeddedResource Include="Migrations\202312231145339_userroles.resx">
       <DependentUpon>202312231145339_userroles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312231209416_userid.resx">
-      <DependentUpon>202312231209416_userid.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202312240948557_remove-age.resx">
+      <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -2,19 +2,8 @@
 @{
     ViewBag.Title = "Patient";
 }
-<header>
-    <h1>Hasta Portalı</h1>
-    <nav>
-        <a href="#ozel-sayfa">Özel Sayfa</a>
-        <a href="#randevu-al">Randevu Al</a>
-        @Html.ActionLink("Randevular","Index","Appointments")
-        <a href="#recete-goruntule">Reçete Görüntüle</a>
-        <a href="#odeme">Ödeme</a>
-        <a href="#iade">İade</a>
-        <a href="#odeme-gecmisi">Ödeme Geçmişi</a>
-        <a href="#sifre-yonetimi">Şifre Yönetimi</a>
-    </nav>
-</header>
+
+@Html.Partial("~/Views/Patients/Header.cshtml");
 
 <section id="ozel-sayfa">
     <h2 style="margin-left: 13%;">Hasta Özel Sayfası</h2>

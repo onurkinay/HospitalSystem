@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
@@ -55,10 +57,34 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,Surname,Age,DOB,Gender,Salary,Specializations,Experience,Languages,Phone,Email,CurDeptartmentID")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "ID,Name,Surname,DOB,Gender,Salary,Specializations,Experience,Languages,Phone,Email,CurDeptartmentID")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
+
+                /* Doktor user ekleme */
+
+                ApplicationDbContext userdb = new ApplicationDbContext();
+
+                var userStore = new UserStore<ApplicationUser>(userdb);
+                var userManager = new ApplicationUserManager(userStore);
+
+                var roleStore = new RoleStore<IdentityRole>(userdb);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var newUser = new ApplicationUser
+                {
+                    Email = doctor.Email,
+                    UserName = doctor.Email
+                };
+                doctor.UserId = newUser.Id;
+                userManager.Create(newUser, Request["password"].ToString());
+                userManager.AddToRole(newUser.Id, MyConstants.RoleDoctor);
+
+                userdb.SaveChanges();
+
+                //doktor user ekleme 
+
                 db.Doctors.Add(doctor);
                 db.SaveChanges();
                 return RedirectToAction("Index");
