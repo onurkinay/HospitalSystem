@@ -177,6 +177,10 @@
     <Compile Include="Migrations\202312231145339_userroles.designer.cs">
       <DependentUpon>202312231145339_userroles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312240948557_remove-age.cs" />
+    <Compile Include="Migrations\202312240948557_remove-age.designer.cs">
+      <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -323,6 +327,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202312231145339_userroles.resx">
       <DependentUpon>202312231145339_userroles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312240948557_remove-age.resx">
+      <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
