@@ -28,13 +28,6 @@ namespace HospitalSystem.Controllers
             else return RedirectToAction("Login", "Account");
         }
 
-        [HttpPost]
-        public ActionResult Index(string username)
-        {//login yonlendirme
-         //    return RedirectToAction("Index",username);
-            return null;
-        }
-
         public ActionResult Register()
         {
             return View();

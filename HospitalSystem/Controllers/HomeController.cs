@@ -11,6 +11,7 @@ namespace HospitalSystem.Controllers
         //ANA SAYFA
         public ActionResult Index()
         {
+            ViewBag.UserLogged = User.Identity.IsAuthenticated;
             return View();
         }
 
