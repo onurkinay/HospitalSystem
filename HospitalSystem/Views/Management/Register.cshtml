@@ -10,9 +10,8 @@
 
 
         <a href="#">Ana Sayfa</a>
-        @Html.ActionLink("Log In", "Index", "Management")
+        @Html.ActionLink("Log In", "Login", "Account")
         @Html.ActionLink("Register", "Register", "Management")
-        <!-- zaten giriş yaptıysa Log In yerine Go to Management yazmalı-->
 
     </nav>
 </header>
@@ -57,8 +56,7 @@
     </div>
     <div class="hesap-bilgileri">
         <h3>Hesap Bilgileri</h3>
-        <ul>
-            <li><span>Kullanıcı Adı:</span>  <input type="text" name="username" value="" /> </li>
+        <ul> 
             <li><span>Şifre:</span> <input type="password" name="password" value="" /></li>
             <li><span>Şifre Tekrar:</span> <input type="password" name="passwordconfirm" value="" /></li>
             <li>
