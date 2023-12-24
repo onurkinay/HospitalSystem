@@ -7,9 +7,9 @@ namespace HospitalSystem.Models
 {
     public static class MyConstants
     {
-        public static string RoleAdmin = "Admin";
-        public static string RolePatient = "Patient";
-        public static string RoleDoctor = "Doctor";
-        public static string RoleAccountant = "Accountant";
+        public const string RoleAdmin = "Admin";
+        public const string RolePatient = "Patient";
+        public const string RoleDoctor = "Doctor";
+        public const string RoleAccountant = "Accountant";
     }
 }

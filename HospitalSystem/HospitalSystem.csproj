@@ -180,6 +180,7 @@
     <Compile Include="Migrations\202312240948557_remove-age.cs" />
     <Compile Include="Migrations\202312240948557_remove-age.designer.cs">
       <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -330,6 +331,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312240948557_remove-age.resx">
       <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
