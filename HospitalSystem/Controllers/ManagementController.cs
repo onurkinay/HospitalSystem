@@ -30,6 +30,10 @@ namespace HospitalSystem.Controllers
 
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Management");
+            }
             return View();
         }
 
