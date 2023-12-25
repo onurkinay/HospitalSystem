@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
-using HospitalSystem.Models; 
+using HospitalSystem.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
@@ -15,52 +18,77 @@ namespace HospitalSystem.Controllers
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Appointments
+        [Authorize(Roles = MyConstants.RolePatient + "," + MyConstants.RoleDoctor)]
         public ActionResult Index()
-        {
-            //sistemde muhasebe giriş varsa yetkisiz rol hatası versin
-
+        {  
             var appointments = db.Appointments.Include(a => a.Doctor).Include(a => a.Patient);
 
-            int patientID = 1;
-            int doctorID = 1;
 
-            if(patientID != null)
+            if (User.IsInRole(MyConstants.RolePatient))
             {
+                string patientGuid = User.Identity.GetUserId();
+                int patientId = db.Patients.FirstOrDefault(y => y.UserId == patientGuid).Id;
                 appointments = db.Appointments
-                    .Where(x=> x.Patient_ID==patientID)
+                    .Where(x => x.Patient_ID == patientId)
                     .Include(a => a.Doctor)
                     .Include(a => a.Patient);//hastanın girişi olduğunda hastanın randevuları göster
-                 
-            }else if(doctorID != null)
+
+            }
+            else if (User.IsInRole(MyConstants.RoleDoctor))
             {
+                string doctorGuid = User.Identity.GetUserId();
+                int doctorId = db.Doctors.FirstOrDefault(y => y.UserId == doctorGuid).ID;
                 appointments = db.Appointments
-                   .Where(x => x.Doctor_ID == doctorID)
+                  .Where(x => x.Doctor_ID == doctorId)
                    .Include(a => a.Doctor)
                    .Include(a => a.Patient);//doktor girişi olduğunda doktorun randevuları göster
             }
-          
+
             return View(appointments.ToList());
         }
 
+        [Authorize(Roles = MyConstants.RolePatient + "," + MyConstants.RoleDoctor)]
         // GET: Appointments/Details/5
         public string Details(int? id) // RANDEVU DETAYLARI JSON İLE FETCH GET OLARAK GÖSTERİLECEK
         {
+            string patientGuid = User.Identity.GetUserId();
+
             if (id == null)
             {
                 return "403";
             }
             Appointment appointment = db.Appointments.Find(id);
+
             if (appointment == null)
             {
                 return "404";
             }
+            if (User.IsInRole(MyConstants.RolePatient))
+            {
+                int patientId = db.Patients.FirstOrDefault(y => y.UserId == patientGuid).Id;
+                if (patientId != appointment.Patient_ID)
+                {
+                    return "Forbidden Access";
+                }
+            }
+            else if (User.IsInRole(MyConstants.RoleDoctor))
+            {
+                int doctorId = db.Doctors.FirstOrDefault(y => y.UserId == patientGuid).ID;
+                if (doctorId != appointment.Doctor_ID)
+                {
+                    return "Forbidden Access";
+                }
+            }
+            appointment.Patient = null;
+            appointment.Doctor = null;
             return JsonConvert.SerializeObject(appointment, new JsonSerializerSettings() { DateFormatString = "yyyy-MM-ddThh:mm:ssZ" });
         }
 
         // GET: Appointments/Create
+        [Authorize(Roles = MyConstants.RolePatient)]
         public ActionResult Create()
-        {//role based kontrol, sadece hasta
-             
+        { 
+           
             List<object> newList = new List<object>();
             var doctors = db.Doctors.ToList();
             foreach (var doctor in doctors)
@@ -83,7 +111,9 @@ namespace HospitalSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Description,Consultant_Fee,AppointmentDate,Doctor_ID,Patient_ID")] Appointment appointment)
         {
-            appointment.Patient_ID = 1;//giriş yapmış olan hastanın ID'sı gelecek
+            string patientGuid = User.Identity.GetUserId(); 
+            appointment.Patient_ID = db.Patients.FirstOrDefault(y => y.UserId == patientGuid).Id;
+
             appointment.Consultant_Fee = 0;//ücret hesaplaması
 
             if (ModelState.IsValid)
@@ -98,9 +128,20 @@ namespace HospitalSystem.Controllers
             return View(appointment);
         }
 
+        [Authorize(Roles = MyConstants.RolePatient + "," + MyConstants.RoleDoctor)]
         // GET: Appointments/Edit/5
         public ActionResult Edit(int? id)
-        {//role kontrol, hasta ve doktor(sadece tarih değiştirebilir)
+        {
+            
+            string userGuid = User.Identity.GetUserId();
+            int userId = 0;
+            if (User.IsInRole(MyConstants.RolePatient))
+                userId = db.Patients.FirstOrDefault(y => y.UserId == userGuid).Id; 
+            else if (User.IsInRole(MyConstants.RoleDoctor))
+                userId = db.Doctors.FirstOrDefault(y => y.UserId == userGuid).ID;
+                
+          
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -110,6 +151,13 @@ namespace HospitalSystem.Controllers
             {
                 return HttpNotFound();
             }
+             
+
+            if(User.IsInRole(MyConstants.RolePatient) && userId != appointment.Patient_ID) 
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            else if (User.IsInRole(MyConstants.RoleDoctor) && userId != appointment.Doctor_ID)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
 
             List<object> newList = new List<object>();
             var doctors = db.Doctors.ToList();
