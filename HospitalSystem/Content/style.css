@@ -31,7 +31,7 @@ header {
         color: #333;
         margin-left: auto;
         transition: all 0.3s ease-in;
-        padding:20px;
+        padding:20px 10px;
     }
 
         .ana-menu a:hover {
