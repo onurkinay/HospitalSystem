@@ -3,8 +3,15 @@
 @{
     ViewBag.Title = "Edit";
 }
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
+{
 
-@Html.Partial("~/Views/Patients/Header.cshtml");
+    @Html.Partial("~/Views/Patients/Header.cshtml");
+}
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+{
+    @Html.Partial("~/Views/Admins/Header.cshtml");
+}
 <h2>Edit</h2>
 
 

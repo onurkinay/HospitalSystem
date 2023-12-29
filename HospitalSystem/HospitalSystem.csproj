@@ -276,7 +276,6 @@
     <Content Include="Views\Appointments\Create.cshtml" />
     <Content Include="Views\Appointments\Edit.cshtml" />
     <Content Include="Views\Appointments\Index.cshtml" />
-    <Content Include="Views\Bills\Create.cshtml" />
     <Content Include="Views\Bills\Edit.cshtml" />
     <Content Include="Views\Bills\Index.cshtml" />
     <Content Include="Views\Patients\Create.cshtml" />
