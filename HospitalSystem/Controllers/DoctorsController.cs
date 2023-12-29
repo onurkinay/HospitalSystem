@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using System.Web.Security;
 
 namespace HospitalSystem.Controllers
 {
@@ -23,6 +20,7 @@ namespace HospitalSystem.Controllers
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Doctors
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Index()
         {
             var doctors = db.Doctors.Include(d => d.CurDepartment);
@@ -45,7 +43,8 @@ namespace HospitalSystem.Controllers
 
         }
 
-        // GET: Doctors/Create
+        // GET: Doctors/Create 
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Create()
         {
             ViewBag.CurDeptartmentID = new SelectList(db.Departments, "ID", "Name");
@@ -56,12 +55,12 @@ namespace HospitalSystem.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] 
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Create([Bind(Include = "ID,Name,Surname,DOB,Gender,Salary,Specializations,Experience,Languages,Phone,Email,CurDeptartmentID")] Doctor doctor)
         {
             if (ModelState.IsValid)
-            {
-
+            { 
                 /* Doktor user ekleme */
 
                 ApplicationDbContext userdb = new ApplicationDbContext();
@@ -94,20 +93,32 @@ namespace HospitalSystem.Controllers
             return View(doctor);
         }
 
-        // GET: Doctors/Edit/5
+        // GET: Doctors/Edit/5 
+        [Authorize(Roles = MyConstants.RoleAdmin+"," +MyConstants.RoleDoctor)]
+        //ADMİN HER DOKTORU ERİŞEBİLİR AMA HER DOKTOR SADECE KENDİ KAYDINA MÜDAHALE EDEBİLİR
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            Doctor doctor = null;
+            if (User.IsInRole(MyConstants.RoleDoctor))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if(id!=null) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                string doctorGuid = User.Identity.GetUserId();
+                id = db.Doctors.FirstOrDefault(y => y.UserId == doctorGuid).ID;
+                
+                doctor = db.Doctors.Find(id);  
+
             }
-            Doctor doctor = db.Doctors.Find(id);
+            else if(User.IsInRole(MyConstants.RoleAdmin)) 
+                doctor = db.Doctors.Find(id);
+            else return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
             if (doctor == null)
             {
                 return HttpNotFound();
             }
             ViewBag.CurDeptartmentID = new SelectList(db.Departments, "ID", "Name", doctor.CurDeptartmentID);
             return View(doctor);
+
         }
 
         // POST: Doctors/Edit/5
@@ -115,6 +126,7 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = MyConstants.RoleAdmin + "," + MyConstants.RoleDoctor)]
         public ActionResult Edit([Bind(Include = "ID,Name,Surname,Age,DOB,Gender,Salary,Specializations,Experience,Languages,Phone,Email,CurDeptartmentID")] Doctor doctor)
         {
             if (ModelState.IsValid)
@@ -128,6 +140,7 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Doctors/Delete/5
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -145,6 +158,7 @@ namespace HospitalSystem.Controllers
         // POST: Doctors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult DeleteConfirmed(int id)
         {
             Doctor doctor = db.Doctors.Find(id);

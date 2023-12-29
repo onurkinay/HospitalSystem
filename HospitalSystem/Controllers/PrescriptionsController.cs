@@ -1,4 +1,6 @@
 ﻿using System.Data.Entity;
+using System.Diagnostics;
+using System.EnterpriseServices.Internal;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -41,10 +43,15 @@ namespace HospitalSystem.Controllers
         
 
         // GET: Prescriptions/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.Appointment_ID = new SelectList(db.Appointments, "Id", "Description");
-            return View();
+            if (id != null)
+            {
+                Debug.WriteLine(id);
+                ViewBag.Appointment_ID = new SelectList(db.Appointments.Where(x => x.Id == id), "Id", "Description");
+                return View();
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
         // POST: Prescriptions/Create

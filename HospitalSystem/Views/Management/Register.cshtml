@@ -4,12 +4,12 @@
     ViewBag.Title = "Register";
 }
 <header id="header">
-    <img id="logo-header" src="~/favicon.ico" alt="Hastane Logosu">
-    <h1 id="head">Hastane Yönetim Sistemi</h1>
+    <img id="logo-header" src="~/Content/Images/apple-touch-icon.png" alt="Hospital Logo">
+    <h1 id="head">The Great Hospital</h1>
     <nav class="ana-menu">
 
 
-        <a href="/Home">Ana Sayfa</a>
+        <a href="/Home">Home Page</a>
         @Html.ActionLink("Log In", "Login", "Account")
         @Html.ActionLink("Register", "Register", "Management")
 
@@ -20,12 +20,12 @@
 {
     @Html.AntiForgeryToken()
 <section id="ozel-sayfa">
-    <h2 style="margin-left: 13%;">Hasta Özel Sayfası</h2>
+    <h2 style="margin-left: 13%;">Patient Register</h2>
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 <div class="container">
     <div class="kisisel-bilgiler">
-        <h3>Kişisel Bilgiler</h3>
+        <h3>Personal Information</h3>
         <ul>
             <li>
                 <span>Adı:</span>    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
@@ -36,39 +36,49 @@
                 @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
             </li>
             <li>
-                <span>Doğum Tarihi:</span>     @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                <span>Date of Birth:</span>     @Html.EditorFor(model => model.DOB, new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control",
+              @type = "date"
+          }
+                })
                 @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
             </li>
             <li>
-                <span>Telefon Numarası:</span>     @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                <span>Mobile Number:</span>     @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
             </li>
             <li>
-                <span>E-posta Adresi:</span>   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                <span>E-mail Address:</span>   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </li>
+            <li>
+                <span>Blood Group: </span>  @Html.EditorFor(model => model.Blood_Group, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Blood_Group, "", new { @class = "text-danger" })
+            </li>
+            <li> <button>Send</button></li>
+        </ul>
+    </div>
+    <div class="hesap-bilgileri">
+        <h3>Account Info</h3>
+        <ul>
+            <li><span>Password:</span> <input type="password" name="password" value="" /></li>
+            <li><span>Password Confirm:</span> <input type="password" name="passwordconfirm" value="" /></li>
+            <li>
+                <span>Gender</span><br /><br />
+                @Html.RadioButtonFor(model => model.Gender, true, new { @style = "width:initial;" })  Male
+                <br />  @Html.RadioButtonFor(model => model.Gender, false, new { @style = "width:initial;" }) Female
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            </li>
+          
             <li>
                 <span>City:</span>   @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
             </li>
-            <li> <button>Gönder</button></li>
-        </ul>
-    </div>
-    <div class="hesap-bilgileri">
-        <h3>Hesap Bilgileri</h3>
-        <ul> 
-            <li><span>Şifre:</span> <input type="password" name="password" value="" /></li>
-            <li><span>Şifre Tekrar:</span> <input type="password" name="passwordconfirm" value="" /></li>
             <li>
-                <span>Cinsiyet</span>    @Html.EditorFor(model => model.Gender)
-                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-            </li>
-            <li>
-                <span>Kan grubu: </span>  @Html.EditorFor(model => model.Blood_Group, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Blood_Group, "", new { @class = "text-danger" })
-            </li>
-            <li>
-                <span>Adres:</span>   @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                <span>Address:</span>   @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @style = "width: 329px; height: 235px;" })
                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
             </li>
 

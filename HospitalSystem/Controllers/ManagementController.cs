@@ -39,7 +39,7 @@ namespace HospitalSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken] 
-        public string Register([Bind(Include = "Id,Name,Surname,DOB,Gender,Blood_Group,Email,Address,City,Phone")] Patient patient)
+        public ActionResult Register([Bind(Include = "Id,Name,Surname,DOB,Gender,Blood_Group,Email,Address,City,Phone")] Patient patient)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace HospitalSystem.Controllers
                 db.SaveChanges();
 
             }
-            return "";
+            return RedirectToAction("Login", "Account");
         }
 
 

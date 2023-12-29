@@ -109,17 +109,24 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Description,Consultant_Fee,AppointmentDate,Doctor_ID,Patient_ID")] Appointment appointment)
+        public ActionResult Create([Bind(Include = "Id,Description,AppointmentDate,Doctor_ID,Patient_ID")] Appointment appointment)
         {
             string patientGuid = User.Identity.GetUserId(); 
             appointment.Patient_ID = db.Patients.FirstOrDefault(y => y.UserId == patientGuid).Id;
-
-            appointment.Consultant_Fee = 0;//ücret hesaplaması
+             
 
             if (ModelState.IsValid)
             {
+
                 db.Appointments.Add(appointment);
                 db.SaveChanges();
+
+
+                Bill bill = new Bill() { Appointment_ID = appointment.Id, IsPaid = false, Amount = 100, Issued_Date = DateTime.Now };
+                db.Bills.Add(bill);
+
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 

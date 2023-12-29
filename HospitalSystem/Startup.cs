@@ -43,7 +43,7 @@ namespace HospitalSystem
                 db.SaveChanges();
             }
 
-            if(!db.Users.Any( x=> x.UserName == "appAdmin"))
+            if(!db.Users.Any( x=> x.UserName == "admin@hospital.com"))
             {
                 var userStore = new UserStore<ApplicationUser>(db);
                 var userManager = new ApplicationUserManager(userStore);
@@ -53,11 +53,11 @@ namespace HospitalSystem
 
                 var newUser = new ApplicationUser
                 {
-                    Email = "appAdmin@test.com",
-                    UserName = "appAdmin"
+                    Email = "admin@hospital.com",
+                    UserName = "admin@hospital.com"
                 };
              
-                userManager.Create(newUser, "applicationadmin");
+                userManager.Create(newUser, "hospital");
                 userManager.AddToRole(newUser.Id, MyConstants.RoleAdmin);
 
 
