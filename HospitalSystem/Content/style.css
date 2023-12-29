@@ -6,6 +6,7 @@ header {
     background: linear-gradient(-45deg, #219cd9, #FFF);
     align-items: center;
     font-family: Arial, sans-serif;
+    padding: 10px;
 }
 
 #logo-header {

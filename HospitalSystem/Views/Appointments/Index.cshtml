@@ -1,39 +1,71 @@
 ﻿@model IEnumerable<HospitalSystem.Models.Appointment>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Appointments";
 }
 <!-- rollere göre header değişmeli, html.actionlink -->
 
-@Html.Partial("~/Views/Patients/Header.cshtml");
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor))
+{
+    @Html.Partial("~/Views/Doctors/Header.cshtml");
+}
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
+{
+    @Html.Partial("~/Views/Patients/Header.cshtml");
 
-<!--
-    randevunun detayı görüntülenmek istendiğinde bir tane popup kutusu açılsın ve detayları oradan göstersin(fetch)
-    sile tıklandığında popup açılsın ve onay istesin
+}
 
-    -->
 <section id="randevular">
 
     <div class="container">
         <h2>Randevular</h2>
         <ul class="responsive-table">
-            <li class="table-header">
-                <div class="col col-1">Tarih/Saat</div>
-                <div class="col col-3">Doktor Adı</div>
-                <div class="col col-6">Eylemler</div>
-            </li>
+
+
+            @if (Model.Count() == 0)
+            { 
+                <p> No record</p>
+            }
+            else
+            {
+                <li class="table-header">
+                    <div class="col col-1">Date/Time</div>
+                    @if (User.IsInRole("Patient"))
+                    {
+                        <div class="col col-3">Doctor Name</div>
+                    }
+                    else
+                    {
+                        <div class="col col-3">Patient Name</div>
+                    }
+                    <div class="col col-6">Actions</div>
+                </li>
+            }
             @foreach (var item in Model)
             {
                 <li class="table-row">
                     <div class="col col-1" data-label="Date">
                         @Html.DisplayFor(modelItem => item.AppointmentDate)
                     </div>
-                    <div class="col col-3" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.Doctor.Name)</div>
-                    <div class="col col-6" data-label="Change Appointment Operation">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new {@class="getDetails"})|
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteApp" })
-                    </div>
+
+
+                    @if (User.IsInRole("Patient"))
+                    {<div class="col col-3" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.Doctor.Name)</div>
+                }
+                else
+                { <div class="col col-3" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.Patient.Name)</div>
+            }
+
+
+                <div class="col col-6" data-label="Change Appointment Operation">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" })|
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteApp" })
+                    @if (User.IsInRole("Doctor"))
+                    { 
+                        @Html.ActionLink("Create Prescription", "Create", "Prescriptions", routeValues: new { id = item.Id },htmlAttributes:null)
+                    }
+                </div>
                 </li>
             }
         </ul>
@@ -45,33 +77,37 @@
     <section id="ozel-sayfa" style="padding:0">
         <div class="container" style="max-width:initial">
             <div class="hesap-bilgileri">
-                <h3>Randevu Detay</h3>
+                <h3>Appointments</h3>
                 <ul>
                     <li class="dateApp"> </li>
                     <li class="descApp"></li>
                 </ul>
             </div>
             <!-- role based olarak değişmeli-->
-            <div class="kisisel-bilgiler">
-                <h3>Doctor</h3>
-                <ul>
-                    <li class="doctorNameSurname"></li>
-                    <li class="doctorDept"></li>
-                </ul>
-            </div>
-
-            <div class="kisisel-bilgiler">
-                <h3>Patient</h3>
-                <ul>
-                    <li class="patientNameSurname"></li>
-                    <li class="patientBlood"><span></li>
-                </ul>
-            </div>
-
+            @if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
+            {
+                <div class="kisisel-bilgiler">
+                    <h3>Doctor</h3>
+                    <ul>
+                        <li class="doctorNameSurname"></li>
+                        <li class="doctorDept"></li>
+                    </ul>
+                </div>
+            }
+            @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor))
+            {
+                <div class="kisisel-bilgiler">
+                    <h3>Patient</h3>
+                    <ul>
+                        <li class="patientNameSurname"></li>
+                        <li class="patientBlood"><span></li>
+                    </ul>
+                </div>
+            }
 
         </div>
-    </section> 
-</div> 
+    </section>
+</div>
 <script>
      function gettoken() {
         var token = '@Html.AntiForgeryToken()';
@@ -96,45 +132,54 @@
         }
 
     });
-    //hasta tarafı
-    $('.getDetails').click(function (event) {//linke click eventi kazandırma
-        event.preventDefault();
-        this.blur();
-        $.get(this.href, function (html) {
-            const appointment = JSON.parse(html)//json bilgisi gelir
-            $('li.dateApp').html('<span>Date:</span> ' + (new Date(appointment.AppointmentDate)).toLocaleString())
-            $('li.descApp').html('<span>Description:</span> ' + appointment.Description)
-            $.get("/Doctors/Details/" + appointment.Doctor_ID, function (doctorJson) {
-                const doctor = JSON.parse(doctorJson)
-                $('li.doctorNameSurname').html('<span>Name Surname:</span> ' + doctor.Name + " " + doctor.Surname)
-                $.get("/Departments/getDeptName/" + doctor.CurDeptartmentID, function (department) {
-
-                    $('li.doctorDept').html('<span>Department:</span> ' + department)
-                    $('#ex1').modal();
-                });
-            });
-
-
-        });
-    });
-    //hasta tarafı
-
-    $('.getDetails').click(function (event) {//linke click eventi kazandırma
-        event.preventDefault();
-        this.blur();
-        $.get(this.href, function (html) {
-            const appointment = JSON.parse(html)//json bilgisi gelir
-            $('li.dateApp').html('<span>Date:</span> ' + (new Date(appointment.AppointmentDate)).toLocaleString())
-            $('li.descApp').html('<span>Description:</span> ' + appointment.Description)
-            $.get("/Patients/Details/" + appointment.Patient_ID, function (patientJson) {
-                const patient = JSON.parse(patientJson)
-                $('li.patientNameSurname').html('<span>Name Surname:</span> ' + patient.Name + " " + patient.Surname)
-                $('li.patientBlood').html('<span>Name Surname:</span> ' + patient.Blood_Group)
-               // $('#ex1').modal();
-            });
-
-
-        });
-    });
-
 </script>
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
+{
+    <script>
+        //hasta tarafı
+        $('.getDetails').click(function (event) {//linke click eventi kazandırma
+            event.preventDefault();
+            this.blur();
+            $.get(this.href, function (html) {
+                const appointment = JSON.parse(html)//json bilgisi gelir
+                $('li.dateApp').html('<span>Date:</span> ' + (new Date(appointment.AppointmentDate)).toLocaleString())
+                $('li.descApp').html('<span>Description:</span> ' + appointment.Description)
+                $.get("/Doctors/Details/" + appointment.Doctor_ID, function (doctorJson) {
+                    const doctor = JSON.parse(doctorJson)
+                    $('li.doctorNameSurname').html('<span>Name Surname:</span> ' + doctor.Name + " " + doctor.Surname)
+                    $.get("/Departments/getDeptName/" + doctor.CurDeptartmentID, function (department) {
+
+                        $('li.doctorDept').html('<span>Department:</span> ' + department)
+                        $('#ex1').modal();
+                    });
+                });
+
+
+            });
+        });
+        //hasta tarafı
+    </script>
+}
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor))
+{
+    <script>
+        $('.getDetails').click(function (event) {//linke click eventi kazandırma
+            event.preventDefault();
+            this.blur();
+            $.get(this.href, function (html) {
+                const appointment = JSON.parse(html)//json bilgisi gelir
+                $('li.dateApp').html('<span>Date:</span> ' + (new Date(appointment.AppointmentDate)).toLocaleString())
+                $('li.descApp').html('<span>Description:</span> ' + appointment.Description)
+                $.get("/Patients/Details/" + appointment.Patient_ID, function (patientJson) {
+                    const patient = JSON.parse(patientJson)
+                    $('li.patientNameSurname').html('<span>Name Surname:</span> ' + patient.Name + " " + patient.Surname)
+                    $('li.patientBlood').html('<span>Blood Group:</span> ' + patient.Blood_Group)
+                     $('#ex1').modal();
+                });
+
+
+            });
+        });
+
+    </script>
+}

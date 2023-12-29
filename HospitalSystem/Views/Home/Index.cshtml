@@ -3,11 +3,11 @@
     ViewBag.isHome = true;
 }
 <header id="header">
-    <img id="logo-header" src="~/favicon.ico" alt="Hastane Logosu">
-    <h1 id="head">Hastane Yönetim Sistemi</h1>
+    <img id="logo-header" src="~/Content/Images/apple-touch-icon.png" alt="Hospital Logo">
+    <h1 id="head">The Great Hospital</h1>
     <nav class="ana-menu">
 
-        <a href="#">Ana Sayfa</a>
+        <a href="/Home">Ana Sayfa</a>
         @if (ViewBag.UserLogged)
         {
             @Html.ActionLink("Go to Management", "Index", "Management")
@@ -19,14 +19,13 @@
             @Html.ActionLink("Register", "Register", "Management")
 
         }
-        <!-- zaten giriş yaptıysa Log In yerine Go to Management yazmalı-->
 
     </nav>
 </header>
 
 
 <div class="slider">
-    <img class="slider-img-top" src="~/Content/Images/images1.jpeg" alt="">
+    <img class="slider-img-top" src="~/Content/Images/images.jpeg" alt="">
 </div>
 
 <h1 id="about-head">Hastane Hakkında</h1>

@@ -180,7 +180,10 @@
     <Compile Include="Migrations\202312240948557_remove-age.cs" />
     <Compile Include="Migrations\202312240948557_remove-age.designer.cs">
       <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
-
+    </Compile>
+    <Compile Include="Migrations\202312291822054_remove-cons-fee.cs" />
+    <Compile Include="Migrations\202312291822054_remove-cons-fee.designer.cs">
+      <DependentUpon>202312291822054_remove-cons-fee.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -292,7 +295,6 @@
     <Content Include="Views\Management\Patient.cshtml" />
     <Content Include="Views\Management\Admin.cshtml" />
     <Content Include="Views\Management\Accountant.cshtml" />
-    <Content Include="Views\Management\Login.cshtml" />
     <Content Include="Views\Doctors\Header.cshtml" />
     <Content Include="Views\Patients\Header.cshtml" />
     <Content Include="Views\Admins\Header.cshtml" />
@@ -331,7 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312240948557_remove-age.resx">
       <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
-
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312291822054_remove-cons-fee.resx">
+      <DependentUpon>202312291822054_remove-cons-fee.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
