@@ -40,7 +40,7 @@ namespace HospitalSystem.Controllers
             }
             return JsonConvert.SerializeObject(prescription, new JsonSerializerSettings() { DateFormatString = "yyyy-MM-ddThh:mm:ssZ" });
         }
-        
+
 
         // GET: Prescriptions/Create
         public ActionResult Create(int? id)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
@@ -21,6 +23,7 @@ namespace HospitalSystem.Controllers
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Patients
+        [Authorize(Roles =MyConstants.RoleAdmin)]
         public ActionResult Index()
         {
             return View(db.Patients.ToList());
@@ -42,6 +45,7 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Patients/Create
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Create()
         {
             return View();
@@ -93,13 +97,36 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Surname,DOB,Gender,Blood_Group,Email,Address,City,Phone")] Patient patient)
+        public ActionResult Edit([Bind(Include = "Id,Name,Surname,DOB,Gender,Blood_Group,Email,Address,City,Phone,UserId")] Patient patient)
         {
             if (ModelState.IsValid)
             {
+                if (Request["password"] != "")
+                {
+                    if (Request["password"] != Request["passwordconfirm"])
+                    {
+                        ViewBag.PassMess = "Passwrod are different";
+                        return View(patient);
+                    }
+                    else
+                    {
+                        ApplicationDbContext userdb = new ApplicationDbContext(); 
+                        var userStore = new UserStore<ApplicationUser>(userdb);
+                        var userManager = new ApplicationUserManager(userStore);
+
+                        userManager.RemovePassword(patient.UserId); 
+                        userManager.AddPassword(patient.UserId, Request["password"]);
+
+                        return View(patient);
+                    }
+                } 
+
                 db.Entry(patient).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                db.SaveChanges(); 
+            }
+            else
+            {
+                Debug.WriteLine("HATA");
             }
             return View(patient);
         }
