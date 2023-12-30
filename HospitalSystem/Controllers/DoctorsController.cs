@@ -166,7 +166,7 @@ namespace HospitalSystem.Controllers
         // GET: Doctors/Delete/5
         [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Delete(int? id)
-        {
+        {//userdan sil
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

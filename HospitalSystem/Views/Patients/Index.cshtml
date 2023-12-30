@@ -5,7 +5,7 @@
 }
 
 @Html.Partial("~/Views/Admins/Header.cshtml");
- 
+
 
 
 <section id="hasta-yonetimi">
@@ -26,11 +26,85 @@
                     <div class="col col-3" data-label="Department">@Html.DisplayFor(modelItem => item.Email)</div>
                     <div class="col col-4" data-label="Operation">
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id },  new { @class = "delete" })
                     </div>
                 </li>
             }
         </ul>
     </div>
 </section>
+
+ 
+    <div id="ex1" class="modal" style="max-width:initial">
+        <section id="ozel-sayfa" style="padding:0">
+            <div class="container" style="max-width:initial">
+                <div class="kisisel-bilgiler">
+                    <h3>Personal Information</h3>
+                    <ul>
+                        <li class="patNameSurname"><span>Name Surname:</span> </li>
+                        <li class="patDoB"><span>Date of Birth:</span> </li>
+                        <li class="patNumber"><span>Phone Number:</span> </li>
+                        <li class="patEmail"><span>E-Mail Address:</span></li>
+                        <li class="patGender"><span>Gender:</span></li>
+                    </ul>
+                </div>
+                <div class="hesap-bilgileri">
+                    <h3>-</h3>
+                    <ul>
+                        <li class="patBlood"><span>Blood Group:</span></li>
+                        <li class="patAddress"><span>Address:</span> </li>
+                        <li class="patCity"><span>City:</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <script>
+     function gettoken() {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
+    }
+
+
+    $('.delete').click(function (event) {//linke click eventi kazandırma
+        event.preventDefault();
+        if (confirm("Do you sure delete this Patient")) {
+            $.ajax({
+                url: this.href,
+                data: {
+                    __RequestVerificationToken: gettoken()
+                },
+                type: 'POST',
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    });
+       //hasta tarafı
+    $('.getDetails').click(function (event) {//linke click eventi kazandırma
+        event.preventDefault();
+        this.blur();
+        $.get(this.href, function (json) {
+            const patient = JSON.parse(json)
+            $('li.patNameSurname').html('<span>Name Surname:</span> ' + patient.Name + " " + patient.Surname)
+            $('li.patDoB').html('<span>Date of Birth:</span> ' + (new Date(patient.DOB)).toLocaleDateString())
+            $('li.patNumber').html('<span>Phone Number:</span> ' + patient.Phone)
+            $('li.patEmail').html('<span>Email:</span> ' + patient.Email)
+            $('li.patGender').html('<span>Gender:</span> ' + ((patient.Gender) ? "Male" : "Female"))
+            $('li.patBlood').html('<span>Blood Group:</span> ' + patient.Blood_Group)
+            $('li.patAddress').html('<span>Address:</span> ' + patient.Address)
+            $('li.patCity').html('<span>City:</span> ' + patient.City)
+
+            $('#ex1').modal();
+        });
+    });
+
+       //hasta tarafı
+
+    </script>

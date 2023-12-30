@@ -150,7 +150,7 @@ namespace HospitalSystem.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
-        {
+        {//userdan da silsin
             Patient patient = db.Patients.Find(id);
             db.Patients.Remove(patient);
             db.SaveChanges();
