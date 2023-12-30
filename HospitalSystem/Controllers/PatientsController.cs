@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
@@ -66,11 +67,20 @@ namespace HospitalSystem.Controllers
         // GET: Patients/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            Patient patient = null;
+            if (User.IsInRole(MyConstants.RolePatient))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id != null) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                string patientGuid = User.Identity.GetUserId();
+                id = db.Patients.FirstOrDefault(y => y.UserId == patientGuid).Id;
+
+                patient = db.Patients.Find(id);
+
             }
-            Patient patient = db.Patients.Find(id);
+            else if (User.IsInRole(MyConstants.RoleAdmin))
+                patient = db.Patients.Find(id);
+            else return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
             if (patient == null)
             {
                 return HttpNotFound();

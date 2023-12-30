@@ -3,14 +3,25 @@
 @{
     ViewBag.Title = "Edit";
 }
+@{
+    ViewBag.Title = "Edit";
+}
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
+{
 
+    @Html.Partial("~/Views/Patients/Header.cshtml");
+}
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+{
+    @Html.Partial("~/Views/Admins/Header.cshtml");
+}
 <h2>Edit</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Patient</h4>
         <hr />

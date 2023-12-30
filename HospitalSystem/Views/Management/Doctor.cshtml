@@ -1,4 +1,4 @@
-﻿
+﻿@model HospitalSystem.Models.Doctor
 @{
     ViewBag.Title = "Doctor";
 }
@@ -7,26 +7,26 @@
 
 
 <section id="ozel-sayfa">
-    <h2 style="margin-left: 13%;">Doktor Özel Sayfa</h2>
+    <h2 style="margin-left: 13%;">My Page</h2>
     <div class="container">
         <div class="kisisel-bilgiler">
-            <h3>Kişisel Bilgiler</h3>
+            <h3>Personal Information</h3>
             <ul>
-                <li><span>Adı Soyadı:</span> Dr. Ahmet Kaska</li>
-                <li><span>Uzmanlık Alanı:</span> İç Hastalıklar</li>
-                <li><span>T.C. Kimlik No:</span> 12345678901</li>
-                <li><span>Doğum Tarihi:</span> 13.01.2000</li>
-                <li><span>Telefon Numarası:</span> 0543 222 33 44</li>
-                <li><span>E-posta Adresi:</span> ahmet.kaska@example.com</li>
+                <li><span>Adı Soyadı:</span> Dr. @(Model.Name + " "+Model.Surname)</li>
+                <li><span>Uzmanlık Alanı:</span> @Model.CurDepartment.Name</li> 
+                <li><span>Doğum Tarihi:</span> @Model.DOB.ToShortDateString()</li>
+                <li><span>Telefon Numarası:</span> @Model.Phone</li>
+                <li><span>E-posta Adresi:</span> @Model.Email</li>
             </ul>
         </div>
 
         <div class="hesap-bilgileri">
-            <h3>Hesap Bilgileri</h3>
+            <h3>-</h3>
             <ul>
-                <li><span>Kullanıcı Adı:</span> ahmetkaska</li>
-                <li><span>Şifre:</span> *********** (Gizli)</li>
-                <li><span>Hesap Tarihi:</span> 01.01.2023</li>
+                <li><span>Experience:</span> @Model.Experience</li>
+                <li><span>Specizalizations:</span> @Model.Specializations</li>
+                <li><span>Languages:</span> @Model.Languages</li>
+                <li><span>Gender:</span> @(Model.Gender?"Male":"Female")</li>
             </ul>
         </div>
     </div>

@@ -3,14 +3,22 @@
 @{
     ViewBag.Title = "Edit";
 }
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor))
+{
 
+    @Html.Partial("~/Views/Doctors/Header.cshtml");
+}
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+{
+    @Html.Partial("~/Views/Admins/Header.cshtml");
+}
 <h2>Edit</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Doctor</h4>
         <hr />
@@ -33,7 +41,7 @@
             </div>
         </div>
 
-     
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -121,4 +129,3 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
- 

@@ -3,7 +3,18 @@
 @{
     ViewBag.Title = "Index";
 }
+@{
+    ViewBag.Title = "Create";
+}
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor))
+{
+    @Html.Partial("~/Views/Doctors/Header.cshtml");
+}
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
+{
+    @Html.Partial("~/Views/Patients/Header.cshtml");
 
+}
 <h2>Index</h2>
 
 <p>
@@ -26,26 +37,27 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurAppointment.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Medicinde)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Remark)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Advice)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurAppointment.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medicinde)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Advice)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>
