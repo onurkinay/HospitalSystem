@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System.Web.Security;
+using System.Diagnostics;
 
 namespace HospitalSystem.Controllers
 {
@@ -127,15 +128,38 @@ namespace HospitalSystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = MyConstants.RoleAdmin + "," + MyConstants.RoleDoctor)]
-        public ActionResult Edit([Bind(Include = "ID,Name,Surname,Age,DOB,Gender,Salary,Specializations,Experience,Languages,Phone,Email,CurDeptartmentID")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "ID,Name,Surname,Age,DOB,Gender,Salary,Specializations,Experience,Languages,Phone,Email,CurDeptartmentID,UserId")] Doctor doctor)
         {
+            ViewBag.CurDeptartmentID = new SelectList(db.Departments, "ID", "Name", doctor.CurDeptartmentID);
             if (ModelState.IsValid)
             {
+                if (Request["password"] != "")
+                {
+                    if (Request["password"] != Request["passwordconfirm"])
+                    {
+                        ViewBag.PassMess = "Passwrod are different";
+                        return View(doctor);
+                    }
+                    else
+                    {
+                        ApplicationDbContext userdb = new ApplicationDbContext();
+                        var userStore = new UserStore<ApplicationUser>(userdb);
+                        var userManager = new ApplicationUserManager(userStore);
+
+                        userManager.RemovePassword(doctor.UserId);
+                        userManager.AddPassword(doctor.UserId, Request["password"]);
+
+                        return View(doctor);
+                    }
+                }
+
                 db.Entry(doctor).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
-            ViewBag.CurDeptartmentID = new SelectList(db.Departments, "ID", "Name", doctor.CurDeptartmentID);
+            else
+            {
+                Debug.WriteLine("HATA");
+            }
             return View(doctor);
         }
 
