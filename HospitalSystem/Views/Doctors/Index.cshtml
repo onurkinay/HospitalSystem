@@ -3,93 +3,33 @@
 @{
     ViewBag.Title = "Index";
 }
+@Html.Partial("~/Views/Admins/Header.cshtml");
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CurDepartment.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Surname)
-        </th>
-    
-        <th>
-            @Html.DisplayNameFor(model => model.DOB)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Salary)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Specializations)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Experience)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Languages)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurDepartment.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Surname)
-        </td>
-      
-        <td>
-            @Html.DisplayFor(modelItem => item.DOB)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Salary)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Specializations)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Experience)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Languages)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
-</table>
+<section id="doktor-yonetimi">
+    <div class="container">
+        <h2>Doktor Yönetimi</h2>
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
+                <div class="col col-2">@Html.DisplayNameFor(model => model.CurDepartment.Name)</div>
+                <div class="col col-3">@Html.DisplayNameFor(model => model.Specializations)</div>
+                <div class="col col-4">İşlemler</div>
+            </li>
+            @foreach (var item in Model)
+            {
+                <li class="table-row">
+                    <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
+                    <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.CurDepartment.Name)</div>
+                    <div class="col col-3" data-label="Department">@Html.DisplayFor(modelItem => item.Specializations)</div>
+                    <div class="col col-4" data-label="Operation">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</section>
