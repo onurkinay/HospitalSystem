@@ -1,4 +1,4 @@
-﻿
+﻿@model HospitalSystem.Models.Patient
 @{
     ViewBag.Title = "Patient";
 }
@@ -11,7 +11,7 @@
         <div class="kisisel-bilgiler">
             <h3>Kişisel Bilgiler</h3>
             <ul>
-                <li><span>Adı Soyadı:</span> Ahmet Kaska</li>
+                <li><span>Adı Soyadı:</span> @(Model.Name + " "+ Model.Surname)</li>
                 <li><span>T.C. Kimlik No:</span> 12345678901</li>
                 <li><span>Doğum Tarihi:</span> 13.01.2000</li>
                 <li><span>Telefon Numarası:</span> 0543 222 33 44</li>
