@@ -180,12 +180,19 @@ namespace HospitalSystem.Controllers
         }
 
         // POST: Doctors/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Delete"), Route("Patient/Delete/{id}")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = MyConstants.RoleAdmin)]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
-            Doctor doctor = db.Doctors.Find(id);
+
+            ApplicationDbContext userdb = new ApplicationDbContext();
+            var userStore = new UserStore<ApplicationUser>(userdb);
+            var userManager = new ApplicationUserManager(userStore);
+
+            Doctor doctor = db.Doctors.FirstOrDefault(x => x.UserId == id);
+            userManager.Delete(userManager.FindById(id));
+             
             db.Doctors.Remove(doctor);
             db.SaveChanges();
             return RedirectToAction("Index");

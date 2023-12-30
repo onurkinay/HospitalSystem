@@ -27,7 +27,7 @@
                     <div class="col col-4" data-label="Operation">
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                         @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id },  new { @class = "delete" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId },  new { @class = "delete" })
                     </div>
                 </li>
             }
