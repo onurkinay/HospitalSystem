@@ -185,6 +185,10 @@
     <Compile Include="Migrations\202312291822054_remove-cons-fee.designer.cs">
       <DependentUpon>202312291822054_remove-cons-fee.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312311313539_modified-models.cs" />
+    <Compile Include="Migrations\202312311313539_modified-models.designer.cs">
+      <DependentUpon>202312311313539_modified-models.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -238,6 +242,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Images\images2.webp" />
     <Content Include="Content\Images\images4.webp" />
+    <None Include="Properties\PublishProfiles\dbhospital - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -336,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312291822054_remove-cons-fee.resx">
       <DependentUpon>202312291822054_remove-cons-fee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202312311313539_modified-models.resx">
+      <DependentUpon>202312311313539_modified-models.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

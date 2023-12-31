@@ -12,15 +12,25 @@ namespace HospitalSystem.Models
         // patient may be stay in any room
         [Key]
         public int Id { get; set; }
+
         public string UserId { get; set; }
+        [Required(ErrorMessage ="Name is required")]
         public string Name { get; set; }
-        public string Surname { get; set; }
+        [Required(ErrorMessage = "Surame is required")]
+        public string Surname { get; set; } 
+        [Required(ErrorMessage = "Date of Birth is required")]
         public DateTime DOB { get; set; }
-        public bool Gender { get; set; }
+        [Required]
+        public bool Gender { get; set; } 
+        [Required(ErrorMessage = "Blood Group is required")]
         public string Blood_Group { get; set; }
+        [Required]
+        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]
         public string Email { get; set; }
+        [Required]
         public string Address { get; set; }
         public string City { get; set; }
+        [Required]
         public string Phone { get; set; }
         
           
