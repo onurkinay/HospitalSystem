@@ -3,58 +3,75 @@
 @{
     ViewBag.Title = "Index";
 }
-@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor))
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
 {
-    @Html.Partial("~/Views/Doctors/Header.cshtml");
+    @Html.Partial("~/Views/Admins/Header.cshtml");
 }
 else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 {
     @Html.Partial("~/Views/Patients/Header.cshtml");
 
 }
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CurAppointment.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Issued_Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Amount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsPaid)
-        </th>
-        <th></th>
-    </tr>
+<section id="doktor-yonetimi">
+    <div class="container">
+        <h2>Bills</h2> 
+        <ul class="responsive-table">
+            @if (Model.Count() == 0)
+            {
+                <p> No record</p>
+            }
+            else
+            {
+                <li class="table-header">
+                    <div class="col col-1">@Html.DisplayNameFor(model => model.CurAppointment.AppointmentDate)</div>
+                    <div class="col col-4">İşlemler</div>
+                </li>
+                foreach (var item in Model)
+                {
+                    <li class="table-row">
+                        <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.CurAppointment.AppointmentDate)</div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurAppointment.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Issued_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPaid)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+                        <div class="col col-4" data-label="Operation">
+                              @Html.ActionLink("Pay it", "Payment", new { id = item.Id }, new { @class = "delete" })
+                          
+                        </div>
+                    </li>
+                }
+            }
+        </ul>
+
+    </div>
+</section>
+
+
+
+
+<script>
+     function gettoken() {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
     }
 
-</table>
+
+    $('.delete').click(function (event) {//linke click eventi kazandırma
+        event.preventDefault();
+        if (confirm("Do you sure delete this department")) {
+            $.ajax({
+                url: this.href,
+                data: {
+                    __RequestVerificationToken: gettoken()
+                },
+                type: 'POST',
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    });
+
+
+</script>
+
