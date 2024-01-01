@@ -7,11 +7,13 @@ body {
 }
 
 header {
-    width: 100%;
     display: flex;
+    width: 100%;
     background: linear-gradient(-45deg, #219cd9, #FFF);
-    color: #333;
+    align-items: center;
+    font-family: Arial, sans-serif;
     padding: 10px;
+ 
 }
 header h1{
     padding:0 50px;
@@ -19,44 +21,37 @@ header h1{
 #logo-header {
     width: 5%;
     color: #333;
+ 
 }
 
-header h1 {
-    margin-left: 3rem;
-    padding:inherit;
-
-}
-
-nav {
-    display: flex;
-    margin-left: auto;
-   /* width: 40%;*/
-    padding: 10px;
-}
-
-nav#muhasebe {
-    width: 30%;
-}
-
-nav#hasta {
-    width: 55%;
-    justify-content: space-around;
-}
-
-nav a {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    cursor: pointer;
-    margin-right: 20px;
-    text-decoration: none;
+#logo-header {
+    width: 5%;
     color: #333;
-    transition: all 0.3s ease-in;
 }
 
-nav a:hover {
-    color: red;
+#head {
+    margin-left: 5%;
 }
+
+.ana-menu {
+    display: flex;
+    justify-content: space-between;
+    /* width: 30%;*/
+    margin-left: auto;
+    margin-right: 2%;
+}
+
+    .ana-menu a {
+        text-decoration: none;
+        color: #333;
+        margin-left: auto;
+        transition: all 0.3s ease-in;
+        padding: 20px 10px;
+    }
+
+        .ana-menu a:hover {
+            color: red;
+        }
 
 section {
     padding: 20px;

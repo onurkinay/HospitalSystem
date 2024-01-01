@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
+using Microsoft.AspNet.Identity;
 
 namespace HospitalSystem.Controllers
 {
@@ -16,8 +17,16 @@ namespace HospitalSystem.Controllers
         // GET: Bills
         public ActionResult Index()
         {
-            var bills = db.Bills.Include(b => b.CurAppointment);
-            return View(bills.ToList());
+            if (User.IsInRole(MyConstants.RolePatient))
+            {
+                string patientGuid = User.Identity.GetUserId();
+                int patientId = db.Patients.FirstOrDefault(y => y.UserId == patientGuid).Id;
+                var apps = db.Appointments.Where(x => x.Patient_ID == patientId);
+
+                var bills = db.Bills.Where(x=> apps.Any(y=>y.Id==x.Appointment_ID)).Include(b => b.CurAppointment);
+                return View(bills.ToList());
+            }
+            return null;
         }
 
         // GET: Bills/Details/5

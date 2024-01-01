@@ -9,8 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity; 
+using Microsoft.AspNet.Identity.EntityFramework; 
 using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
@@ -69,8 +69,8 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Patients/Edit/5
-        public ActionResult Edit(int? id)
-        {
+        public ActionResult Edit(int? id) 
+        { 
             Patient patient = null;
             if (User.IsInRole(MyConstants.RolePatient))
             {
@@ -88,7 +88,7 @@ namespace HospitalSystem.Controllers
             if (patient == null)
             {
                 return HttpNotFound();
-            }
+            } 
             return View(patient);
         }
 

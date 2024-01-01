@@ -1,10 +1,12 @@
-﻿<header>
+﻿<header id="header">
     <h1>Admin Paneli</h1>
-    <nav>
+ 
+    <nav class="ana-menu">
         <a href="/Doctors">Doctors</a>
-        <a href="/Patients">Patients</a> 
-        <a href="/Departments">Departments</a>
-        <a href="/Admins/Edit">Admins</a>
-        <a href="/Account/Logoff">Logout</a>
+        <a href="/Patients">Patients</a>
+        <a href="/Accountants">Accountant</a>
+        <a href="/Admins/">My Info</a>
+        @Html.ActionLink("Log off", "LogOff", "Account")
+ 
     </nav>
 </header>
