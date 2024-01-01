@@ -1,9 +1,12 @@
-/* Headers */
+html {
+    height: 100%;
+}
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    height: 100%;
 }
 
 header {
@@ -55,18 +58,11 @@ header h1{
 
 section {
     padding: 20px;
+    margin-bottom: 100px;
+    min-height: 100%; 
 }
 
-footer {
-    background: white;
-    color: #333;
-    text-align: center;
-    padding: 10px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
+ 
 
 a {
     text-decoration: none;
@@ -75,12 +71,13 @@ a {
 /* Sifre Yonetimi */
 
 #sifre-yonetimi {
-    background: linear-gradient(-45deg, #219cd9, #FFF);
 }
 
 .container-password-management {
+    background: linear-gradient(-45deg, #219cd9, #FFF);
     width: 40%;
     margin: 0 auto;
+    padding:45px;
 }
 
 #form-header {
@@ -354,12 +351,10 @@ nav#admin {
     font-family: "Poppins", sans-serif;
 }
 
-.footer {
-    position: relative;
+.footer { 
     width: 100%;
     background: #3586ff;
-    min-height: 100px;
-    margin-top: 10%;
+    min-height: 100px; 
     padding: 20px 50px;
     display: flex;
     justify-content: center;
@@ -415,3 +410,6 @@ nav#admin {
     font-size: 1rem;
     font-weight: 300;
 }
+
+
+ 

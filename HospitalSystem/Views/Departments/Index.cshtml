@@ -1,33 +1,64 @@
-﻿@model IEnumerable<HospitalSystem.Models.Department>
+﻿@model IEnumerable<HospitalSystem.Models.Department> 
 
 @{
     ViewBag.Title = "Index";
 }
+@Html.Partial("~/Views/Admins/Header.cshtml");
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+<section id="doktor-yonetimi">
+    <div class="container">
+        <h2>Edit Department</h2>
+        @Html.ActionLink("Add Department","Create")
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div> 
+                <div class="col col-4">İşlemler</div>
+            </li>
+            @foreach (var item in Model)
+            {
+                <li class="table-row">
+                    <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name)</div>
+              
+                    <div class="col col-4" data-label="Operation">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) | 
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @class = "delete" })
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</section>
 
-</table>
+ 
+
+
+<script>
+     function gettoken() {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
+    }
+
+
+    $('.delete').click(function (event) {//linke click eventi kazandırma
+        event.preventDefault();
+        if (confirm("Do you sure delete this department")) {
+            $.ajax({
+                url: this.href,
+                data: {
+                    __RequestVerificationToken: gettoken()
+                },
+                type: 'POST',
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    });
+     
+
+</script>
+

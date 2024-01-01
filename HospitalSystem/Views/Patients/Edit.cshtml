@@ -13,7 +13,7 @@
 else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
 {
     @Html.Partial("~/Views/Admins/Header.cshtml");
- 
+}
 
 @using (Html.BeginForm())
 {
@@ -21,13 +21,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
  
 <section id="ozel-sayfa">
  
-
-    <div class="form-horizontal">
-        <h4>Patient</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
- 
+  
 
     <h2 style="margin-left: 13%;">Edit Account</h2>
     @Html.HiddenFor(model => model.Id)

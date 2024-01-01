@@ -23,8 +23,10 @@
     <h2 style="margin-left: 13%;">Patient Register</h2>
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+  
 <div class="container">
-    <div class="kisisel-bilgiler"> 
+ 
+    <div class="kisisel-bilgiler">
         <ul>
             <li>
                 <span>Adı:</span>    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
@@ -36,13 +38,13 @@
             </li>
             <li>
                 <span>Date of Birth:</span>     @Html.EditorFor(model => model.DOB, new
-                {
-                    htmlAttributes = new
-                    {
-                        @class = "form-control",
-              @type = "date"
-          }
-                })
+{
+htmlAttributes = new
+{
+@class = "form-control",
+@type = "date"
+}
+})
                 @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
             </li>
             <li>
@@ -51,7 +53,8 @@
             </li>
             <li>
                 <span>E-mail Address:</span>   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+              
+                @ViewBag.SameEmail
             </li>
             <li>
                 <span>Blood Group: </span>  @Html.EditorFor(model => model.Blood_Group, new { htmlAttributes = new { @class = "form-control" } })
@@ -61,9 +64,12 @@
         </ul>
     </div>
     <div class="hesap-bilgileri">
-  
+
         <ul>
-            <li><span>Password:</span> <input type="password" name="password" value="" /></li>
+            <li>
+                <span>Password:</span> <input type="password" name="password" value="" />
+                @ViewBag.PassMess
+            </li>
             <li><span>Password Confirm:</span> <input type="password" name="passwordconfirm" value="" /></li>
             <li>
                 <span>Gender</span><br /><br />
@@ -71,7 +77,7 @@
                 <br />  @Html.RadioButtonFor(model => model.Gender, false, new { @style = "width:initial;" }) Female
                 @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
             </li>
-          
+
             <li>
                 <span>City:</span>   @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })

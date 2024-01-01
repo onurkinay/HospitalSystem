@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -19,6 +20,7 @@ namespace HospitalSystem.Controllers
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Departments
+        [Authorize(Roles =MyConstants.RoleAdmin)]
         public ActionResult Index()
         {
             return View(db.Departments.ToList());
@@ -40,6 +42,7 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Departments/Create
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Create()
         {
             return View();
@@ -50,6 +53,7 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Create([Bind(Include = "ID,Name")] Department department)
         {
             if (ModelState.IsValid)
@@ -63,6 +67,7 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Departments/Edit/5
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -82,6 +87,7 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Edit([Bind(Include = "ID,Name")] Department department)
         {
             if (ModelState.IsValid)
@@ -113,6 +119,13 @@ namespace HospitalSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var doctors = db.Doctors.Where(x=>x.CurDeptartmentID == id).ToList();
+            foreach (var doctor in doctors)
+            {
+                doctor.CurDeptartmentID = 1;
+                db.Doctors.AddOrUpdate(doctor); 
+            }
+
             Department department = db.Departments.Find(id);
             db.Departments.Remove(department);
             db.SaveChanges();

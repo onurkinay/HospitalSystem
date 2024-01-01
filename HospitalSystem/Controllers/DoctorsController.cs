@@ -60,9 +60,16 @@ namespace HospitalSystem.Controllers
         [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Create([Bind(Include = "ID,Name,Surname,DOB,Gender,Salary,Specializations,Experience,Languages,Phone,Email,CurDeptartmentID")] Doctor doctor)
         {
+            if (Request["password"] != "")
+            {
+                if (Request["password"] != Request["passwordconfirm"])
+                {
+                    ViewBag.PassMess = "Passwords are different";
+                    return View(doctor);
+                }
+            }
             if (ModelState.IsValid)
             { 
-                /* Doktor user ekleme */
 
                 ApplicationDbContext userdb = new ApplicationDbContext();
 
@@ -71,6 +78,13 @@ namespace HospitalSystem.Controllers
 
                 var roleStore = new RoleStore<IdentityRole>(userdb);
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                if (userdb.Users.Any(x => x.UserName == doctor.Email))
+                {
+                    ViewBag.SameEmail = "The email already exists. Take another";
+                    return View(doctor);
+                }
+
 
                 var newUser = new ApplicationUser
                 {
@@ -82,8 +96,7 @@ namespace HospitalSystem.Controllers
                 userManager.AddToRole(newUser.Id, MyConstants.RoleDoctor);
 
                 userdb.SaveChanges();
-
-                //doktor user ekleme 
+                 
 
                 db.Doctors.Add(doctor);
                 db.SaveChanges();
@@ -131,6 +144,8 @@ namespace HospitalSystem.Controllers
         public ActionResult Edit([Bind(Include = "ID,Name,Surname,Age,DOB,Gender,Salary,Specializations,Experience,Languages,Phone,Email,CurDeptartmentID,UserId")] Doctor doctor)
         {
             ViewBag.CurDeptartmentID = new SelectList(db.Departments, "ID", "Name", doctor.CurDeptartmentID);
+           
+
             if (ModelState.IsValid)
             {
                 if (Request["password"] != "")
@@ -145,6 +160,12 @@ namespace HospitalSystem.Controllers
                         ApplicationDbContext userdb = new ApplicationDbContext();
                         var userStore = new UserStore<ApplicationUser>(userdb);
                         var userManager = new ApplicationUserManager(userStore);
+                        if (userdb.Users.Any(x => x.UserName == doctor.Email))
+                        {
+                            ViewBag.SameEmail = "The email already exists. Take another";
+                            return View(doctor);
+                        }
+
 
                         userManager.RemovePassword(doctor.UserId);
                         userManager.AddPassword(doctor.UserId, Request["password"]);

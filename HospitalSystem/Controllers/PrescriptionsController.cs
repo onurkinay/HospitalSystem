@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.EnterpriseServices.Internal;
 using System.Linq;
@@ -6,6 +8,7 @@ using System.Net;
 using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
@@ -19,10 +22,31 @@ namespace HospitalSystem.Controllers
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Prescriptions
+        
         public ActionResult Index()
         {
-            var prescriptions = db.Prescriptions.Include(p => p.CurAppointment);
-            return View(prescriptions.ToList());
+            if (User.IsInRole(MyConstants.RoleDoctor))
+            {
+                 
+                string doctorGuid = User.Identity.GetUserId(); 
+                int doctorId = db.Doctors.FirstOrDefault(y => y.UserId == doctorGuid).ID;
+                var apps = db.Appointments.Where(x => x.Doctor_ID == doctorId);
+
+                var prescriptions = db.Prescriptions.Where(x => apps.Any(y => y.Id == x.Appointment_ID)).Include(p => p.CurAppointment);
+
+                return View(prescriptions.ToList());
+
+            }else if (User.IsInRole(MyConstants.RolePatient)){
+
+                string patientGuid = User.Identity.GetUserId();
+                int patientId = db.Patients.FirstOrDefault(y => y.UserId == patientGuid).Id;
+                var apps = db.Appointments.Where(x => x.Doctor_ID == patientId);
+
+                var prescriptions = db.Prescriptions.Where(x => apps.Any(y => y.Id == x.Appointment_ID)).Include(p => p.CurAppointment);
+
+                return View(prescriptions.ToList());
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
         }
 
         // GET: Prescriptions/Details/5
@@ -46,8 +70,7 @@ namespace HospitalSystem.Controllers
         public ActionResult Create(int? id)
         {
             if (id != null)
-            {
-                Debug.WriteLine(id);
+            { 
                 ViewBag.Appointment_ID = new SelectList(db.Appointments.Where(x => x.Id == id), "Id", "Description");
                 return View();
             }
@@ -63,6 +86,7 @@ namespace HospitalSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                prescription.Appointment_ID = Convert.ToInt32(Request.Path.Split('/')[3]);
                 db.Prescriptions.Add(prescription);
                 db.SaveChanges();
                 return RedirectToAction("Index");

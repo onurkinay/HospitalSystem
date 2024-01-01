@@ -53,6 +53,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
             <div class="col-md-10">
                 @Html.DropDownList("Appointment_ID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.Appointment_ID, "", new { @class = "text-danger" })
+                
             </div>
         </div>
 
@@ -63,3 +64,4 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
         </div>
     </div>
 }
+<script>$("#Appointment_ID option:first").attr('selected','');</script>

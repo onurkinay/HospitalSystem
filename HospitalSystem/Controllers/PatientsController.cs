@@ -42,32 +42,7 @@ namespace HospitalSystem.Controllers
                 return "404";
             }
             return JsonConvert.SerializeObject(patient, new JsonSerializerSettings() { DateFormatString = "yyyy-MM-ddThh:mm:ssZ" });
-        }
-
-        // GET: Patients/Create
-        [Authorize(Roles = MyConstants.RoleAdmin)]
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Patients/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Surname,DOB,Gender,Blood_Group,Email,Address,City,Phone")] Patient patient)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Patients.Add(patient);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(patient);
-        }
-
+        } 
         // GET: Patients/Edit/5
         public ActionResult Edit(int? id) 
         { 
@@ -101,11 +76,12 @@ namespace HospitalSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 if (Request["password"] != "")
                 {
                     if (Request["password"] != Request["passwordconfirm"])
                     {
-                        ViewBag.PassMess = "Passwrod are different";
+                        ViewBag.PassMess = "Password are different";
                         return View(patient);
                     }
                     else
@@ -113,6 +89,13 @@ namespace HospitalSystem.Controllers
                         ApplicationDbContext userdb = new ApplicationDbContext(); 
                         var userStore = new UserStore<ApplicationUser>(userdb);
                         var userManager = new ApplicationUserManager(userStore);
+
+                        if (userdb.Users.Any(x => x.UserName == patient.Email))
+                        {
+                            ViewBag.SameEmail = "The email already exists.";
+                            return View(patient);
+                        }
+
 
                         userManager.RemovePassword(patient.UserId); 
                         userManager.AddPassword(patient.UserId, Request["password"]);

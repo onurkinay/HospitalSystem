@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 
 namespace HospitalSystem.Controllers
@@ -17,7 +16,7 @@ namespace HospitalSystem.Controllers
     public class ManagementController : Controller
     {
 
-        private HospitalSystem3Context db = new HospitalSystem3Context(); 
+        private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Management
         public ActionResult Index() //login page
@@ -26,7 +25,7 @@ namespace HospitalSystem.Controllers
 
             if (User.IsInRole(MyConstants.RoleDoctor))
             {
-                Doctor doctor = db.Doctors.Include(d=>d.CurDepartment).FirstOrDefault(y => y.UserId == userGuid);
+                Doctor doctor = db.Doctors.Include(d => d.CurDepartment).FirstOrDefault(y => y.UserId == userGuid);
                 return View("Doctor", doctor);
             }
             else if (User.IsInRole(MyConstants.RolePatient))
@@ -56,12 +55,20 @@ namespace HospitalSystem.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken] 
+        [ValidateAntiForgeryToken]
         public ActionResult Register([Bind(Include = "Id,Name,Surname,DOB,Gender,Blood_Group,Email,Address,City,Phone")] Patient patient)
         {
+            if (Request["password"] != "")
+            {
+                if (Request["password"] != Request["passwordconfirm"])
+                {
+                    ViewBag.PassMess = "Passwrod are different";
+                    return View(patient);
+                }
+            }
             if (ModelState.IsValid)
             {
-                HospitalSystem3Context db = new HospitalSystem3Context(); 
+                HospitalSystem3Context db = new HospitalSystem3Context();
                 ApplicationDbContext userdb = new ApplicationDbContext();
 
                 var userStore = new UserStore<ApplicationUser>(userdb);
@@ -69,6 +76,14 @@ namespace HospitalSystem.Controllers
 
                 var roleStore = new RoleStore<IdentityRole>(userdb);
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+
+                if (userdb.Users.Any(x => x.UserName == patient.Email))
+                {
+                    ViewBag.SameEmail = "The email already exists. Take another";
+                    return View(patient);
+                }
+
 
                 var newUser = new ApplicationUser
                 {
@@ -84,12 +99,14 @@ namespace HospitalSystem.Controllers
                 db.Patients.Add(patient);
                 db.SaveChanges();
 
+                return RedirectToAction("Login", "Account");
+
             }
-            return RedirectToAction("Login", "Account");
+            return View(patient);
         }
 
 
 
-        
+
     }
 }
