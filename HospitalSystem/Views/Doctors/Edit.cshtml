@@ -2,23 +2,27 @@
 
 @{
     ViewBag.Title = "Edit";
+    string dob = Model.DOB.ToString("yyyy-MM-dd");
 }
-
+ 
+ 
 @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor))
-{
-
+{ 
     @Html.Partial("~/Views/Doctors/Header.cshtml");
 }
 else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
 {
     @Html.Partial("~/Views/Admins/Header.cshtml");
-}
+ 
 <h2>Edit</h2>
-
+ 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+ 
+    <section id="ozel-sayfa">
+ 
 
     <div class="form-horizontal">
         <h4>Doctor</h4>
@@ -60,73 +64,94 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
                     @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div> 
+
+        <h2 style="margin-left: 13%;">Edit Account</h2>
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.UserId)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="container">
+
+            <div class="kisisel-bilgiler">
+                <ul>
+                    <li>
+                        <span>Name:</span>    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>Surname:</span>  @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>Date of Birth:</span>     @Html.EditorFor(model => dob, new
+                                                   {
+                                                       htmlAttributes = new
+                                                       {
+                                                           @class = "form-control",
+                                                           @type = "date"
+                                                       }
+                                                   })
+                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>Mobile Number:</span>     @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>E-mail Address:</span>   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>Department: </span>    @Html.DropDownList("CurDeptartmentID", null, (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor)) ? (object) new { @disabled = "", @class = "form-control" }  :  new { @class = "form-control" }  )
+                        @Html.ValidationMessageFor(model => model.CurDeptartmentID, "", new { @class = "text-danger" })
+                    </li>
+                    <li> <button>Send</button></li>
+                </ul>
+            </div>
+            <div class="hesap-bilgileri">
+
+                <ul>
+                    <li>
+                        <span>Password:</span> <input type="password" name="password" value="" />
+                        @ViewBag.PassMess
+                    </li>
+                    <li><span>Password Confirm:</span> <input type="password" name="passwordconfirm" value="" /></li>
+                    <li>
+                        <span>Gender</span><br /><br />
+                        @Html.RadioButtonFor(model => model.Gender, true, new { @style = "width:initial;" })  Male
+                        <br />  @Html.RadioButtonFor(model => model.Gender, false, new { @style = "width:initial;" }) Female
+                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                    </li>
+
+                    <li>
+                        <span>Languages:</span>    @Html.EditorFor(model => model.Languages, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Languages, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>Specializations:</span>    @Html.EditorFor(model => model.Specializations, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Experience, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>Experience:</span>    @Html.EditorFor(model => model.Experience, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Experience, "", new { @class = "text-danger" })
+                    </li>
+
+                    <li>
+                        <span>Salary:</span>
+                   
+                            @Html.EditorFor(model => model.Salary, (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor)) ? (object)new { htmlAttributes = new { @disabled = "", @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control" } })
+                     
+                        @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
+                    </li><!--roleadmin de düzenlenebilir. roledoctorda disabled olmalı-->
+
+                </ul>
+            </div>
+
+
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Salary, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Specializations, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Specializations, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Specializations, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Experience, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Experience, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Experience, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Languages, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Languages, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Languages, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CurDeptartmentID, "CurDeptartmentID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CurDeptartmentID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CurDeptartmentID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    </section>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
+ 

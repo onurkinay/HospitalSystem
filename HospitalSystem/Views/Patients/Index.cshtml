@@ -3,80 +3,108 @@
 @{
     ViewBag.Title = "Index";
 }
+ 
+ 
 @Html.Partial("~/Views/Admins/Header.cshtml");
-<h2>Index</h2>
+ 
+ 
+<section id="hasta-yonetimi">
+    <div class="container">
+        <h2>Hasta Yönetimi</h2>
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
+                <div class="col col-2">@Html.DisplayNameFor(model => model.City)</div>
+                <div class="col col-3">@Html.DisplayNameFor(model => model.Email)</div>
+                <div class="col col-4">İşlemler</div>
+            </li>
+            @foreach (var item in Model)
+            {
+                <li class="table-row">
+                    <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
+                    <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.City)</div>
+                    <div class="col col-3" data-label="Department">@Html.DisplayFor(modelItem => item.Email)</div>
+                    <div class="col col-4" data-label="Operation">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId },  new { @class = "delete" })
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</section>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Surname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DOB)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Blood_Group)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th></th>
-    </tr>
+ 
+    <div id="ex1" class="modal" style="max-width:initial">
+        <section id="ozel-sayfa" style="padding:0">
+            <div class="container" style="max-width:initial">
+                <div class="kisisel-bilgiler">
+                    <h3>Personal Information</h3>
+                    <ul>
+                        <li class="patNameSurname"><span>Name Surname:</span> </li>
+                        <li class="patDoB"><span>Date of Birth:</span> </li>
+                        <li class="patNumber"><span>Phone Number:</span> </li>
+                        <li class="patEmail"><span>E-Mail Address:</span></li>
+                        <li class="patGender"><span>Gender:</span></li>
+                    </ul>
+                </div>
+                <div class="hesap-bilgileri">
+                    <h3>-</h3>
+                    <ul>
+                        <li class="patBlood"><span>Blood Group:</span></li>
+                        <li class="patAddress"><span>Address:</span> </li>
+                        <li class="patCity"><span>City:</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Surname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DOB)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Blood_Group)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
+
+    <script>
+     function gettoken() {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
     }
 
-</table>
+
+    $('.delete').click(function (event) {//linke click eventi kazandırma
+        event.preventDefault();
+        if (confirm("Do you sure delete this Patient")) {
+            $.ajax({
+                url: this.href,
+                data: {
+                    __RequestVerificationToken: gettoken()
+                },
+                type: 'POST',
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    });
+       //hasta tarafı
+    $('.getDetails').click(function (event) {//linke click eventi kazandırma
+        event.preventDefault();
+        this.blur();
+        $.get(this.href, function (json) {
+            const patient = JSON.parse(json)
+            $('li.patNameSurname').html('<span>Name Surname:</span> ' + patient.Name + " " + patient.Surname)
+            $('li.patDoB').html('<span>Date of Birth:</span> ' + (new Date(patient.DOB)).toLocaleDateString())
+            $('li.patNumber').html('<span>Phone Number:</span> ' + patient.Phone)
+            $('li.patEmail').html('<span>Email:</span> ' + patient.Email)
+            $('li.patGender').html('<span>Gender:</span> ' + ((patient.Gender) ? "Male" : "Female"))
+            $('li.patBlood').html('<span>Blood Group:</span> ' + patient.Blood_Group)
+            $('li.patAddress').html('<span>Address:</span> ' + patient.Address)
+            $('li.patCity').html('<span>City:</span> ' + patient.City)
+
+            $('#ex1').modal();
+        });
+    });
+
+       //hasta tarafı
+
+    </script>

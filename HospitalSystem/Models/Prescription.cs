@@ -19,6 +19,7 @@ namespace HospitalSystem.Models
         public string Remark { get; set; }
         public string Advice { get; set; }
 
+        [Required]
         public int Appointment_ID { get; set; }
         public Appointment CurAppointment { get; set; }
 

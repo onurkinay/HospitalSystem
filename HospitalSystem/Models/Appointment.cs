@@ -12,14 +12,11 @@ namespace HospitalSystem.Models
         // Appointment have Doctor and Patient ID
         [Key]
         public int Id { get; set; }
-          
+        [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; } 
-         
         public DateTime AppointmentDate { get; set; }
-
         public int Doctor_ID { get; set; }
         public int Patient_ID { get; set; }
-
         public Doctor Doctor { get; set; }
         public Patient Patient { get; set; }
 

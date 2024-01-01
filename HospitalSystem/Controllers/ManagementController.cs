@@ -10,21 +10,39 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity;
 
 namespace HospitalSystem.Controllers
 {
     public class ManagementController : Controller
     {
-        // GİRİŞ SAYFASI OLACAK
-        //ROLLERE GÖRE AYRI SAYFALARA YÖNLENDİRİLECEK
+
+        private HospitalSystem3Context db = new HospitalSystem3Context(); 
 
         // GET: Management
         public ActionResult Index() //login page
         {
-            if (User.IsInRole(MyConstants.RoleDoctor)) return View("Doctor");
-            else if (User.IsInRole(MyConstants.RolePatient)) return View("Patient");
-            else if (User.IsInRole(MyConstants.RoleAdmin)) return View("Admin");
-            else if (User.IsInRole(MyConstants.RoleAccountant)) return View("Accountant");
+            string userGuid = User.Identity.GetUserId();
+
+            if (User.IsInRole(MyConstants.RoleDoctor))
+            {
+                Doctor doctor = db.Doctors.Include(d=>d.CurDepartment).FirstOrDefault(y => y.UserId == userGuid);
+                return View("Doctor", doctor);
+            }
+            else if (User.IsInRole(MyConstants.RolePatient))
+            {
+                Patient patient = db.Patients.FirstOrDefault(y => y.UserId == userGuid);
+                return View("Patient", patient);
+            }
+            else if (User.IsInRole(MyConstants.RoleAdmin))
+            {
+                Admin admin = db.Admins.FirstOrDefault(y => y.UserId == userGuid);
+                return View("Admin");
+            }
+            else if (User.IsInRole(MyConstants.RoleAccountant))
+            {
+                return View("Accountant");
+            }
             else return RedirectToAction("Login", "Account");
         }
 
