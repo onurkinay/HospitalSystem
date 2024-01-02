@@ -22,7 +22,7 @@ namespace HospitalSystem.Controllers
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Doctors
-        [Authorize(Roles = MyConstants.RoleAdmin)]
+        [Authorize(Roles = MyConstants.RoleAdmin+","+MyConstants.RoleAccountant)]
         public ActionResult Index()
         {
             var doctors = db.Doctors.Include(d => d.CurDepartment);
@@ -109,7 +109,7 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Doctors/Edit/5 
-        [Authorize(Roles = MyConstants.RoleAdmin+"," +MyConstants.RoleDoctor)]
+        [Authorize(Roles = MyConstants.RoleAdmin+"," +MyConstants.RoleDoctor + "," + MyConstants.RoleAccountant)]
         //ADMİN HER DOKTORU ERİŞEBİLİR AMA HER DOKTOR SADECE KENDİ KAYDINA MÜDAHALE EDEBİLİR
         public ActionResult Edit(int? id)
         {
@@ -141,7 +141,7 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = MyConstants.RoleAdmin + "," + MyConstants.RoleDoctor)]
+        [Authorize(Roles = MyConstants.RoleAdmin + "," + MyConstants.RoleDoctor + "," + MyConstants.RoleAccountant)]
         public ActionResult Edit([Bind(Include = "ID,Name,Surname,Age,DOB,Gender,Salary,Specializations,Experience,Languages,Phone,Email,CurDeptartmentID,UserId")] Doctor doctor)
         {
             ViewBag.CurDeptartmentID = new SelectList(db.Departments, "ID", "Name", doctor.CurDeptartmentID);

@@ -27,6 +27,11 @@ namespace HospitalSystem.Controllers
                 var bills = db.Bills.Where(x=> apps.Any(y=>y.Id==x.Appointment_ID)).Include(b => b.CurAppointment);
                 return View(bills.ToList());
             }
+            else if(User.IsInRole(MyConstants.RoleAccountant))
+            {  
+                var bills = db.Bills.Include(b => b.CurAppointment);
+                return View(bills.ToList());
+            }
             return null;
         }
 

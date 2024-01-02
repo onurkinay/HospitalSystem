@@ -45,7 +45,8 @@ namespace HospitalSystem.Controllers
             }
             else if (User.IsInRole(MyConstants.RoleAccountant))
             {
-                return View("Accountant");
+                Admin admin = db.Admins.FirstOrDefault(y => y.UserId == userGuid);
+                return View("Accountant",admin);
             }
             else return RedirectToAction("Login", "Account");
         }

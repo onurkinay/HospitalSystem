@@ -54,7 +54,7 @@ namespace HospitalSystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
-        public ActionResult Create([Bind(Include = "Id,Username,Password,Email,PhoneNumber,Address,City,DOB")] Admin admin)
+        public ActionResult Create([Bind(Include = "Id,Username,Password,Email,PhoneNumber,Address,City,DOB,Accountant")] Admin admin)
         {
             if (ModelState.IsValid)
             {
@@ -89,8 +89,10 @@ namespace HospitalSystem.Controllers
                 };
                 admin.UserId = newUser.Id;
                 userManager.Create(newUser, Request["password"].ToString());
-                userManager.AddToRole(newUser.Id, MyConstants.RoleAdmin);
-
+                if(!admin.Accountant)
+                    userManager.AddToRole(newUser.Id, MyConstants.RoleAdmin);
+                else
+                    userManager.AddToRole(newUser.Id, MyConstants.RoleAccountant);
                 userdb.SaveChanges(); 
 
 
@@ -103,6 +105,7 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Admins/Edit/5
+        [Authorize(Roles = MyConstants.RoleAccountant)]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -122,8 +125,8 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Username,Password,Email,PhoneNumber,Address,City,DOB,UserId")] Admin admin)
-        {
+        public ActionResult Edit([Bind(Include = "Id,Username,Password,Email,PhoneNumber,Address,City,DOB,UserId,Accountant,UserId")] Admin admin)
+        {//giriş yapmış adminie accountant verilmemeli
             if (ModelState.IsValid)
             {
                 ApplicationDbContext userdb = new ApplicationDbContext();
@@ -131,6 +134,7 @@ namespace HospitalSystem.Controllers
                 var userManager = new ApplicationUserManager(userStore); 
 
                 var admin_old = db.Admins.FirstOrDefault(y => y.Id == admin.Id);
+                var user = userdb.Users.FirstOrDefault(x => x.Id == admin.UserId);
 
                 if (Request["password"] != "")
                 {//password changes detected
@@ -153,18 +157,24 @@ namespace HospitalSystem.Controllers
                     {
                         ViewBag.SameEmail = "The email already exists. Take another";
                         return View(admin);
-                    }
-
-                    var user = userdb.Users.FirstOrDefault(x => x.Id == admin.UserId);
-
+                    } 
                     user.Email = admin.Email;
                     user.UserName = admin.Email;
-
-                    userManager.Update(user);
-
-
+                   
+                    
                 }
 
+                userManager.RemoveFromRole(user.Id, MyConstants.RoleAdmin);
+                userManager.RemoveFromRole(user.Id, MyConstants.RoleAccountant);
+
+
+                if (!admin.Accountant)
+                    userManager.AddToRole(user.Id, MyConstants.RoleAdmin);
+                else
+                    userManager.AddToRole(user.Id, MyConstants.RoleAccountant);
+
+
+                userManager.Update(user);
                 db.Admins.AddOrUpdate(admin);
                 db.SaveChanges();
                 return RedirectToAction("Index");

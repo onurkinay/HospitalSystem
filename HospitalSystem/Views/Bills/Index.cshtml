@@ -12,10 +12,15 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
     @Html.Partial("~/Views/Patients/Header.cshtml");
 
 }
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
+{
+    @Html.Partial("~/Views/Admins/AccountantHeader.cshtml");
+
+}
 
 <section id="doktor-yonetimi">
     <div class="container">
-        <h2>Bills</h2> 
+        <h2>Bills</h2>
         <ul class="responsive-table">
             @if (Model.Count() == 0)
             {
@@ -23,30 +28,30 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
             }
             else
             {
-        <li class="table-header">
-            <div class="col col-1">@Html.DisplayNameFor(model => model.CurAppointment.AppointmentDate)</div>
-            <div class="col col-1">@Html.DisplayNameFor(model => model.Amount)</div> 
-            <div class="col col-1">@Html.DisplayNameFor(model => model.IsPaid)</div>
-            <div class="col col-4">Actions</div>
-        </li>
+                <li class="table-header">
+                    <div class="col col-1">@Html.DisplayNameFor(model => model.CurAppointment.AppointmentDate)</div>
+                    <div class="col col-1">@Html.DisplayNameFor(model => model.Amount)</div>
+                    <div class="col col-1">@Html.DisplayNameFor(model => model.IsPaid)</div>
+                    <div class="col col-4">Actions</div>
+                </li>
                 foreach (var item in Model)
                 {
-        <li class="table-row">
-            <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.CurAppointment.AppointmentDate)</div>
-            <div class="col col-1">@Html.DisplayFor(modelItem => item.Amount)</div>
-            <div class="col col-2" data-label="Operation">
-                @(item.IsPaid ? "Paid" : "Not Paid")
+                    <li class="table-row">
+                        <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.CurAppointment.AppointmentDate)</div>
+                        <div class="col col-1">@Html.DisplayFor(modelItem => item.Amount)</div>
+                        <div class="col col-2" data-label="Operation">
+                            @(item.IsPaid ? "Paid" : "Not Paid")
 
-            </div>
-            <div class="col col-3" data-label="Operation">
-                @if (!item.IsPaid)
-                {
-                    @Html.ActionLink("Pay it", "Payment", new { id = item.Id }, new { @class = "payIt" })
-                }
+                        </div>
+                        <div class="col col-3" data-label="Operation">
+                            @if (!item.IsPaid)
+                            {
+                                @Html.ActionLink("Pay it", "Payment", new { id = item.Id }, new { @class = "payIt" })
+                            }
 
 
-            </div>
-        </li>
+                        </div>
+                    </li>
                 }
             }
         </ul>
