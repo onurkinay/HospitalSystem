@@ -4,55 +4,108 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+@Html.Partial("~/Views/Admins/Header.cshtml");
+<section id="doktor-yonetimi">
+    <div class="container">
+        <h2>Admin Management</h2> @Html.ActionLink("Add Admin", "Create")
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1">@Html.DisplayNameFor(model => model.UserId)</div>
+                <div class="col col-2">@Html.DisplayNameFor(model => model.Email)</div>
+                <div class="col col-4">İşlemler</div>
+            </li>
+            @foreach (var item in Model)
+            {
+                <li class="table-row">
+                    <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.UserId)</div>
+                    <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.Email)</div>
+                    <div class="col col-4" data-label="Operation">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "delete" })
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</section>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr> 
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DOB)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DOB)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
 
-</table>
+<div id="ex1" class="modal" style="max-width:initial">
+    <section id="ozel-sayfa" style="padding:0">
+        <div class="container" style="max-width:initial">
+            <div class="kisisel-bilgiler">
+                <h3>Personal Information</h3>
+                <ul>
+                    <li class="docNameSurname"><span>Name Surname:</span> </li>
+                    <li class="docDoB"><span>Date of Birth:</span> </li>
+                    <li class="docNumber"><span>Phone Number:</span> </li>
+                    <li class="docEmail"><span>E-Mail Address:</span></li>
+                    <li class="docGender"><span>Gender:</span></li>
+                </ul>
+            </div>
+            <div class="hesap-bilgileri">
+                <h3>-</h3>
+                <ul>
+                    <li class="docExperience"><span>Experience:</span></li>
+                    <li class="docSpecializations"><span>Specializations:</span> </li>
+                    <li class="docLangs"><span>Langs:</span></li>
+                    <li class="docDept"><span>Department:</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script>
+     function gettoken() {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
+    }
+
+
+    $('.delete').click(function (event) {//linke click eventi kazandırma
+        event.preventDefault();
+        if (confirm("Do you sure delete this admin")) {
+            $.ajax({
+                url: this.href,
+                data: {
+                    __RequestVerificationToken: gettoken()
+                },
+                type: 'POST',
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    });
+       //hasta tarafı
+    $('.getDetails').click(function (event) {//linke click eventi kazandırma
+        event.preventDefault();
+        this.blur();
+        $.get(this.href, function (json) {
+            const doctor = JSON.parse(json)
+            $('li.docNameSurname').html('<span>Name Surname:</span> ' + doctor.Name + " " + doctor.Surname)
+            $('li.docDoB').html('<span>Date of Birth:</span> ' + (new Date(doctor.DOB)).toLocaleDateString())
+            $('li.docNumber').html('<span>Phone Number:</span> ' + doctor.Phone)
+            $('li.docEmail').html('<span>Email:</span> ' + doctor.Email)
+            $('li.docGender').html('<span>Gender:</span> ' + ((doctor.Gender) ? "Male" : "Female"))
+            $('li.docExperience').html('<span>Experience:</span> ' + doctor.Experience)
+            $('li.docSpecializations').html('<span>Specializations:</span> ' + doctor.Specializations)
+            $('li.docLangs').html('<span>Languages:</span> ' + doctor.Languages)
+            $.get("/Departments/getDeptName/" + doctor.CurDeptartmentID, function (department) {
+
+                $('li.docDept').html('<span>Department:</span> ' + department)
+                $('#ex1').modal();
+            });
+        });
+    });
+
+       //hasta tarafı
+
+</script>
+

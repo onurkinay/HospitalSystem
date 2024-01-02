@@ -192,6 +192,7 @@ namespace HospitalSystem.Controllers
 
                 db.Doctors.AddOrUpdate(doctor);
                 db.SaveChanges();
+                return RedirectToAction("Index");
             }
             else
             {

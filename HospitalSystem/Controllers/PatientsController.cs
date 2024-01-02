@@ -114,7 +114,8 @@ namespace HospitalSystem.Controllers
 
                 }
                 db.Patients.AddOrUpdate(patient);
-                db.SaveChanges(); 
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
             else
             {
