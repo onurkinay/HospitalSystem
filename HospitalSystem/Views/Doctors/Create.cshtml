@@ -94,7 +94,7 @@
                         @Html.EditorFor(model => model.Salary, (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor)) ? (object)new { htmlAttributes = new { @disabled = "", @class = "form-control" } } : new { htmlAttributes = new { @class = "form-control" } })
 
                         @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
-                    </li><!--roleadmin de düzenlenebilir. roledoctorda disabled olmalı-->
+                    </li>
 
                 </ul>
             </div>

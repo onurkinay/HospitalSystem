@@ -7,12 +7,12 @@
 @Html.Partial("~/Views/Admins/Header.cshtml");
 <section id="doktor-yonetimi">
     <div class="container">
-        <h2>Admin Management</h2> @Html.ActionLink("Add Admin", "Create")
+        <h2 style="display:inline">Admin Management</h2> @Html.ActionLink("Add Admin", "Create")
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">@Html.DisplayNameFor(model => model.UserId)</div>
                 <div class="col col-2">@Html.DisplayNameFor(model => model.Email)</div>
-                <div class="col col-4">İşlemler</div>
+                <div class="col col-4">Actions</div>
             </li>
             @foreach (var item in Model)
             {

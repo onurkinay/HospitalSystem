@@ -193,6 +193,14 @@
     <Compile Include="Migrations\202401020923348_addprice.designer.cs">
       <DependentUpon>202401020923348_addprice.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401021417308_needmig.cs" />
+    <Compile Include="Migrations\202401021417308_needmig.designer.cs">
+      <DependentUpon>202401021417308_needmig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401021420138_needmig2.cs" />
+    <Compile Include="Migrations\202401021420138_needmig2.designer.cs">
+      <DependentUpon>202401021420138_needmig2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -341,6 +349,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202401020923348_addprice.resx">
       <DependentUpon>202401020923348_addprice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401021417308_needmig.resx">
+      <DependentUpon>202401021417308_needmig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401021420138_needmig2.resx">
+      <DependentUpon>202401021420138_needmig2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

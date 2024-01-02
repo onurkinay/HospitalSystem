@@ -9,13 +9,13 @@
 
 <section id="doktor-yonetimi">
     <div class="container">
-        <h2>Doktor Yönetimi</h2> @Html.ActionLink("Add Doctor", "Create")
+        <h2 style="display:inline">Doctor Management</h2> @Html.ActionLink("Add Doctor", "Create")
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
                 <div class="col col-2">@Html.DisplayNameFor(model => model.CurDepartment.Name)</div>
                 <div class="col col-3">@Html.DisplayNameFor(model => model.Specializations)</div>
-                <div class="col col-4">İşlemler</div>
+                <div class="col col-4">Actions</div>
             </li>
             @foreach (var item in Model)
             {

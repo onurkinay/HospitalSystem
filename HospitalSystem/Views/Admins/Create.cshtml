@@ -6,18 +6,22 @@
 
 
 @Html.Partial("~/Views/Admins/Header.cshtml");
-<section id="ozel-sayfa">
-    <h2 style="margin-left: 13%;">Create Account</h2> 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-    <div class="container">
+    <section id="ozel-sayfa">
+        <h2 style="margin-left: 13%;">Create Account</h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="kisisel-bilgiler">
-            <ul>
+        <div class="container">
+
+            <div class="kisisel-bilgiler">
+                <ul>
 
 
-                <li>
-                    <span>Date of Birth:</span>     @Html.EditorFor(model => model.DOB, new
+                    <li>
+                        <span>Date of Birth:</span>     @Html.EditorFor(model => model.DOB, new
 {
 htmlAttributes = new
 {
@@ -26,48 +30,48 @@ htmlAttributes = new
 @max = DateTime.Now.ToString("yyyy-MM-dd")
 }
 })
-                    @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
-                </li>
-                <li>
-                    <span>Mobile Number:</span>     @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-                </li>
-                <li>
-                    <span>E-mail Address:</span>   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>Mobile Number:</span>     @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>E-mail Address:</span>   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
 
-                    @ViewBag.SameEmail
-                </li>
+                        @ViewBag.SameEmail
+                    </li>
 
-                <li> <button>Send</button></li>
-            </ul>
+                    <li> <button>Send</button></li>
+                </ul>
+            </div>
+            <div class="hesap-bilgileri">
+
+                <ul>
+                    <li>
+                        <span>Password:</span> <input type="password" name="password" value="" />
+                        @ViewBag.PassMess
+                    </li>
+                    <li><span>Password Confirm:</span> <input type="password" name="passwordconfirm" value="" /></li>
+
+
+                    <li>
+                        <span>City:</span>
+                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                    </li>
+                    <li>
+                        <span>Address:</span>
+                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @style = "width: 329px; height: 235px;" })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </li>
+
+
+                </ul>
+            </div>
+
+
         </div>
-        <div class="hesap-bilgileri">
 
-            <ul>
-                <li>
-                    <span>Password:</span> <input type="password" name="password" value="" />
-                    @ViewBag.PassMess
-                </li>
-                <li><span>Password Confirm:</span> <input type="password" name="passwordconfirm" value="" /></li>
-
-
-                <li>
-                    <span>City:</span>
-                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-                </li>
-                <li>
-                    <span>Address:</span>
-                    @Html.TextAreaFor(model => model.Address, new { @class = "form-control", @style = "width: 329px; height: 235px;" })
-                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                </li>
-
-
-            </ul>
-        </div>
-
-
-    </div>
-
-</section>
+    </section>
 }

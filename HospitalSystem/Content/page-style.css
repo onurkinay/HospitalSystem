@@ -158,7 +158,7 @@ button:hover {
     span {
         font-weight: bold;
         display: inline-block;
-        width: 150px;
+       
     }
 
     .kisisel-bilgiler ul li:nth-child(odd) {

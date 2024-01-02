@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
-{
+{/*doktor/hasta silindiğinde randevular ne olmalı */
     public class AppointmentsController : Controller
     {
         private HospitalSystem3Context db = new HospitalSystem3Context();
@@ -193,7 +193,8 @@ namespace HospitalSystem.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] 
+        [Authorize(Roles = MyConstants.RolePatient + "," + MyConstants.RoleDoctor)]
         public ActionResult Edit([Bind(Include = "Id,Description,Consultant_Fee,AppointmentDate,Doctor_ID,Patient_ID")] Appointment appointment)
         {
             if (ModelState.IsValid)
@@ -211,7 +212,8 @@ namespace HospitalSystem.Controllers
 
         // POST: Appointments/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken] 
+        [Authorize(Roles = MyConstants.RolePatient + "," + MyConstants.RoleDoctor)]
         public ActionResult DeleteConfirmed(int id)
         {
             Appointment appointment = db.Appointments.Find(id);

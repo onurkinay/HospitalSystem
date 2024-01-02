@@ -13,6 +13,7 @@ namespace HospitalSystem.Models
         [Key]
         public int ID { get; set; }
         [DisplayName("Department Name")]
+        [Required]
         public string Name { get; set; }
         [Required]
         [DisplayName("Price Per Unit")]
