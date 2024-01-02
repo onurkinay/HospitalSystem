@@ -3,8 +3,7 @@
 @{
     ViewBag.Title = "Create";
 }
-
-<!-- rollere göre değişmeli -->
+ 
 @if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 {
 @Html.Partial("~/Views/Patients/Header.cshtml");
@@ -28,7 +27,8 @@
            {
                @class = "form-control",
                required = "required",
-               @type = "datetime-local"
+               @type = "datetime-local",
+               @min = DateTime.Now.ToString("yyyy-MM-ddT00:00")
            })
                 @Html.ValidationMessageFor(model => model.AppointmentDate, "", new { @class = "text-danger" })
             </div>

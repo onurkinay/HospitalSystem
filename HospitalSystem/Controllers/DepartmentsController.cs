@@ -54,7 +54,7 @@ namespace HospitalSystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = MyConstants.RoleAdmin)]
-        public ActionResult Create([Bind(Include = "ID,Name")] Department department)
+        public ActionResult Create([Bind(Include = "ID,Name,PriceUnit")] Department department)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace HospitalSystem.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = MyConstants.RoleAdmin)]
-        public ActionResult Edit([Bind(Include = "ID,Name")] Department department)
+        public ActionResult Edit([Bind(Include = "ID,Name,PriceUnit")] Department department)
         {
             if (ModelState.IsValid)
             {

@@ -42,13 +42,14 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
                 </li>
                 <li>
                     <span>Date of Birth:</span>     @Html.EditorFor(model => dob, new
-{
-htmlAttributes = new
-{
-@class = "form-control",
-@type = "date"
-}
-})
+                                               {
+                                                   htmlAttributes = new
+                                                   {
+                                                       @class = "form-control",
+                                                       @type = "date",
+                                                       @max = DateTime.Now.ToString("yyyy-MM-dd")
+                                                   }
+                                               })
                     @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
                 </li>
                 <li>

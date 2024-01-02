@@ -23,20 +23,30 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
             }
             else
             {
-                <li class="table-header">
-                    <div class="col col-1">@Html.DisplayNameFor(model => model.CurAppointment.AppointmentDate)</div>
-                    <div class="col col-4">İşlemler</div>
-                </li>
+        <li class="table-header">
+            <div class="col col-1">@Html.DisplayNameFor(model => model.CurAppointment.AppointmentDate)</div>
+            <div class="col col-1">@Html.DisplayNameFor(model => model.Amount)</div> 
+            <div class="col col-1">@Html.DisplayNameFor(model => model.IsPaid)</div>
+            <div class="col col-4">İşlemler</div>
+        </li>
                 foreach (var item in Model)
                 {
-                    <li class="table-row">
-                        <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.CurAppointment.AppointmentDate)</div>
+        <li class="table-row">
+            <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.CurAppointment.AppointmentDate)</div>
+            <div class="col col-1">@Html.DisplayFor(modelItem => item.Amount)</div>
+            <div class="col col-2" data-label="Operation">
+                @(item.IsPaid ? "Paid" : "Not Paid")
 
-                        <div class="col col-4" data-label="Operation">
-                              @Html.ActionLink("Pay it", "Payment", new { id = item.Id }, new { @class = "delete" })
-                          
-                        </div>
-                    </li>
+            </div>
+            <div class="col col-3" data-label="Operation">
+                @if (!item.IsPaid)
+                {
+                    @Html.ActionLink("Pay it", "Payment", new { id = item.Id }, new { @class = "payIt" })
+                }
+
+
+            </div>
+        </li>
                 }
             }
         </ul>
@@ -55,9 +65,9 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
     }
 
 
-    $('.delete').click(function (event) {//linke click eventi kazandırma
+    $('.payIt').click(function (event) {//linke click eventi kazandırma
         event.preventDefault();
-        if (confirm("Do you sure delete this department")) {
+        if (confirm("Do you sure pay this bill")) {
             $.ajax({
                 url: this.href,
                 data: {

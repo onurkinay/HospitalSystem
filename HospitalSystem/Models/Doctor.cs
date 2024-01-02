@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace HospitalSystem.Models
         [Required(ErrorMessage = "Surname is required")]
         public string Surname { get; set; }
         [Required(ErrorMessage = "Date of Birth is required")]
+        [DisplayName("Date of Birth")]
         public DateTime DOB { get; set;}
         public bool Gender { get; set; }
         [Required(ErrorMessage = "Salary is required")]

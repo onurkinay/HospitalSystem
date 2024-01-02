@@ -189,6 +189,10 @@
     <Compile Include="Migrations\202312311313539_modified-models.designer.cs">
       <DependentUpon>202312311313539_modified-models.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401020923348_addprice.cs" />
+    <Compile Include="Migrations\202401020923348_addprice.designer.cs">
+      <DependentUpon>202401020923348_addprice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -341,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312311313539_modified-models.resx">
       <DependentUpon>202312311313539_modified-models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401020923348_addprice.resx">
+      <DependentUpon>202401020923348_addprice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

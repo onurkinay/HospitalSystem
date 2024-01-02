@@ -25,6 +25,10 @@
                         <span>Name:</span>    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </li>
+                    <li>
+                        <span>Price:</span>    @Html.EditorFor(model => model.PriceUnit, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PriceUnit, "", new { @class = "text-danger" })
+                    </li>
                     <li> <button>Send</button></li>
                 </ul>
             </div>

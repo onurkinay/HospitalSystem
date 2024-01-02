@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -27,6 +28,19 @@ namespace HospitalSystem.Controllers
                 return View(bills.ToList());
             }
             return null;
+        }
+
+        public string Payment(int? id)
+        {
+
+            var bill = db.Bills.FirstOrDefault(x => x.Id == id);
+
+            bill.IsPaid = true;
+            db.Bills.AddOrUpdate(bill);
+            db.SaveChanges();
+
+
+            return "";
         }
 
         // GET: Bills/Details/5

@@ -121,8 +121,10 @@ namespace HospitalSystem.Controllers
                 db.Appointments.Add(appointment);
                 db.SaveChanges();
 
+                Doctor doctor = db.Doctors.FirstOrDefault(x => x.ID == appointment.Doctor_ID);
+                Department dept = db.Departments.FirstOrDefault(x => x.ID == doctor.CurDeptartmentID);
 
-                Bill bill = new Bill() { Appointment_ID = appointment.Id, IsPaid = false, Amount = 100, Issued_Date = DateTime.Now };
+                Bill bill = new Bill() { Appointment_ID = appointment.Id, IsPaid = false, Amount = dept.PriceUnit, Issued_Date = DateTime.Now };
                 db.Bills.Add(bill);
 
                 db.SaveChanges();
