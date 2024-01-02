@@ -46,6 +46,10 @@ namespace HospitalSystem.Controllers
             else if (User.IsInRole(MyConstants.RoleAccountant))
             {
                 Admin admin = db.Admins.FirstOrDefault(y => y.UserId == userGuid);
+                ViewBag.PatientCount = db.Patients.Count();
+                ViewBag.DoctorCount = db.Doctors.Count();
+                ViewBag.AppCount = db.Appointments.Count();
+                ViewBag.BillCount = db.Bills.Count();
                 return View("Accountant",admin);
             }
             else return RedirectToAction("Login", "Account");

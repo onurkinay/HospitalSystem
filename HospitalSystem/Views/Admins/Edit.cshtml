@@ -4,8 +4,15 @@
     ViewBag.Title = "Edit";
     string dob = Model.DOB.ToString("yyyy-MM-dd");
 }
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+{
 
-@Html.Partial("~/Views/Admins/Header.cshtml");
+    @Html.Partial("~/Views/Admins/Header.cshtml");
+}
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
+{
+    @Html.Partial("~/Views/Admins/AccountantHeader.cshtml");
+}
 
 @using (Html.BeginForm())
 {
