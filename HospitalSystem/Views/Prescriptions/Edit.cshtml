@@ -14,81 +14,54 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 
 }
 
-<section id="recete-duzenle-container">
-    <h2 class="container-header">Edit Prescription</h2>
-    <div class="recete-duzenle">
+
+
+<section id="randevu-al-container">
+    <h2 class="container-header">Create Pre</h2>
+    <div class="randevu-al">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
+
+
 
             <div class="form-group">
-                <!--DOKTORUN GÖRECEĞİ KISIM-->
-                @Html.ActionLink("Details", "Details", new { id = Model.Id }, new { @class = "getDetails" })
-            </div>
-
-            <div class="form-group">
-                <label for="medicine">Medicine</label>
-                @Html.EditorFor(model => model.Medicinde, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Medicinde, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group">
-                <label for="remark">Remark</label>
-                @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="form-group">
-                <label for="advice">Advice</label>
-                @Html.EditorFor(model => model.Advice, new { htmlAttributes = new { @class = "form-control" } })
+                <label for="randevu-sebebi"> @Html.DisplayNameFor(model => model.Advice)</label>
+                @Html.EditorFor(model => model.Advice)
                 @Html.ValidationMessageFor(model => model.Advice, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Appointment_ID, "Appointment_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("Appointment_ID", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Appointment_ID, "", new { @class = "text-danger" })
-                </div>
+                <label for="randevu-sebebi"> @Html.DisplayNameFor(model => model.Medicinde)</label>
+                @Html.EditorFor(model => model.Medicinde)
+                @Html.ValidationMessageFor(model => model.Medicinde, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="randevu-sebebi"> @Html.DisplayNameFor(model => model.Remark)</label>
+                @Html.EditorFor(model => model.Remark)
+                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
             </div>
 
+
             <div class="form-group">
-                <input id="btn" type="submit" value="Edit Prescription" class="btn btn-primary">
+                <label>
+                    @Html.LabelFor(model => model.Appointment_ID, "Appointment_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                </label>
+                @Html.DropDownList("Appointment_ID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.Advice, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group">
+                <input id="btn" type="submit" value="Create Appointment">
             </div>
         }
     </div>
 </section>
-<div id="ex1" class="modal" style="max-width:auto">
-    <section id="ozel-sayfa" style="padding:0">
-        <div class="container" style="max-width:initial">
-            <div class="hesap-bilgileri">
-                <h3>Prescription Details</h3>
-                <ul>
-                    <li class="medicinePrescription"> </li>
-                    <li class="remarkPrescription"></li>
-                    <li class="advicePrescription"></li>
-                </ul>
-            </div>
-        </div>
-    </section>
-</div>
+ 
 <script>
-    // Hasta tarafı için reçete detaylarını gösterme
-    $('.getDetails').click(function (event) {
-        event.preventDefault();
-        this.blur();
-        $.get(this.href, function (html) {
-            const prescription = JSON.parse(html); // JSON bilgisi gelir
-            // İlaç adını, reçetenin notunu ve tavsiyesini ayarlayın
-            $('li.medicinePrescription').html('<span>Medicine:</span> ' + prescription.Medicinde);
-            $('li.remarkPrescription').html('<span>Remark:</span> ' + prescription.Remark);
-            $('li.advicePrescription').html('<span>Advice:</span> ' + prescription.Advice);
-
-            // Modal penceresini göster
-            $('#ex1').modal();
-        });
+    $('form').submit(function (e) {
+        $(':disabled').each(function (e) {
+            $(this).removeAttr('disabled');
+        })
     });
-    // Hasta tarafı
 </script>
-

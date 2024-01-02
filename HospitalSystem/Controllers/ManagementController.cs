@@ -1,13 +1,8 @@
 ﻿using HospitalSystem.Data;
 using HospitalSystem.Models;
-using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 
@@ -15,7 +10,6 @@ namespace HospitalSystem.Controllers
 {
     public class ManagementController : Controller
     {
-
         private HospitalSystem3Context db = new HospitalSystem3Context();
 
         // GET: Management
@@ -114,9 +108,6 @@ namespace HospitalSystem.Controllers
             }
             return View(patient);
         }
-
-
-
 
     }
 }

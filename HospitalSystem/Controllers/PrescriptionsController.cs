@@ -32,7 +32,7 @@ namespace HospitalSystem.Controllers
                 int doctorId = db.Doctors.FirstOrDefault(y => y.UserId == doctorGuid).ID;
                 var apps = db.Appointments.Where(x => x.Doctor_ID == doctorId);
 
-                var prescriptions = db.Prescriptions.Where(x => apps.Any(y => y.Id == x.Appointment_ID)).Include(p => p.CurAppointment);
+                var prescriptions = db.Prescriptions.Where(x => apps.Any(y => y.Id == x.Appointment_ID)).Include(p => p.CurAppointment).Include(q =>q.CurAppointment.Patient);
 
                 return View(prescriptions.ToList());
 
@@ -42,7 +42,7 @@ namespace HospitalSystem.Controllers
                 int patientId = db.Patients.FirstOrDefault(y => y.UserId == patientGuid).Id;
                 var apps = db.Appointments.Where(x => x.Doctor_ID == patientId);
 
-                var prescriptions = db.Prescriptions.Where(x => apps.Any(y => y.Id == x.Appointment_ID)).Include(p => p.CurAppointment);
+                var prescriptions = db.Prescriptions.Where(x => apps.Any(y => y.Id == x.Appointment_ID)).Include(p => p.CurAppointment).Include(q => q.CurAppointment.Doctor);
 
                 return View(prescriptions.ToList());
             }

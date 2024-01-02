@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Create";
 }
- 
+
 @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor))
 {
     @Html.Partial("~/Views/Doctors/Header.cshtml");
@@ -13,55 +13,56 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
     @Html.Partial("~/Views/Patients/Header.cshtml");
 
 }
-<h2>Create</h2>
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<section id="randevu-al-container">
+    <h2 class="container-header">Create Prescription</h2>
+    <div class="randevu-al">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Prescription</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Medicinde, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Medicinde, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Medicinde, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Remark, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Remark, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Advice, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Advice, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="form-group">
+                <label for="randevu-sebebi"> @Html.DisplayNameFor(model => model.Advice)</label>
+                @Html.EditorFor(model => model.Advice)
                 @Html.ValidationMessageFor(model => model.Advice, "", new { @class = "text-danger" })
             </div>
-        </div>
+            <div class="form-group">
+                <label for="randevu-sebebi"> @Html.DisplayNameFor(model => model.Medicinde)</label>
+                @Html.EditorFor(model => model.Medicinde)
+                @Html.ValidationMessageFor(model => model.Medicinde, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label for="randevu-sebebi"> @Html.DisplayNameFor(model => model.Remark)</label>
+                @Html.EditorFor(model => model.Remark)
+                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Appointment_ID, "Appointment_ID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-group">
+                <label for="randevu-sebebi">
+                    @Html.LabelFor(model => model.Appointment_ID, "Appointment_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                </label>
                 @Html.DropDownList("Appointment_ID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
-                @Html.ValidationMessageFor(model => model.Appointment_ID, "", new { @class = "text-danger" })
-                
+                @Html.ValidationMessageFor(model => model.Advice, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group">
+                <input id="btn" type="submit" value="Create Prescription">
             </div>
-        </div>
+        }
     </div>
-}
-<script>$("#Appointment_ID option:first").attr('selected','');</script>
+</section>
+
+<script>
+    $('form').submit(function (e) {
+        $(':disabled').each(function (e) {
+            $(this).removeAttr('disabled');
+        })
+    });
+</script>
+
+
+
+
