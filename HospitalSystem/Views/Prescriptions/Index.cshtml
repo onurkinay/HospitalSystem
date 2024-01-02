@@ -54,12 +54,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 </style>
 
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
+<h2>Prescriptions</h2>
 <table class="table">
     <thead>
         <tr>
@@ -79,9 +74,15 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
                 <td>@Html.DisplayFor(modelItem => item.Remark)</td>
                 <td>@Html.DisplayFor(modelItem => item.Advice)</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteApp" })
+
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" })
+                    @if (User.IsInRole("Doctor"))
+                    {
+                        @Html.Raw("| ")
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                        @Html.Raw("| ")
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteApp" })
+                    }
                 </td>
             </tr>
         }
