@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Index";
 }
- 
+
 @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleDoctor))
 {
     @Html.Partial("~/Views/Doctors/Header.cshtml");
@@ -11,51 +11,139 @@
 else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 {
     @Html.Partial("~/Views/Patients/Header.cshtml");
-
 }
+
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+        .table thead tr {
+            background-color: #3586ff;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px 15px;
+        }
+
+        .table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+            .table tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3;
+            }
+
+            .table tbody tr:last-of-type {
+                border-bottom: 2px solid #3586ff;
+            }
+
+            .table tbody tr.active-row {
+                font-weight: bold;
+                color: #009879;
+            }
+</style>
+
+
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CurAppointment.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Medicinde)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Remark)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Advice)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+<table class="table">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurAppointment.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Medicinde)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Remark)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Advice)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
+            <th>@Html.DisplayNameFor(model => model.CurAppointment.Description)</th>
+            <th>@Html.DisplayNameFor(model => model.Medicinde)</th>
+            <th>@Html.DisplayNameFor(model => model.Remark)</th>
+            <th>@Html.DisplayNameFor(model => model.Advice)</th>
+            <th>İşlemler</th>
         </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.CurAppointment.Description)</td>
+                <td>@Html.DisplayFor(modelItem => item.Medicinde)</td>
+                <td>@Html.DisplayFor(modelItem => item.Remark)</td>
+                <td>@Html.DisplayFor(modelItem => item.Advice)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteApp" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div id="ex1" class="modal" style="max-width:auto">
+    <section id="ozel-sayfa" style="padding:0">
+        <div class="container" style="max-width:initial">
+            <div class="hesap-bilgileri">
+                <h3>Prescription Details</h3>
+                <ul>
+                    <li class="medicinePrescription"> </li>
+                    <li class="remarkPrescription"></li>
+                    <li class="advicePrescription"></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+     function gettoken() {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
     }
 
-</table>
+
+    $('.deleteApp').click(function (event) {//linke click eventi kazandırma
+        event.preventDefault();
+        if (confirm("Do you sure delete this appointment")) {
+            $.ajax({
+                url: this.href,
+                data: {
+                    __RequestVerificationToken: gettoken()
+                },
+                type: 'POST',
+                success: function (result) {
+                    location.reload();
+                }
+            });
+        }
+
+    });
+</script>
+
+<script>
+    // Hasta tarafı için reçete detaylarını gösterme
+    $('.getDetails').click(function (event) {
+        event.preventDefault();
+        this.blur();
+        $.get(this.href, function (html) {
+            const prescription = JSON.parse(html); // JSON bilgisi gelir
+            // İlaç adını, reçetenin notunu ve tavsiyesini ayarlayın
+            $('li.medicinePrescription').html('<span>Medicine:</span> ' + prescription.Medicinde);
+            $('li.remarkPrescription').html('<span>Remark:</span> ' + prescription.Remark);
+            $('li.advicePrescription').html('<span>Advice:</span> ' + prescription.Advice);
+
+            // Modal penceresini göster
+            $('#ex1').modal();
+        });
+    });
+    // Hasta tarafı
+</script>
+
