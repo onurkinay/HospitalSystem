@@ -28,30 +28,39 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
             }
             else
             {
-                <li class="table-header">
-                    <div class="col col-1">@Html.DisplayNameFor(model => model.CurAppointment.AppointmentDate)</div>
-                    <div class="col col-1">@Html.DisplayNameFor(model => model.Amount)</div>
-                    <div class="col col-1">@Html.DisplayNameFor(model => model.IsPaid)</div>
-                    <div class="col col-4">Actions</div>
-                </li>
+        <li class="table-header">
+            <div class="col col-1">@Html.DisplayNameFor(model => model.CurAppointment.AppointmentDate)</div>
+            <div class="col col-1">@Html.DisplayNameFor(model => model.CurAppointment.Patient.Name)</div>
+            <div class="col col-1">@Html.DisplayNameFor(model => model.Amount)</div>
+            <div class="col col-1">@Html.DisplayNameFor(model => model.IsPaid)</div>
+            <div class="col col-4">Actions</div>
+        </li>
                 foreach (var item in Model)
                 {
-                    <li class="table-row">
-                        <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.CurAppointment.AppointmentDate)</div>
-                        <div class="col col-1">@Html.DisplayFor(modelItem => item.Amount)</div>
-                        <div class="col col-2" data-label="Operation">
-                            @(item.IsPaid ? "Paid" : "Not Paid")
+        <li class="table-row">
+            <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.CurAppointment.AppointmentDate)</div>
+            <div class="col col-1">@Html.DisplayFor(modelItem => item.CurAppointment.Patient.Name)</div>
+            <div class="col col-1">@Html.DisplayFor(modelItem => item.Amount)</div>
+            <div class="col col-2" data-label="Operation">
+                @(item.IsPaid ? "Paid" : "Not Paid")
 
-                        </div>
-                        <div class="col col-3" data-label="Operation">
-                            @if (!item.IsPaid)
-                            {
-                                @Html.ActionLink("Pay it", "Payment", new { id = item.Id }, new { @class = "payIt" })
-                            }
+            </div>
+            <div class="col col-3" data-label="Operation">
+                @if (!item.IsPaid && User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
+                {
+                    @Html.ActionLink("Pay it", "Payment", new { id = item.Id }, new { @class = "payIt" })
+                }
+
+                @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
+                    @Html.Raw(" | ")
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteBill" })
+                }
 
 
-                        </div>
-                    </li>
+            </div>
+        </li>
                 }
             }
         </ul>
@@ -61,8 +70,10 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
 
 
 
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
+{
+    <script>
 
-<script>
      function gettoken() {
         var token = '@Html.AntiForgeryToken()';
         token = $(token).val();
@@ -88,5 +99,35 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
     });
 
 
-</script>
+    </script>
 
+}
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
+{
+<script>
+
+     function gettoken() {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
+    }
+
+         $('.deleteBill').click(function (event) {//linke click eventi kazandırma
+             event.preventDefault();
+             if (confirm("Do you sure delete this bill")) {
+                 $.ajax({
+                     url: this.href,
+                     data: {
+                         __RequestVerificationToken: gettoken()
+                     },
+                     type: 'POST',
+                     success: function (result) {
+                         location.reload();
+                     }
+                 });
+             }
+
+         });
+</script>
+     
+}

@@ -27,18 +27,18 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Departments/Details/5
-        public ActionResult Details(int? id)//JSON RETURN
+        public string Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return "403";
             }
-            Department department = db.Departments.Find(id);
-            if (department == null)
+            Department dept = db.Departments.Find(id);
+            if (dept == null)
             {
-                return HttpNotFound();
+                return "404";
             }
-            return View(department);
+            return JsonConvert.SerializeObject(dept, new JsonSerializerSettings() { DateFormatString = "yyyy-MM-ddThh:mm:ssZ" });
         }
 
         // GET: Departments/Create

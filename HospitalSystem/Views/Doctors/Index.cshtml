@@ -34,15 +34,15 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
             @foreach (var item in Model)
             {
                 <li class="table-row">
-                    <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
+                    <div class="col col-1 nameSurname" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
                     <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.CurDepartment.Name)</div>
                     @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
                     {
-                        <div class="col col-3">@Html.DisplayFor(modelItem => item.Specializations)</div>
+                        <div class="col col-3 ">@Html.DisplayFor(modelItem => item.Specializations)</div>
                     }
                     else
                     {
-                        <div class="col col-3">@Html.DisplayFor(modelItem => item.Salary)</div>
+                        <div class="col col-3 salary">@Html.DisplayFor(modelItem => item.Salary)</div>
                     }
                     <div class="col col-4" data-label="Operation">
                         @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
@@ -51,8 +51,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
                         else
                         {
                             @Html.ActionLink("Change Salary", "EditSalary", new { id = item.ID }, new { @class = "changeSalary" })
-                            <script>let salaryDName = "@item.Name" + " " + "@item.Surname"; let oldsalary ="@item.Salary"</script>
-                        }
+                             }
                         @Html.Raw("| ")
                         @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "getDetails" })
                         @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
@@ -106,6 +105,9 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
 
     $('.changeSalary').click(function (event) {//linke click eventi kazandırma
         event.preventDefault();
+        let salaryDName = $(event.target).parent().siblings(".nameSurname").text();
+        let oldsalary = $(event.target).parent().siblings(".salary").text();
+    
         let salary = prompt("Please enter new salary for " + salaryDName,oldsalary );
         if (salary != null && salary != "") {
             if (isNaN(salary)) {
@@ -129,7 +131,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
         }
 
     });
-       //hasta tarafı
+      
     $('.getDetails').click(function (event) {//linke click eventi kazandırma
         event.preventDefault();
         this.blur();
@@ -150,8 +152,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
             });
         });
     });
-
-       //hasta tarafı
+     
 
 </script>
 
