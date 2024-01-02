@@ -46,7 +46,8 @@ htmlAttributes = new
                         @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
                     </li>
                     <li>
-                        <span>Accountant:</span>     @Html.CheckBoxFor(model => model.Accountant, new { @class = "form-control", @style = "width:initial" })
+                        <span>Accountant:</span>     
+                        @Html.CheckBoxFor(model => model.Accountant, (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant)) ? (object)new { @disabled = "", @class = "form-control", @style = "width:initial" } : new { @class = "form-control", @style="width:initial" })
                         @Html.ValidationMessageFor(model => model.Accountant, "", new { @class = "text-danger" })
                     </li>
                     <li>

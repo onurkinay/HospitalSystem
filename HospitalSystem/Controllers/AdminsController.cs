@@ -145,7 +145,7 @@ namespace HospitalSystem.Controllers
                 ApplicationDbContext userdb = new ApplicationDbContext();
                 var userStore = new UserStore<ApplicationUser>(userdb);
                 var userManager = new ApplicationUserManager(userStore); 
-
+                
                 var admin_old = db.Admins.FirstOrDefault(y => y.Id == admin.Id);
                 var user = userdb.Users.FirstOrDefault(x => x.Id == admin.UserId);
 
@@ -173,18 +173,26 @@ namespace HospitalSystem.Controllers
                     } 
                     user.Email = admin.Email;
                     user.UserName = admin.Email;
-                   
-                    
+                     
+               }
+
+                if(admin.Id != 1)//ilk adminin rolü asla değişmeyecek
+                {
+                    userManager.RemoveFromRole(user.Id, MyConstants.RoleAdmin);
+                    userManager.RemoveFromRole(user.Id, MyConstants.RoleAccountant);
+
+
+                    if (!admin.Accountant)
+                        userManager.AddToRole(user.Id, MyConstants.RoleAdmin);
+                    else
+                        userManager.AddToRole(user.Id, MyConstants.RoleAccountant);
+
+                }
+                else
+                {
+                    admin.Accountant = false;
                 }
 
-                userManager.RemoveFromRole(user.Id, MyConstants.RoleAdmin);
-                userManager.RemoveFromRole(user.Id, MyConstants.RoleAccountant);
-
-
-                if (!admin.Accountant)
-                    userManager.AddToRole(user.Id, MyConstants.RoleAdmin);
-                else
-                    userManager.AddToRole(user.Id, MyConstants.RoleAccountant);
 
 
                 userManager.Update(user);
