@@ -1,8 +1,10 @@
-﻿using HospitalSystem.Models;
+﻿using HospitalSystem.Data;
+using HospitalSystem.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
+using System.Data.Entity.Migrations;
 using System.Linq;
 
 [assembly: OwinStartupAttribute(typeof(HospitalSystem.Startup))]
@@ -43,7 +45,7 @@ namespace HospitalSystem
                 db.SaveChanges();
             }
 
-            if(!db.Users.Any( x=> x.UserName == "admin@hospital.com"))
+            if (!db.Users.Any(x => x.UserName == "admin@hospital.com"))
             {
                 var userStore = new UserStore<ApplicationUser>(db);
                 var userManager = new ApplicationUserManager(userStore);
@@ -56,10 +58,24 @@ namespace HospitalSystem
                     Email = "admin@hospital.com",
                     UserName = "admin@hospital.com"
                 };
-             
+
                 userManager.Create(newUser, "hospital");
                 userManager.AddToRole(newUser.Id, MyConstants.RoleAdmin);
 
+                Admin admin = new Admin()
+                {
+                    UserId = newUser.Id,
+                    Email = newUser.Email,
+                    City = "Istanbul",
+                    DOB = new System.DateTime(2011, 1, 1),
+                    Address = "Ayvansaray",
+                    PhoneNumber = "+9055555",
+                    Accountant = false
+                };
+
+                HospitalSystem3Context hospitalDb = new HospitalSystem3Context();
+                hospitalDb.Admins.AddOrUpdate(admin);
+                hospitalDb.SaveChanges();
 
 
                 db.SaveChanges();

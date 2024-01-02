@@ -1,6 +1,31 @@
-﻿
+﻿@model HospitalSystem.Models.Admin
 @{
     ViewBag.Title = "Admin";
 }
- 
+
 @Html.Partial("~/Views/Admins/Header.cshtml");
+
+<section id="ozel-sayfa">
+    <h2 style="margin-left: 13%;">My Page</h2>
+    <div class="container">
+        <div class="kisisel-bilgiler">
+            <h3>Personal Information</h3>
+            <ul>
+                <li><span>Name Surname:</span> @Model.UserId.Substring(0,10)...</li>
+                <li><span>Date of Birth:</span> @Model.DOB.ToShortDateString()</li>
+                <li><span>Phone Number:</span> @Model.PhoneNumber</li>
+                <li><span>E-Mail Address:</span> @Model.Email</li>
+            </ul>
+        </div>
+        <div class="hesap-bilgileri">
+            <h3>Hospital Info</h3>
+            <ul>
+                <li><span>Patient Count:</span> @ViewBag.PatientCount</li>
+                <li><span>Doctor Count:</span> @ViewBag.DoctorCount</li>
+                <li><span>App Count:</span> @ViewBag.AppCount</li>
+                <li><span>Bill Count:</span> @ViewBag.BillCount</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
