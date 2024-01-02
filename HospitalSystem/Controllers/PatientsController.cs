@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -76,7 +77,12 @@ namespace HospitalSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                ApplicationDbContext userdb = new ApplicationDbContext();
+                var userStore = new UserStore<ApplicationUser>(userdb);
+                var userManager = new ApplicationUserManager(userStore);
+             
+                var patient_old = db.Patients.FirstOrDefault(y => y.Id == patient.Id);
+               
                 if (Request["password"] != "")
                 {
                     if (Request["password"] != Request["passwordconfirm"])
@@ -85,26 +91,29 @@ namespace HospitalSystem.Controllers
                         return View(patient);
                     }
                     else
-                    {
-                        ApplicationDbContext userdb = new ApplicationDbContext(); 
-                        var userStore = new UserStore<ApplicationUser>(userdb);
-                        var userManager = new ApplicationUserManager(userStore);
-
-                        if (userdb.Users.Any(x => x.UserName == patient.Email))
-                        {
-                            ViewBag.SameEmail = "The email already exists.";
-                            return View(patient);
-                        }
-
-
+                    { 
                         userManager.RemovePassword(patient.UserId); 
                         userManager.AddPassword(patient.UserId, Request["password"]);
-
+                         
+                    }
+                }
+                if (patient_old.Email != patient.Email)//email changes detected
+                {
+                    if (userdb.Users.Any(x => x.UserName == patient.Email))
+                    {
+                        ViewBag.SameEmail = "The email already exists. Take another";
                         return View(patient);
                     }
-                } 
 
-                db.Entry(patient).State = EntityState.Modified;
+                    var user = userdb.Users.FirstOrDefault(x => x.Id == patient.UserId);
+
+                    user.Email = patient.Email;
+                    user.UserName = patient.Email;
+
+                    userManager.Update(user);
+
+                }
+                db.Patients.AddOrUpdate(patient);
                 db.SaveChanges(); 
             }
             else

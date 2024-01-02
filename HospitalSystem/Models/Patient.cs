@@ -8,8 +8,7 @@ using System.Web;
 namespace HospitalSystem.Models
 {
     public class Patient
-    {
-        // patient may be stay in any room
+    { 
         [Key]
         public int Id { get; set; }
 
@@ -25,7 +24,7 @@ namespace HospitalSystem.Models
         [Required(ErrorMessage = "Blood Group is required")]
         public string Blood_Group { get; set; }
         [Required]
-        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]
+        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",ErrorMessage ="Email is not valid")]
         public string Email { get; set; }
         [Required]
         public string Address { get; set; }

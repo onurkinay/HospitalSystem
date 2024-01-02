@@ -57,7 +57,8 @@ htmlAttributes = new
                 </li>
                 <li>
                     <span>E-mail Address:</span>   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+              
+                    @ViewBag.SameEmail
                 </li>
                 <li>
                     <span>Blood Group: </span>  @Html.EditorFor(model => model.Blood_Group, new { htmlAttributes = new { @class = "form-control" } })

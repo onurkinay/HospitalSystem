@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System.Web.Security;
 using System.Diagnostics;
+using System.Data.Entity.Migrations;
 
 namespace HospitalSystem.Controllers
 {
@@ -148,8 +149,16 @@ namespace HospitalSystem.Controllers
 
             if (ModelState.IsValid)
             {
+                 
+                ApplicationDbContext userdb = new ApplicationDbContext();
+                var userStore = new UserStore<ApplicationUser>(userdb);
+                var userManager = new ApplicationUserManager(userStore);
+
+              
+                var doctor_old = db.Doctors.FirstOrDefault(y => y.ID == doctor.ID);
+
                 if (Request["password"] != "")
-                {
+                {//password changes detected
                     if (Request["password"] != Request["passwordconfirm"])
                     {
                         ViewBag.PassMess = "Passwrod are different";
@@ -157,24 +166,31 @@ namespace HospitalSystem.Controllers
                     }
                     else
                     {
-                        ApplicationDbContext userdb = new ApplicationDbContext();
-                        var userStore = new UserStore<ApplicationUser>(userdb);
-                        var userManager = new ApplicationUserManager(userStore);
-                        if (userdb.Users.Any(x => x.UserName == doctor.Email))
-                        {
-                            ViewBag.SameEmail = "The email already exists. Take another";
-                            return View(doctor);
-                        }
-
-
                         userManager.RemovePassword(doctor.UserId);
                         userManager.AddPassword(doctor.UserId, Request["password"]);
 
                         return View(doctor);
                     }
                 }
+                if(doctor_old.Email != doctor.Email)//email changes detected
+                {
+                    if (userdb.Users.Any(x => x.UserName == doctor.Email))
+                    {
+                        ViewBag.SameEmail = "The email already exists. Take another";
+                        return View(doctor);
+                    }
 
-                db.Entry(doctor).State = EntityState.Modified;
+                    var user = userdb.Users.FirstOrDefault(x => x.Id == doctor.UserId);
+
+                    user.Email = doctor.Email;
+                    user.UserName = doctor.Email;
+
+                    userManager.Update(user);
+
+
+                }
+
+                db.Doctors.AddOrUpdate(doctor);
                 db.SaveChanges();
             }
             else
