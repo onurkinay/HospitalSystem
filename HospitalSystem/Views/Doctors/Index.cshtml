@@ -4,12 +4,27 @@
     ViewBag.Title = "Index";
 }
 @Html.Partial("~/Views/Admins/Header.cshtml");
- 
 
+<style>
+    .buttonAddDoctor {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .addDoctor {
+        background-color: #3586ff;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+    }
+</style>
 
 <section id="doktor-yonetimi">
     <div class="container">
-        <h2 style="display:inline">Doctor Management</h2> @Html.ActionLink("Add Doctor", "Create")
+        <h2 style="display:inline">Doctor Management</h2>
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
@@ -32,6 +47,10 @@
             }
         </ul>
     </div>
+    <div class="buttonAddDoctor">
+        @Html.ActionLink("Add Doctor", "Create", null, new { @class = "addDoctor" })
+    </div>
+    
 </section>
 
 
@@ -105,7 +124,7 @@
 
                 $('li.docDept').html('<span>Department:</span> ' + department)
                 $('#ex1').modal();
-            }); 
+            });
         });
     });
 
