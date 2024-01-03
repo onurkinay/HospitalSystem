@@ -4,16 +4,6 @@
     ViewBag.Title = "Index";
 }
 @Html.Partial("~/Views/Admins/Header.cshtml");
-=======
-@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
-{
-    @Html.Partial("~/Views/Admins/Header.cshtml");
-} 
-else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
-{
-    @Html.Partial("~/Views/Admins/AccountantHeader.cshtml");
-
-}
 
 <style>
     .buttonAddDoctor {
@@ -30,13 +20,19 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
         text-decoration: none;
         font-size: 16px;
     }
+    .bosluk{
+        height:10px;
+    }
 </style>
 
 <section id="doktor-yonetimi">
     <div class="container">
 
-        <h2 style="display:inline">Doctor Management</h2>@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin)) {@Html.ActionLink("Add Doctor", "Create")}
-
+        <h2 style="display:inline">Doctor Management</h2>
+        <div class="buttonAddDoctor">
+            @Html.ActionLink("Add Doctor", "Create", null, new { @class = "addDoctor" })
+        </div>
+        <div class="bosluk"> </div>
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
@@ -71,7 +67,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
                         else
                         {
                             @Html.ActionLink("Change Salary", "EditSalary", new { id = item.ID }, new { @class = "changeSalary" })
-                             }
+                        }
                         @Html.Raw("| ")
                         @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "getDetails" })
                         @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
@@ -84,9 +80,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
             }
         </ul>
     </div>
-    <div class="buttonAddDoctor">
-        @Html.ActionLink("Add Doctor", "Create", null, new { @class = "addDoctor" })
-    </div>
+
     
 </section>
 

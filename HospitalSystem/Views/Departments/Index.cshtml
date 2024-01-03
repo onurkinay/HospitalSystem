@@ -21,11 +21,18 @@
         text-decoration: none;
         font-size: 16px;
     }
+    .bosluk {
+        height: 10px;
+    }
 </style>
 
 <section id="doktor-yonetimi">
     <div class="container">
         <h2 style="display:inline">Departments</h2>
+        <div class="buttonAddDepartment">
+            @Html.ActionLink("Add Department", "Create", null, new { @class = "addDepartment" })
+        </div>
+        <div class="bosluk"> </div>
         <ul class="responsive-table">
             @if (Model.Count() == 0)
             {
@@ -58,9 +65,7 @@
             }
         </ul>
     </div>
-    <div class="buttonAddDepartment">
-        @Html.ActionLink("Add Department", "Create", null, new { @class = "addDepartment" })
-    </div>
+
 </section>
 
  
