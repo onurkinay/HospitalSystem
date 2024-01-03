@@ -5,9 +5,28 @@
 }
 
 @Html.Partial("~/Views/Admins/Header.cshtml");
+
+<style>
+    .buttonAddAdmin {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .addAdmin {
+        background-color: #3586ff;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+    }
+</style>
+
 <section id="doktor-yonetimi">
     <div class="container">
-        <h2 style="display:inline">Admin Management</h2> @Html.ActionLink("Add Admin", "Create")
+        <h2 style="display:inline">Admin Management</h2> 
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">@Html.DisplayNameFor(model => model.UserId)</div>
@@ -28,6 +47,10 @@
             }
         </ul>
     </div>
+    <div class="buttonAddAdmin">
+        @Html.ActionLink("Add Admin", "Create", null, new { @class = "addAdmin" })
+    </div>
+
 </section>
 
 
