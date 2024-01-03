@@ -22,18 +22,11 @@
         text-decoration: none;
         font-size: 16px;
     }
-    .bosluk {
-        height: 10px;
-    }
 </style>
 
 <section id="doktor-yonetimi">
     <div class="container">
-        <h2 style="display:inline">Admin Management</h2>
-        <div class="buttonAddAdmin">
-            @Html.ActionLink("Add Admin", "Create", null, new { @class = "addAdmin" })
-        </div>
-        <div class="bosluk"></div>
+        <h2 style="display:inline">Admin Management</h2> 
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">@Html.DisplayNameFor(model => model.UserId)</div>
@@ -54,7 +47,9 @@
             }
         </ul>
     </div>
-
+    <div class="buttonAddAdmin">
+        @Html.ActionLink("Add Admin", "Create", null, new { @class = "addAdmin" })
+    </div>
 
 </section>
 
