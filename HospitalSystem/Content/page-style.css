@@ -342,6 +342,27 @@ h2#admin {
 nav#admin {
     width: 30%;
 }
+
+.addButton {
+    float: right;
+}
+
+.addButtonInside {
+    background-color: #3586ff;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.bosluk {
+    height: 10px;
+}
+ 
+
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
 
 * {
