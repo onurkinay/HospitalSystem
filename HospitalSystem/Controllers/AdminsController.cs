@@ -10,19 +10,19 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
-{
-    [Authorize(Roles = MyConstants.RoleAdmin)]
+{ 
     public class AdminsController : Controller
     {
-        private HospitalSystem3Context db = new HospitalSystem3Context();
-        //branch test
+        private HospitalSystem3Context db = new HospitalSystem3Context(); 
         // GET: Admins
+        [Authorize(Roles =  MyConstants.RoleAdmin)]
         public ActionResult Index()
         {
             return View(db.Admins.ToList());
         }
 
         // GET: Admins/Details/5
+        [Authorize(Roles = MyConstants.RoleAccountant + "," + MyConstants.RoleAdmin)]
         public string Details(int? id)
         {
             string adminGuid = User.Identity.GetUserId();
@@ -43,6 +43,7 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Admins/Create
+        [Authorize(Roles =  MyConstants.RoleAdmin)]
         public ActionResult Create()
         {
             return View();
@@ -53,7 +54,7 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
+        [Authorize(Roles = MyConstants.RoleAdmin)]
         public ActionResult Create([Bind(Include = "Id,Username,Password,Email,PhoneNumber,Address,City,DOB,Accountant")] Admin admin)
         {
             if (ModelState.IsValid)
@@ -105,14 +106,25 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Admins/Edit/5
-        [Authorize(Roles = MyConstants.RoleAccountant)]
+        [Authorize(Roles = MyConstants.RoleAccountant+","+MyConstants.RoleAdmin)]
         public ActionResult Edit(int? id)
         {
+            Admin admin;
+            if (User.IsInRole(MyConstants.RoleAccountant))
+            {
+                if (id != null) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                string adminGuid = User.Identity.GetUserId();
+                id = db.Admins.FirstOrDefault(y => y.UserId == adminGuid).Id;
+
+                admin = db.Admins.Find(id);
+                return View(admin);
+
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Admin admin = db.Admins.Find(id);
+            admin = db.Admins.Find(id);
             if (admin == null)
             {
                 return HttpNotFound();
@@ -125,6 +137,7 @@ namespace HospitalSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = MyConstants.RoleAccountant + "," + MyConstants.RoleAdmin)]
         public ActionResult Edit([Bind(Include = "Id,Username,Password,Email,PhoneNumber,Address,City,DOB,UserId,Accountant,UserId")] Admin admin)
         {//giriş yapmış adminie accountant verilmemeli
             if (ModelState.IsValid)
@@ -132,7 +145,7 @@ namespace HospitalSystem.Controllers
                 ApplicationDbContext userdb = new ApplicationDbContext();
                 var userStore = new UserStore<ApplicationUser>(userdb);
                 var userManager = new ApplicationUserManager(userStore); 
-
+                
                 var admin_old = db.Admins.FirstOrDefault(y => y.Id == admin.Id);
                 var user = userdb.Users.FirstOrDefault(x => x.Id == admin.UserId);
 
@@ -160,18 +173,26 @@ namespace HospitalSystem.Controllers
                     } 
                     user.Email = admin.Email;
                     user.UserName = admin.Email;
-                   
-                    
+                     
+               }
+
+                if(admin.Id != 1)//ilk adminin rolü asla değişmeyecek
+                {
+                    userManager.RemoveFromRole(user.Id, MyConstants.RoleAdmin);
+                    userManager.RemoveFromRole(user.Id, MyConstants.RoleAccountant);
+
+
+                    if (!admin.Accountant)
+                        userManager.AddToRole(user.Id, MyConstants.RoleAdmin);
+                    else
+                        userManager.AddToRole(user.Id, MyConstants.RoleAccountant);
+
+                }
+                else
+                {
+                    admin.Accountant = false;
                 }
 
-                userManager.RemoveFromRole(user.Id, MyConstants.RoleAdmin);
-                userManager.RemoveFromRole(user.Id, MyConstants.RoleAccountant);
-
-
-                if (!admin.Accountant)
-                    userManager.AddToRole(user.Id, MyConstants.RoleAdmin);
-                else
-                    userManager.AddToRole(user.Id, MyConstants.RoleAccountant);
 
 
                 userManager.Update(user);

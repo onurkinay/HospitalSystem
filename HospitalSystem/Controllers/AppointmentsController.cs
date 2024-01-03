@@ -205,7 +205,8 @@ namespace HospitalSystem.Controllers
             }
             ViewBag.Doctor_ID = new SelectList(db.Doctors, "ID", "Name", appointment.Doctor_ID);
             ViewBag.Patient_ID = new SelectList(db.Patients, "Id", "Name", appointment.Patient_ID);
-            return View(appointment);
+             
+            return RedirectToAction("Index");
         }
 
    

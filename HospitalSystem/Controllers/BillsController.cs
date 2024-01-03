@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace HospitalSystem.Controllers
 {
@@ -29,7 +30,7 @@ namespace HospitalSystem.Controllers
             }
             else if(User.IsInRole(MyConstants.RoleAccountant))
             {  
-                var bills = db.Bills.Include(b => b.CurAppointment);
+                var bills = db.Bills.Include(b => b.CurAppointment).Include(a => a.CurAppointment.Patient);
                 return View(bills.ToList());
             }
             return null;
@@ -49,18 +50,18 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Bills/Details/5
-        public ActionResult Details(int? id) // JSON RETURN
+        public string Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return "403";
             }
             Bill bill = db.Bills.Find(id);
             if (bill == null)
             {
-                return HttpNotFound();
+                return "404";
             }
-            return View(bill);
+            return JsonConvert.SerializeObject(bill, new JsonSerializerSettings() { DateFormatString = "yyyy-MM-ddThh:mm:ssZ" });
         }
 
         // GET: Bills/Create

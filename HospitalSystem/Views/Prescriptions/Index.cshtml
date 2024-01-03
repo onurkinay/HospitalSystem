@@ -12,86 +12,79 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 {
     @Html.Partial("~/Views/Patients/Header.cshtml");
 }
+ 
+<section id="randevular">
 
-<style>
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        font-family: sans-serif;
-        min-width: 400px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
+    <div class="container">
+        <h2>Prescription</h2> 
+        <ul class="responsive-table">
 
-        .table thead tr {
-            background-color: #3586ff;
-            color: #ffffff;
-            text-align: left;
-        }
 
-        .table th,
-        .table td {
-            padding: 12px 15px;
-        }
-
-        .table tbody tr {
-            border-bottom: 1px solid #dddddd;
-        }
-
-            .table tbody tr:nth-of-type(even) {
-                background-color: #f3f3f3;
+            @if (Model.Count() == 0)
+            {
+                <p> No record</p>
             }
-
-            .table tbody tr:last-of-type {
-                border-bottom: 2px solid #3586ff;
+            else
+            {
+                <li class="table-header">
+                    <div class="col col-1">Date/Time</div>
+                    @if (User.IsInRole("Patient"))
+                    {
+                        <div class="col col-3">Doctor Name</div>
+                    }
+                    else
+                    {
+                        <div class="col col-3">Patient Name</div>
+                    }
+                    <div class="col col-6">Actions</div>
+                </li>
             }
+            @foreach (var item in Model)
+            {
+                <li class="table-row">
+                    <div class="col col-1" data-label="Date">
+                        @Html.DisplayFor(modelItem => item.CurAppointment.AppointmentDate)
+                    </div>
 
-            .table tbody tr.active-row {
-                font-weight: bold;
-                color: #009879;
-            }
-</style>
+
+                    @if (User.IsInRole("Patient"))
+                    {<div class="col col-3" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.CurAppointment.Doctor.Name)</div>
+                    }
+                    else
+                    { <div class="col col-3" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.CurAppointment.Patient.Name)</div>
+                    }
 
 
-<h2>Prescriptions</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.CurAppointment.Description)</th>
-            <th>@Html.DisplayNameFor(model => model.Medicinde)</th>
-            <th>@Html.DisplayNameFor(model => model.Remark)</th>
-            <th>@Html.DisplayNameFor(model => model.Advice)</th>
-            <th>İşlemler</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.CurAppointment.Description)</td>
-                <td>@Html.DisplayFor(modelItem => item.Medicinde)</td>
-                <td>@Html.DisplayFor(modelItem => item.Remark)</td>
-                <td>@Html.DisplayFor(modelItem => item.Advice)</td>
-                <td>
+                <div class="col col-6" data-label="Change Appointment Operation">
 
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" })
                     @if (User.IsInRole("Doctor"))
                     {
-                        @Html.Raw("| ")
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                        @Html.Raw("| ")
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteApp" })
+                        @Html.Raw(" | ")
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" })
+                        @Html.Raw(" | ")
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deletePre" })
                     }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    else
+                    { 
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" })
+
+                }
+                </div>
+                </li>
+            }
+        </ul>
+    </div>
+
+</section>
+
+
+
+
 <div id="ex1" class="modal" style="max-width:auto">
-    <section id="ozel-sayfa" style="padding:0">
-        <div class="container" style="max-width:initial">
-            <div class="hesap-bilgileri">
+    <section id="ozel-sayfa" style="padding:0;margin-bottom:0">
+        <div class="container" style="max-width:initial;display:block">
+            <div class="hesap-bilgileri" style="width:initial">
                 <h3>Prescription Details</h3>
                 <ul>
                     <li class="medicinePrescription"> </li>
@@ -111,9 +104,9 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
     }
 
 
-    $('.deleteApp').click(function (event) {//linke click eventi kazandırma
+    $('.deletePre').click(function (event) {//linke click eventi kazandırma
         event.preventDefault();
-        if (confirm("Do you sure delete this appointment")) {
+        if (confirm("Do you sure delete this prescription")) {
             $.ajax({
                 url: this.href,
                 data: {

@@ -4,6 +4,16 @@
     ViewBag.Title = "Index";
 }
 @Html.Partial("~/Views/Admins/Header.cshtml");
+=======
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+{
+    @Html.Partial("~/Views/Admins/Header.cshtml");
+} 
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
+{
+    @Html.Partial("~/Views/Admins/AccountantHeader.cshtml");
+
+}
 
 <style>
     .buttonAddDoctor {
@@ -24,24 +34,51 @@
 
 <section id="doktor-yonetimi">
     <div class="container">
-        <h2 style="display:inline">Doctor Management</h2>
+
+        <h2 style="display:inline">Doctor Management</h2>@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin)) {@Html.ActionLink("Add Doctor", "Create")}
+
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
                 <div class="col col-2">@Html.DisplayNameFor(model => model.CurDepartment.Name)</div>
-                <div class="col col-3">@Html.DisplayNameFor(model => model.Specializations)</div>
+                @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+                {
+                    <div class="col col-3">@Html.DisplayNameFor(model => model.Specializations)</div>
+                }
+                else
+                {
+                    <div class="col col-3">@Html.DisplayNameFor(model => model.Salary)</div>
+                }
                 <div class="col col-4">Actions</div>
             </li>
             @foreach (var item in Model)
             {
                 <li class="table-row">
-                    <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
+                    <div class="col col-1 nameSurname" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
                     <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.CurDepartment.Name)</div>
-                    <div class="col col-3" data-label="Department">@Html.DisplayFor(modelItem => item.Specializations)</div>
+                    @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+                    {
+                        <div class="col col-3 ">@Html.DisplayFor(modelItem => item.Specializations)</div>
+                    }
+                    else
+                    {
+                        <div class="col col-3 salary">@Html.DisplayFor(modelItem => item.Salary)</div>
+                    }
                     <div class="col col-4" data-label="Operation">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "getDetails" }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "delete" })
+                        @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) }
+                        else
+                        {
+                            @Html.ActionLink("Change Salary", "EditSalary", new { id = item.ID }, new { @class = "changeSalary" })
+                             }
+                        @Html.Raw("| ")
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "getDetails" })
+                        @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+                        {
+                            @Html.Raw("| ")
+                            @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "delete" })
+                        }
                     </div>
                 </li>
             }
@@ -90,23 +127,35 @@
     }
 
 
-    $('.delete').click(function (event) {//linke click eventi kazandırma
+    $('.changeSalary').click(function (event) {//linke click eventi kazandırma
         event.preventDefault();
-        if (confirm("Do you sure delete this doctor")) {
-            $.ajax({
-                url: this.href,
-                data: {
-                    __RequestVerificationToken: gettoken()
-                },
-                type: 'POST',
-                success: function (result) {
-                    location.reload();
-                }
-            });
+        let salaryDName = $(event.target).parent().siblings(".nameSurname").text();
+        let oldsalary = $(event.target).parent().siblings(".salary").text();
+    
+        let salary = prompt("Please enter new salary for " + salaryDName,oldsalary );
+        if (salary != null && salary != "") {
+            if (isNaN(salary)) {
+                alert("Please enter a number");
+
+            } else if (salary < 0) {
+                alert("Salary must be greater than 0");
+            } else {
+                $.ajax({
+                    url: this.href,
+                    data: {
+                        __RequestVerificationToken: gettoken(),
+                        newSalary: salary
+                    },
+                    type: 'POST',
+                    success: function (result) {
+                        location.reload();
+                    }
+                });
+            }
         }
 
     });
-       //hasta tarafı
+      
     $('.getDetails').click(function (event) {//linke click eventi kazandırma
         event.preventDefault();
         this.blur();
@@ -127,8 +176,7 @@
             });
         });
     });
-
-       //hasta tarafı
+     
 
 </script>
 

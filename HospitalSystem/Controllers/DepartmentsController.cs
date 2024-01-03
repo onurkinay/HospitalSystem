@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
 using HospitalSystem.Models;
@@ -27,18 +24,18 @@ namespace HospitalSystem.Controllers
         }
 
         // GET: Departments/Details/5
-        public ActionResult Details(int? id)//JSON RETURN
+        public string Details(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return "403";
             }
-            Department department = db.Departments.Find(id);
-            if (department == null)
+            Department dept = db.Departments.Find(id);
+            if (dept == null)
             {
-                return HttpNotFound();
+                return "404";
             }
-            return View(department);
+            return JsonConvert.SerializeObject(dept, new JsonSerializerSettings() { DateFormatString = "yyyy-MM-ddThh:mm:ssZ" });
         }
 
         // GET: Departments/Create

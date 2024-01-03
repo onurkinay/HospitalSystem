@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Web.Security;
 using System.Diagnostics;
 using System.Data.Entity.Migrations;
+using System;
 
 namespace HospitalSystem.Controllers
 {
@@ -199,6 +200,20 @@ namespace HospitalSystem.Controllers
                 Debug.WriteLine("HATA");
             }
             return View(doctor);
+        }
+
+        public string EditSalary(int? id)
+        {
+            if (id == null)
+            {
+                return "";
+            }
+
+            var doctor = db.Doctors.FirstOrDefault(x => x.ID == id);
+            doctor.Salary = Convert.ToInt32(Request["newSalary"]);
+            db.Doctors.AddOrUpdate(doctor);
+            db.SaveChanges();
+            return "";
         }
 
         // GET: Doctors/Delete/5
