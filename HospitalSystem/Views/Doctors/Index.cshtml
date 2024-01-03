@@ -20,11 +20,18 @@
         text-decoration: none;
         font-size: 16px;
     }
+    .bosluk {
+        height: 10px;
+    }
 </style>
 
 <section id="doktor-yonetimi">
     <div class="container">
         <h2 style="display:inline">Doctor Management</h2>
+        <div class="buttonAddDoctor">
+            @Html.ActionLink("Add Doctor", "Create", null, new { @class = "addDoctor" })
+        </div>
+        <div class="bosluk"></div>
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
@@ -47,9 +54,7 @@
             }
         </ul>
     </div>
-    <div class="buttonAddDoctor">
-        @Html.ActionLink("Add Doctor", "Create", null, new { @class = "addDoctor" })
-    </div>
+
     
 </section>
 
