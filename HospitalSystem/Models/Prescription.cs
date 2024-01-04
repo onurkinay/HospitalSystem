@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace HospitalSystem.Models
         public string Advice { get; set; }
 
         [Required]
+        [DisplayName("Appointment")]
         public int Appointment_ID { get; set; }
         public Appointment CurAppointment { get; set; }
 

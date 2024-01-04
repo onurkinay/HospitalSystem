@@ -17,7 +17,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 
 
 <section id="randevu-al-container">
-    <h2 class="container-header">Create Pre</h2>
+    <h2 class="container-header">Edit Precription</h2>
     <div class="randevu-al">
         @using (Html.BeginForm())
         {
@@ -44,7 +44,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 
             <div class="form-group">
                 <label>
-                    @Html.LabelFor(model => model.Appointment_ID, "Appointment_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                    Appointment
                 </label>
                 @Html.DropDownList("Appointment_ID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
                 @Html.ValidationMessageFor(model => model.Advice, "", new { @class = "text-danger" })
@@ -52,7 +52,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 
 
             <div class="form-group">
-                <input id="btn" type="submit" value="Create Appointment">
+                <input id="btn" type="submit" value="Edit Precription">
             </div>
         }
     </div>
