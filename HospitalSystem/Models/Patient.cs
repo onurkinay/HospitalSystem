@@ -25,7 +25,6 @@ namespace HospitalSystem.Models
         public bool Gender { get; set; } 
         [Required(ErrorMessage = "Blood Group is required")]
         [DisplayName("Blood Type")]
-
         public Blood Blood_Group { get; set; }
         [Required]
         [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",ErrorMessage ="Email is not valid")]

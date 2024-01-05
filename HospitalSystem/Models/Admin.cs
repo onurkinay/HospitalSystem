@@ -7,8 +7,7 @@ using System.Web;
 namespace HospitalSystem.Models
 {
     public class Admin
-    {
-        // admin doesn't have any relationship
+    { 
         [Key]
         public int Id { get; set; } 
         public string UserId { get; set; }

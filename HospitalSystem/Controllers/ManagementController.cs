@@ -67,7 +67,7 @@ namespace HospitalSystem.Controllers
             {
                 if (Request["password"] != Request["passwordconfirm"])
                 {
-                    ViewBag.PassMess = "Passwrod are different";
+                    ViewBag.PassMess = "Password are different";
                     return View(patient);
                 }
             }

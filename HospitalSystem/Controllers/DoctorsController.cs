@@ -7,7 +7,6 @@ using HospitalSystem.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
-using System.Web.Security;
 using System.Diagnostics;
 using System.Data.Entity.Migrations;
 using System;
@@ -162,7 +161,7 @@ namespace HospitalSystem.Controllers
                 {//password changes detected
                     if (Request["password"] != Request["passwordconfirm"])
                     {
-                        ViewBag.PassMess = "Passwrod are different";
+                        ViewBag.PassMess = "Password are different";
                         return View(doctor);
                     }
                     else
