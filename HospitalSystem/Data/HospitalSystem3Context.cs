@@ -17,7 +17,7 @@ namespace HospitalSystem.Data
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
     
-        public HospitalSystem3Context() : base("Server=tcp:dbhospital.database.windows.net,1433;Initial Catalog=dbhospital;Persist Security Info=False;User ID=fsmvu;Password=rneiFJryBN87tVX;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;")
+        public HospitalSystem3Context() : base("HospitalSystem3Context")
         {
         }
 
