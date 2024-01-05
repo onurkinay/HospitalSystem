@@ -171,33 +171,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312231145339_userroles.cs" />
-    <Compile Include="Migrations\202312231145339_userroles.designer.cs">
-      <DependentUpon>202312231145339_userroles.cs</DependentUpon>
+    <Compile Include="Migrations\202401050950244_first2.cs" />
+    <Compile Include="Migrations\202401050950244_first2.designer.cs">
+      <DependentUpon>202401050950244_first2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202312240948557_remove-age.cs" />
-    <Compile Include="Migrations\202312240948557_remove-age.designer.cs">
-      <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312291822054_remove-cons-fee.cs" />
-    <Compile Include="Migrations\202312291822054_remove-cons-fee.designer.cs">
-      <DependentUpon>202312291822054_remove-cons-fee.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202312311313539_modified-models.cs" />
-    <Compile Include="Migrations\202312311313539_modified-models.designer.cs">
-      <DependentUpon>202312311313539_modified-models.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202401020923348_addprice.cs" />
-    <Compile Include="Migrations\202401020923348_addprice.designer.cs">
-      <DependentUpon>202401020923348_addprice.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202401021417308_needmig.cs" />
-    <Compile Include="Migrations\202401021417308_needmig.designer.cs">
-      <DependentUpon>202401021417308_needmig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202401021420138_needmig2.cs" />
-    <Compile Include="Migrations\202401021420138_needmig2.designer.cs">
-      <DependentUpon>202401021420138_needmig2.cs</DependentUpon>
+    <Compile Include="Migrations\202401051043327_enumblood.cs" />
+    <Compile Include="Migrations\202401051043327_enumblood.designer.cs">
+      <DependentUpon>202401051043327_enumblood.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -333,27 +313,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202312231145339_userroles.resx">
-      <DependentUpon>202312231145339_userroles.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Migrations\202401050950244_first2.resx">
+      <DependentUpon>202401050950244_first2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312240948557_remove-age.resx">
-      <DependentUpon>202312240948557_remove-age.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312291822054_remove-cons-fee.resx">
-      <DependentUpon>202312291822054_remove-cons-fee.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202312311313539_modified-models.resx">
-      <DependentUpon>202312311313539_modified-models.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202401020923348_addprice.resx">
-      <DependentUpon>202401020923348_addprice.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202401021417308_needmig.resx">
-      <DependentUpon>202401021417308_needmig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202401021420138_needmig2.resx">
-      <DependentUpon>202401021420138_needmig2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202401051043327_enumblood.resx">
+      <DependentUpon>202401051043327_enumblood.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

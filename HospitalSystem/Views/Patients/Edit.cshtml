@@ -42,14 +42,14 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
                 </li>
                 <li>
                     <span>Date of Birth:</span>     @Html.EditorFor(model => dob, new
-                                               {
-                                                   htmlAttributes = new
-                                                   {
-                                                       @class = "form-control",
-                                                       @type = "date",
-                                                       @max = DateTime.Now.ToString("yyyy-MM-dd")
-                                                   }
-                                               })
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control",
+                       @type = "date",
+                       @max = DateTime.Now.ToString("yyyy-MM-dd")
+                   }
+               })
                     @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
                 </li>
                 <li>
@@ -58,11 +58,11 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
                 </li>
                 <li>
                     <span>E-mail Address:</span>   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-              
+
                     @ViewBag.SameEmail
                 </li>
                 <li>
-                    <span>Blood Group: </span>  @Html.EditorFor(model => model.Blood_Group, new { htmlAttributes = new { @class = "form-control" } })
+                    <span>Blood Type: </span>  @Html.DropDownListFor(model => model.Blood_Group, EnumHelper.GetSelectList(typeof(HospitalSystem.Models.Patient.Blood)), new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Blood_Group, "", new { @class = "text-danger" })
                 </li>
                 <li> <button>Send</button></li>

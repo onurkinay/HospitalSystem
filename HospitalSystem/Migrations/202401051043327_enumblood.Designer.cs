@@ -7,13 +7,13 @@ namespace HospitalSystem.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class modifiedmodels : IMigrationMetadata
+    public sealed partial class enumblood : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(modifiedmodels));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(enumblood));
         
         string IMigrationMetadata.Id
         {
-            get { return "202312311313539_modified-models"; }
+            get { return "202401051043327_enumblood"; }
         }
         
         string IMigrationMetadata.Source

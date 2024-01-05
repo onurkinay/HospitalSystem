@@ -57,7 +57,7 @@ htmlAttributes = new
                 @ViewBag.SameEmail
             </li>
             <li>
-                <span>Blood Group: </span>  @Html.EditorFor(model => model.Blood_Group, new { htmlAttributes = new { @class = "form-control" } })
+                <span>Blood Type: </span>  @Html.DropDownListFor(model => model.Blood_Group, EnumHelper.GetSelectList(typeof(HospitalSystem.Models.Patient.Blood)), new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Blood_Group, "", new { @class = "text-danger" })
             </li>
             <li> <button>Send</button></li>

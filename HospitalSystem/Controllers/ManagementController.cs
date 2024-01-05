@@ -34,6 +34,7 @@ namespace HospitalSystem.Controllers
                 ViewBag.DoctorCount = db.Doctors.Count();
                 ViewBag.AppCount = db.Appointments.Count();
                 ViewBag.BillCount = db.Bills.Count();
+                ViewBag.DeptCount = db.Departments.Count();
 
                 return View("Admin",admin);
             }

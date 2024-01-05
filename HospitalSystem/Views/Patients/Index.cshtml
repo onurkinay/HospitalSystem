@@ -11,28 +11,34 @@
 <section id="hasta-yonetimi">
     <div class="container">
         <h2>Patients</h2>
-        <ul class="responsive-table">
-            <li class="table-header">
-                <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
-                <div class="col col-2">@Html.DisplayNameFor(model => model.City)</div>
-                <div class="col col-3">@Html.DisplayNameFor(model => model.Email)</div>
-                <div class="col col-4">Actions</div>
-            </li>
-            @foreach (var item in Model)
-            {
-                <li class="table-row">
-                    <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
-                    <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.City)</div>
-                    <div class="col col-3" data-label="Department">@Html.DisplayFor(modelItem => item.Email)</div>
-                    <div class="col col-4" data-label="Operation">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId },  new { @class = "delete" })
-                    </div>
+        @if (Model.Count() == 0)
+        {
+            <p>No record!</p>
+        }
+        else
+        {
+            <ul class="responsive-table">
+                <li class="table-header">
+                    <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
+                    <div class="col col-2">@Html.DisplayNameFor(model => model.City)</div>
+                    <div class="col col-3">@Html.DisplayNameFor(model => model.Email)</div>
+                    <div class="col col-4">Actions</div>
                 </li>
-            }
-        </ul>
-    </div>
+                @foreach (var item in Model)
+                {
+                    <li class="table-row">
+                        <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
+                        <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.City)</div>
+                        <div class="col col-3" data-label="Department">@Html.DisplayFor(modelItem => item.Email)</div>
+                        <div class="col col-4" data-label="Operation">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "delete" })
+                        </div>
+                    </li>
+                }
+            </ul>
+        }     </div>
 </section>
 
  

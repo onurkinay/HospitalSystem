@@ -1,10 +1,19 @@
 ﻿@model IEnumerable<HospitalSystem.Models.Doctor>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Doctor Management";
 }
-@Html.Partial("~/Views/Admins/Header.cshtml");
- 
+@if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+{
+
+    @Html.Partial("~/Views/Admins/Header.cshtml");
+}
+else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAccountant))
+{
+
+    @Html.Partial("~/Views/Admins/AccountantHeader.cshtml");
+}
+
 
 <section id="doktor-yonetimi">
     <div class="container">
@@ -17,62 +26,69 @@
             </div>
             <div class="bosluk"></div>
         }
+        @if (Model.Count() == 0)
+        {
+            <p>No record!</p>
+        }
+        else
+        {
 
-        <ul class="responsive-table">
-            <li class="table-header">
-                <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
-                <div class="col col-2">@Html.DisplayNameFor(model => model.CurDepartment.Name)</div>
-                @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
-                {
-                    <div class="col col-3">@Html.DisplayNameFor(model => model.Specializations)</div>
-                }
-                else
-                {
-                    <div class="col col-3">@Html.DisplayNameFor(model => model.Salary)</div>
-                }
-                <div class="col col-4">Actions</div>
-            </li>
-            @foreach (var item in Model)
-            {
-                <li class="table-row">
-                    <div class="col col-1 nameSurname" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
-                    <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.CurDepartment.Name)</div>
+            <ul class="responsive-table">
+                <li class="table-header">
+                    <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
+                    <div class="col col-2">@Html.DisplayNameFor(model => model.CurDepartment.Name)</div>
                     @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
                     {
-                        <div class="col col-3 ">@Html.DisplayFor(modelItem => item.Specializations)</div>
+                        <div class="col col-3">@Html.DisplayNameFor(model => model.Specializations)</div>
                     }
                     else
                     {
-                        <div class="col col-3 salary">@Html.DisplayFor(modelItem => item.Salary)</div>
+                        <div class="col col-3">@Html.DisplayNameFor(model => model.Salary)</div>
                     }
-                    <div class="col col-4" data-label="Operation">
+                    <div class="col col-4">Actions</div>
+                </li>
+                @foreach (var item in Model)
+                {
+                    <li class="table-row">
+                        <div class="col col-1 nameSurname" data-label="Job Id">@Html.DisplayFor(modelItem => item.Name) @Html.DisplayFor(modelItem => item.Surname)</div>
+                        <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.CurDepartment.Name)</div>
                         @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
                         {
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ID }) }
+                            <div class="col col-3 ">@Html.DisplayFor(modelItem => item.Specializations)</div>
+                        }
                         else
                         {
-                            @Html.ActionLink("Change Salary", "EditSalary", new { id = item.ID }, new { @class = "changeSalary" })
+                            <div class="col col-3 salary">@Html.DisplayFor(modelItem => item.Salary)</div>
                         }
-                        @Html.Raw("| ")
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "getDetails" })
-                        @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
-                        {
+                        <div class="col col-4" data-label="Operation">
+                            @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+                            {
+                                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) }
+                            else
+                            {
+                                @Html.ActionLink("Change Salary", "EditSalary", new { id = item.ID }, new { @class = "changeSalary" })
+                            }
                             @Html.Raw("| ")
-                            @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "delete" })
-                        }
-                    </div>
-                </li>
-            }
-        </ul>
+                            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @class = "getDetails" })
+                            @if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
+                            {
+                                @Html.Raw("| ")
+                                @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "delete" })
+                            }
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
     </div>
 
-    
+
 </section>
 
 
 
 <div id="ex1" class="modal" style="max-width:initial">
-    <section id="ozel-sayfa" style="padding:0">
+    <section id="ozel-sayfa" style="padding:0;margin-bottom:0">
         <div class="container" style="max-width:initial">
             <div class="kisisel-bilgiler">
                 <h3>Personal Information</h3>
@@ -91,6 +107,7 @@
                     <li class="docSpecializations"><span>Specializations:</span> </li>
                     <li class="docLangs"><span>Langs:</span></li>
                     <li class="docDept"><span>Department:</span></li>
+                    <li class="docSalary"><span>Salary:</span></li>
                 </ul>
             </div>
         </div>
@@ -110,7 +127,7 @@
         event.preventDefault();
         let salaryDName = $(event.target).parent().siblings(".nameSurname").text();
         let oldsalary = $(event.target).parent().siblings(".salary").text();
-    
+
         let salary = prompt("Please enter new salary for " + salaryDName,oldsalary );
         if (salary != null && salary != "") {
             if (isNaN(salary)) {
@@ -134,7 +151,7 @@
         }
 
     });
-      
+
     $('.getDetails').click(function (event) {//linke click eventi kazandırma
         event.preventDefault();
         this.blur();
@@ -148,6 +165,7 @@
             $('li.docExperience').html('<span>Experience:</span> ' + doctor.Experience)
             $('li.docSpecializations').html('<span>Specializations:</span> ' + doctor.Specializations)
             $('li.docLangs').html('<span>Languages:</span> ' + doctor.Languages)
+            $('li.docSalary').html('<span>Salary:</span> ' + doctor.Salary)
             $.get("/Departments/getDeptName/" + doctor.CurDeptartmentID, function (department) {
 
                 $('li.docDept').html('<span>Department:</span> ' + department)
@@ -155,7 +173,7 @@
             });
         });
     });
-     
+
 
 </script>
 

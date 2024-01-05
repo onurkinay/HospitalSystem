@@ -3,16 +3,16 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class removeage : DbMigration
+    public partial class enumblood : DbMigration
     {
         public override void Up()
         {
-            DropColumn("dbo.Doctors", "Age");
+            AlterColumn("dbo.Patients", "Blood_Group", c => c.Int(nullable: false));
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Doctors", "Age", c => c.Int(nullable: false));
+            AlterColumn("dbo.Patients", "Blood_Group", c => c.String(nullable: false));
         }
     }
 }

@@ -1,37 +1,17 @@
 ﻿@model IEnumerable<HospitalSystem.Models.Admin>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Admin Management";
 }
 
 @Html.Partial("~/Views/Admins/Header.cshtml");
 
-<style>
-    .buttonAddAdmin {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .addAdmin {
-        background-color: #3586ff;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 16px;
-    }
-    .bosluk {
-        height: 10px;
-    }
-</style>
 
 <section id="doktor-yonetimi">
     <div class="container">
         <h2 style="display:inline">Admin Management</h2>
-        <div class="buttonAddAdmin">
-            @Html.ActionLink("Add Admin", "Create", null, new { @class = "addAdmin" })
+        <div class="addButton">
+            @Html.ActionLink("Add Admin", "Create", null, new { @class = "addButtonInside" })
         </div>
         <div class="bosluk"> </div>
         <ul class="responsive-table">
@@ -48,7 +28,14 @@
                     <div class="col col-4" data-label="Operation">
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                         @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.UserId }, new { @class = "delete" })
+                        @if (item.Id != 1)
+                        {
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "delete" });
+                        }
+                        else
+                        {
+                            @Html.Raw("Can't be deleted")
+                        }
                     </div>
                 </li>
             }
@@ -61,25 +48,24 @@
 
 
 <div id="ex1" class="modal" style="max-width:initial">
-    <section id="ozel-sayfa" style="padding:0">
+    <section id="ozel-sayfa" style="padding:0;margin-bottom:0">
         <div class="container" style="max-width:initial">
             <div class="kisisel-bilgiler">
                 <h3>Personal Information</h3>
                 <ul>
-                    <li class="docNameSurname"><span>Name Surname:</span> </li>
-                    <li class="docDoB"><span>Date of Birth:</span> </li>
-                    <li class="docNumber"><span>Phone Number:</span> </li>
-                    <li class="docEmail"><span>E-Mail Address:</span></li>
-                    <li class="docGender"><span>Gender:</span></li>
+                    <li class="adminUserId"><span>User Id:</span> </li>
+                    <li class="adminDoB"><span>Date of Birth:</span> </li>
+                    <li class="adminNumber"><span>Phone Number:</span> </li>
+                    <li class="adminEmail"><span>E-Mail Address:</span></li>
+                   
                 </ul>
             </div>
             <div class="hesap-bilgileri">
                 <h3>-</h3>
                 <ul>
-                    <li class="docExperience"><span>Experience:</span></li>
-                    <li class="docSpecializations"><span>Specializations:</span> </li>
-                    <li class="docLangs"><span>Langs:</span></li>
-                    <li class="docDept"><span>Department:</span></li>
+                    <li class="adminAccountant"><span>Experience:</span></li>
+                    <li class="adminAddress"><span>Specializations:</span> </li>
+                    <li class="adminCity"><span>Langs:</span></li>
                 </ul>
             </div>
         </div>
@@ -116,20 +102,15 @@
         event.preventDefault();
         this.blur();
         $.get(this.href, function (json) {
-            const doctor = JSON.parse(json)
-            $('li.docNameSurname').html('<span>Name Surname:</span> ' + doctor.Name + " " + doctor.Surname)
-            $('li.docDoB').html('<span>Date of Birth:</span> ' + (new Date(doctor.DOB)).toLocaleDateString())
-            $('li.docNumber').html('<span>Phone Number:</span> ' + doctor.Phone)
-            $('li.docEmail').html('<span>Email:</span> ' + doctor.Email)
-            $('li.docGender').html('<span>Gender:</span> ' + ((doctor.Gender) ? "Male" : "Female"))
-            $('li.docExperience').html('<span>Experience:</span> ' + doctor.Experience)
-            $('li.docSpecializations').html('<span>Specializations:</span> ' + doctor.Specializations)
-            $('li.docLangs').html('<span>Languages:</span> ' + doctor.Languages)
-            $.get("/Departments/getDeptName/" + doctor.CurDeptartmentID, function (department) {
-
-                $('li.docDept').html('<span>Department:</span> ' + department)
-                $('#ex1').modal();
-            });
+            const admin = JSON.parse(json)
+            $('li.adminUserId').html('<span>User:</span> ' + admin.UserId)
+            $('li.adminDoB').html('<span>Date of Birth:</span> ' +(new Date(admin.DOB)).toLocaleDateString())
+            $('li.adminNumber').html('<span>Phone Number:</span> ' + admin.PhoneNumber)
+            $('li.adminEmail').html('<span>Email:</span> ' + admin.Email) 
+            $('li.adminCity').html('<span>City:</span> ' + admin.City)
+            $('li.adminAccountant').html('<span>Accountant:</span> ' +  (admin.Accountant?"Yes":"No"))
+            $('li.adminAddress').html('<span>Address:</span> ' + admin.Address)
+            $('#ex1').modal();
         });
     });
 

@@ -139,7 +139,7 @@ namespace HospitalSystem.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = MyConstants.RoleAccountant + "," + MyConstants.RoleAdmin)]
         public ActionResult Edit([Bind(Include = "Id,Username,Password,Email,PhoneNumber,Address,City,DOB,UserId,Accountant,UserId")] Admin admin)
-        {//giriş yapmış adminie accountant verilmemeli
+        {
             if (ModelState.IsValid)
             {
                 ApplicationDbContext userdb = new ApplicationDbContext();
@@ -159,9 +159,7 @@ namespace HospitalSystem.Controllers
                     else
                     {
                         userManager.RemovePassword(admin.UserId);
-                        userManager.AddPassword(admin.UserId, Request["password"]);
-
-                        return View(admin);
+                        userManager.AddPassword(admin.UserId, Request["password"]); 
                     }
                 }
                 if (admin_old.Email != admin.Email)//email changes detected
