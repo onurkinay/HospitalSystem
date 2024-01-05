@@ -17,12 +17,17 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 <section id="randevular">
 
     <div class="container">
-        <h2>Appointments</h2>
-        <ul class="responsive-table">
-
-
+        <h2 style="display:inline">Appointments</h2>
+        @if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
+        {
+            <div class="addButton">
+                @Html.ActionLink("Add Appointment", "Create", null, new { @class = "addButtonInside" })
+            </div>
+            <div class="bosluk"> </div>
+        }
+        <ul class="responsive-table"> 
             @if (Model.Count() == 0)
-            { 
+            {
                 <p> No record</p>
             }
             else
@@ -56,16 +61,16 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
             }
 
 
-                <div class="col col-6" data-label="Change Appointment Operation">
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteApp" })
-                    @if (User.IsInRole("Doctor"))
-                    {   
-                        @Html.Raw("| ")
-                        @Html.ActionLink("Create Prescription", "Create", "Prescriptions", routeValues: new { id = item.Id }, htmlAttributes: null)
-                    }
-                </div>
+                    <div class="col col-6" data-label="Change Appointment Operation">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "getDetails" }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "deleteApp" })
+                        @if (User.IsInRole("Doctor"))
+                        {
+                            @Html.Raw("| ")
+                            @Html.ActionLink("Create Prescription", "Create", "Prescriptions", routeValues: new { id = item.Id }, htmlAttributes: null)
+                        }
+                    </div>
                 </li>
             }
         </ul>
@@ -74,7 +79,7 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))
 </section>
 
 <div id="ex1" class="modal" style="max-width:initial">
-    <section id="ozel-sayfa" style="padding:0">
+    <section id="ozel-sayfa" style="padding:0;margin-bottom:0">
         <div class="container" style="max-width:initial">
             <div class="hesap-bilgileri">
                 <h3>Appointments</h3>

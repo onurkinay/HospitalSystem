@@ -1,6 +1,6 @@
 ﻿@model HospitalSystem.Models.Admin
 @{
-    ViewBag.Title = "Admin";
+    ViewBag.Title = "My Page";
 }
 
 @Html.Partial("~/Views/Admins/Header.cshtml");
@@ -11,7 +11,7 @@
         <div class="kisisel-bilgiler">
             <h3>Personal Information</h3>
             <ul>
-                <li><span>Name Surname:</span> @Model.UserId.Substring(0,10)...</li>
+                <li><span>Name Surname:</span> @Model.UserId.Substring(0,8)</li>
                 <li><span>Date of Birth:</span> @Model.DOB.ToShortDateString()</li>
                 <li><span>Phone Number:</span> @Model.PhoneNumber</li>
                 <li><span>E-Mail Address:</span> @Model.Email</li>

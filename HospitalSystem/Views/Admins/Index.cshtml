@@ -4,7 +4,7 @@
     ViewBag.Title = "Admin Management";
 }
 
-@Html.Partial("~/Views/Admins/Header.cshtml");
+@Html.Partial("~/Views/Admins/Header.cshtml")
 
 
 <section id="doktor-yonetimi">
@@ -17,13 +17,25 @@
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">@Html.DisplayNameFor(model => model.UserId)</div>
+                <div class="col col-1">Role</div>
                 <div class="col col-2">@Html.DisplayNameFor(model => model.Email)</div>
                 <div class="col col-4">Actions</div>
             </li>
             @foreach (var item in Model)
             {
                 <li class="table-row">
-                    <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.UserId)</div>
+                    <div class="col col-1" data-label="Job Id">@Html.DisplayFor(modelItem => item.UserId).ToString().Substring(0,8)</div>
+                    <div class="col col-1" data-label="Job Id">
+                        @if (item.Accountant)
+                        {
+                            @Html.Raw("Accountant")
+                        }
+                        else
+                        {
+                            @Html.Raw("Admin")
+                        }
+
+                    </div>
                     <div class="col col-2" data-label="Doctor Name">@Html.DisplayFor(modelItem => item.Email)</div>
                     <div class="col col-4" data-label="Operation">
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

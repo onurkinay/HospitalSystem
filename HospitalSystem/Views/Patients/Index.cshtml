@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<HospitalSystem.Models.Patient>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Patient";
 }
  
  
@@ -11,12 +11,14 @@
 <section id="hasta-yonetimi">
     <div class="container">
         <h2>Patients</h2>
+
         @if (Model.Count() == 0)
         {
             <p>No record!</p>
         }
         else
         {
+
             <ul class="responsive-table">
                 <li class="table-header">
                     <div class="col col-1">@Html.DisplayNameFor(model => model.Name)</div>
@@ -43,7 +45,7 @@
 
  
     <div id="ex1" class="modal" style="max-width:initial">
-        <section id="ozel-sayfa" style="padding:0">
+        <section id="ozel-sayfa" style="padding:0;margin-bottom:0">
             <div class="container" style="max-width:initial">
                 <div class="kisisel-bilgiler">
                     <h3>Personal Information</h3>

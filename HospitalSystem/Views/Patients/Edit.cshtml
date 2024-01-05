@@ -1,7 +1,13 @@
 ﻿@model HospitalSystem.Models.Patient
  
 @{
-    ViewBag.Title = "Edit";
+    if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient)) {
+        ViewBag.Title = "Edit My Account";
+    }
+    else
+    {
+        ViewBag.Title = "Edit Patient";
+    }
     string dob = Model.DOB.ToString("yyyy-MM-dd");
 }
  
@@ -20,10 +26,8 @@ else if (User.IsInRole(HospitalSystem.Models.MyConstants.RoleAdmin))
     @Html.AntiForgeryToken()
  
 <section id="ozel-sayfa">
- 
   
-
-    <h2 style="margin-left: 13%;">Edit Account</h2>
+     
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.UserId)
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })

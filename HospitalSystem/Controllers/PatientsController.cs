@@ -6,6 +6,7 @@ using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Runtime.Serialization;
 using System.Web;
 using System.Web.Mvc;
 using HospitalSystem.Data;
@@ -165,6 +166,19 @@ namespace HospitalSystem.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public static string GetEnumMemberAttrValue<T>(T enumVal)
+        {
+            var enumType = typeof(T);
+            var memInfo = enumType.GetMember(enumVal.ToString());
+            var attr = memInfo.FirstOrDefault()?.GetCustomAttributes(false).OfType<EnumMemberAttribute>().FirstOrDefault();
+            if (attr != null)
+            {
+                return attr.Value;
+            }
+
+            return null;
         }
     }
 }

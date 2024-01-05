@@ -1,7 +1,7 @@
 ﻿@model HospitalSystem.Models.Appointment
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Appointment";
 }
 
 @if (User.IsInRole("Patient"))
@@ -83,7 +83,7 @@ else
 
 
 <div id="ex1" class="modal"  >
-    <section id="ozel-sayfa" style="padding:0">
+    <section id="ozel-sayfa" style="padding:0;margin-bottom:0">
         <div class="container" style="max-width:initial"> 
             <!-- role based olarak değişmeli-->
             @if (User.IsInRole(HospitalSystem.Models.MyConstants.RolePatient))

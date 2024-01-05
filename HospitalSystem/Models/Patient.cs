@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Runtime.Serialization;
 
 namespace HospitalSystem.Models
 {
@@ -39,24 +42,37 @@ namespace HospitalSystem.Models
 
         public ICollection<Appointment> Appointments { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public enum Blood
         {
             [Display(Name ="A Rh+")]
+            [EnumMember(Value = "A Rh+")]
+            [JsonProperty(PropertyName = "A Rh+")]
             ARhPlus,
 
+            [EnumMember(Value = "B Rh+")]
             [Display(Name = "B Rh+")]
+            [Description("Blanched Almond Color")]
+            [JsonProperty(PropertyName = "B Rh+")]
             BRhPlus,
 
-            [Display(Name = "0 Rh+")]
+            [EnumMember(Value = "0 Rh+")]
+            [Display(Name = "0 Rh+")] 
             ZRhPlus,
 
-            [Display(Name = "A Rh-")]
+            [EnumMember(Value = "A Rh-")]
+            [Display(Name= "A Rh-")]
+            [JsonProperty(PropertyName = "A Rh-")]
             ARhNegative,
 
+            [EnumMember(Value = "B Rh-")]
             [Display(Name = "B Rh-")]
+            [JsonProperty(PropertyName = "B Rh-")] 
             BRhNegative,
 
+            [EnumMember(Value = "0 Rh-")]
             [Display(Name = "0 Rh-")]
+            [JsonProperty(PropertyName = "0 Rh-")]
             ZRhNegative
 
         }

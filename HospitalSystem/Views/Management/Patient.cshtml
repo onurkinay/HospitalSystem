@@ -1,10 +1,9 @@
 ﻿@model HospitalSystem.Models.Patient
 @{
-    ViewBag.Title = "Patient";
+    ViewBag.Title = "My Page";
 }
 
-@Html.Partial("~/Views/Patients/Header.cshtml");
-<!-- HASTANIN BİLGİLERİ OLACAK -->
+@Html.Partial("~/Views/Patients/Header.cshtml"); 
 <section id="ozel-sayfa">
     <h2 style="margin-left: 13%;">My Page</h2>
     <div class="container">
@@ -20,7 +19,7 @@
         <div class="hesap-bilgileri">
             <h3>-</h3>
             <ul>
-                <li><span>Blood Group:</span> @Model.Blood_Group</li>
+                <li><span>Blood Group:</span>@HospitalSystem.Controllers.PatientsController.GetEnumMemberAttrValue(Model.Blood_Group)</li>
                 <li><span>Address:</span> @Model.Address</li>
                 <li><span>City:</span> @Model.City</li>
             </ul>
